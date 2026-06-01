@@ -43,7 +43,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
     {categories.map(cat => {
       const catPartners = partners.filter(p => p.category === cat);
       if (catPartners.length === 0) return null;
-      const catKey = `sponsoring.categories.${cat}` as Parameters<typeof t>[0];
+      const catKey = `sponsoring.categories.${cat}` as any;
       return (
         <section class="sponsors-section" aria-labelledby={`sponsors-${cat}`}>
           <h2 id={`sponsors-${cat}`} class="sponsors-section__title">{t(catKey)}</h2>
