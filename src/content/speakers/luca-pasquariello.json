@@ -1,0 +1,17 @@
+{
+  "id": "luca-pasquariello",
+  "slug": "luca-pasquariello",
+  "year": 2026,
+  "name": "Luca Pasquariello",
+  "pronouns": "er/ihm",
+  "role_de": "Ernährungsberater & Content Creator",
+  "role_en": "Nutritionist & Content Creator",
+  "organization": "Vegangainsbyluca",
+  "bio_de": "Luca ist ein evidenzbasierter Ernährungsberater und Fitnesscoach, der komplexe Themen rund um tierfreie Ernährung, Gesundheit und Tierschutz verständlich und präzise einordnet. Auf Vegangainsbyluca verbindet er wissenschaftliche Analyse mit klarer Social-Media-Kommunikation und reagiert regelmässig auf verbreitete Mythen und Fehlinformationen.",
+  "bio_en": "Luca is an evidence-based nutritionist and fitness coach who breaks down complex topics around plant-based nutrition, health and animal protection in a clear and precise way. On Vegangainsbyluca, he combines scientific analysis with effective social media communication and regularly addresses widespread myths and misinformation.",
+  "photo": "/images/speakers/Luca_Pasquariello.png",
+  "sessionIds": [
+    "fleischmythen"
+  ],
+  "sortOrder": 27
+}

@@ -1,0 +1,40 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import FAQAccordion from "../components/faq/FAQAccordion.astro";
+import { useTranslations } from "../lib/i18n";
+import { getCollection } from "astro:content";
+
+const locale = "de";
+const t = useTranslations(locale);
+
+const faqsRaw = await getCollection("faqs");
+// Jede Datei enthält ein Array — entry.data ist direkt das Array
+const faqs = faqsRaw
+  .flatMap(entry => entry.data)
+  .sort((a, b) => a.sortOrder - b.sortOrder)
+  .map(item => ({
+    id: item.id,
+    question: item.question_de,
+    answer: item.answer_de,
+    category: item.category,
+  }));
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("faq.title")}
+  description={t("faq.lead")}
+  locale={locale}
+  canonicalUrl={`${site}faq/`}
+  alternates={{ de: `${site}faq/`, en: `${site}en/faq/` }}
+  breadcrumbs={[{ label: t("faq.title") }]}
+>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">{t("faq.title")}</h1>
+      <p class="section__lead">{t("faq.lead")}</p>
+    </header>
+    <FAQAccordion items={faqs} />
+  </div>
+</PageLayout>

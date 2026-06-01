@@ -1,0 +1,17 @@
+{
+  "id": "valentina-zibung",
+  "slug": "valentina-zibung",
+  "year": 2026,
+  "name": "Valentina Zibung",
+  "pronouns": "sie/ihr",
+  "role_de": "Tierschutzaktivistin & Lebenshof-Mitarbeiterin",
+  "role_en": "Animal Welfare Activist & Sanctuary Worker",
+  "organization": "Verein Hof Narr",
+  "bio_de": "Valentina Zibung ist seit 15 Jahren im Tierschutz aktiv und seit 10 Jahren beim Lebenshof Hof Narr dabei. In dieser Zeit hat sie umfangreiche Erfahrungen im Bereich der Tierrettung gesammelt.",
+  "bio_en": "Valentina Zibung has been active in animal welfare for 15 years and has been part of the Hof Narr sanctuary for 10 years, during which time she has gathered extensive experience in animal rescue.",
+  "photo": "/images/speakers/Valentina_Zibung.jpg",
+  "sessionIds": [
+    "tierrettungen"
+  ],
+  "sortOrder": 16
+}

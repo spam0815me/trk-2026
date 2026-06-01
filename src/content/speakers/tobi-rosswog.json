@@ -1,0 +1,16 @@
+{
+  "id": "tobi-rosswog",
+  "slug": "tobi-rosswog",
+  "year": 2026,
+  "name": "Tobi Rosswog",
+  "pronouns": "er/ihm",
+  "role_de": "Aktivist, Autor & Dozent",
+  "role_en": "Activist, Author & Lecturer",
+  "bio_de": "Tobi Rosswog setzt sich als Aktivist, freier Dozent, Autor und Initiator für die sozial-ökologische Transformation ein – hin zu einer Gesellschaft jenseits von Arbeit, Eigentum und Geld.",
+  "bio_en": "Tobi Rosswog is an activist, freelance lecturer, author and initiator working towards socio-ecological transformation — towards a society beyond work, property and money.",
+  "photo": "/images/speakers/Tobi_Rosswog.jpg",
+  "sessionIds": [
+    "kreativ-in-gesellschaft-intervenieren"
+  ],
+  "sortOrder": 1
+}

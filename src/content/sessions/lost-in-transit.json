@@ -1,0 +1,25 @@
+{
+  "id": "lost-in-transit",
+  "slug": "lost-in-transit",
+  "year": 2026,
+  "title_de": "Lost in Transit: Das Geschäft mit der Milch – und wie auf dem Transportweg Tierleben, Umwelt und Menschenrechte auf der Strecke bleiben",
+  "title_en": "Lost in Transit: The Milk Business – and How Animal Lives, the Environment and Human Rights Are Left Behind Along the Way",
+  "description_de": "Quer durch Europa und weit darüber hinaus werden junge Kälber und trächtige Rinder aus der Milchindustrie transportiert – über lange Strecken, unter Bedingungen, die Tierleid zur kalkulierten Größe machen. Investigative Recherchen zeigen, wie ein globalisiertes System auf dem Rücken der Tiere, der Umwelt und Menschenrechten für den Profit einiger weniger aufrecht erhalten wird. Entlang der Transportwege verschwinden Verantwortung, Kontrolle und Transparenz – und mit ihnen die Frage, wer dafür eigentlich zur Rechenschaft gezogen wird.",
+  "description_en": "Across Europe and far beyond, young calves and pregnant cattle from the dairy industry are transported over long distances under conditions that make animal suffering a calculated factor. Investigative research shows how a globalised system is maintained at the expense of animals, the environment and human rights for the profit of a few. Along the transport routes, responsibility, oversight and transparency disappear — along with the question of who is actually held accountable.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "14:00",
+  "endTime": "15:00",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "ann-kathrin-freude",
+    "tobias-giesinger"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 21,
+  "durationMinutes": 60
+}

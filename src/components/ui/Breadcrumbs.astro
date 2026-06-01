@@ -1,0 +1,76 @@
+---
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  locale: Locale;
+}
+
+const { items, locale } = Astro.props;
+const t = useTranslations(locale);
+
+const homeHref = locale === "en" ? "/en/" : "/";
+const allItems = [{ label: t("breadcrumbs.home"), href: homeHref }, ...items];
+---
+
+<nav aria-label={locale === "de" ? "Breadcrumb" : "Breadcrumb"} class="breadcrumbs">
+  <ol class="breadcrumbs__list" role="list">
+    {allItems.map((item, i) => {
+      const isLast = i === allItems.length - 1;
+      return (
+        <li class="breadcrumbs__item">
+          {isLast || !item.href ? (
+            <span aria-current={isLast ? "page" : undefined} class="breadcrumbs__current">
+              {item.label}
+            </span>
+          ) : (
+            <a href={item.href} class="breadcrumbs__link">{item.label}</a>
+          )}
+          {!isLast && <span class="breadcrumbs__sep" aria-hidden="true">/</span>}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+.breadcrumbs {
+  margin-bottom: var(--space-4);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.breadcrumbs__link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+.breadcrumbs__link:hover { color: var(--color-primary); }
+
+.breadcrumbs__current {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+}
+
+.breadcrumbs__sep {
+  color: var(--color-neutral-400);
+}
+</style>

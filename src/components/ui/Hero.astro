@@ -1,0 +1,188 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  lead?: string;
+  ctaPrimary?: { href: string; label: string };
+  ctaSecondary?: { href: string; label: string };
+  size?: "default" | "large";
+  pushDown?: boolean;
+}
+
+const { lead, ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="hero" aria-label="Hero">
+
+  <!-- Parallax-Hintergrund -->
+  <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+
+    <!-- Linke Spalte: Kuh -->
+    <div class="hero__visual">
+      <img src="/images/trk-logo.png" alt="" class="hero__kuh" id="hero-kuh" aria-hidden="true" />
+    </div>
+
+    <!-- Rechte Spalte: Text + TIF-Logo -->
+    <div class="hero__content">
+      {lead && <p class="hero__lead" set:html={lead} />}
+
+      <p class="hero__event-info">
+        <span>23.–25. Oktober 2026</span>
+        <img src="/images/x-separator.svg" alt="" class="hero__event-sep" aria-hidden="true" />
+        <span>Photobastei Zürich</span>
+      </p>
+
+      {(ctaPrimary || ctaSecondary) && (
+        <div class="hero__actions">
+          {ctaPrimary && (
+            <a href={ctaPrimary.href} class="btn btn--lg btn--organic">
+              {ctaPrimary.label}
+            </a>
+          )}
+          {ctaSecondary && (
+            <a href={ctaSecondary.href} class="btn btn--lg btn--organic-v2">
+              {ctaSecondary.label}
+            </a>
+          )}
+        </div>
+      )}
+
+      <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer" class="hero__organizer">
+        <img src="/images/tif-logo-dark.png" alt="Tier im Fokus (TIF)" class="hero__organizer-logo" />
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const bg  = document.getElementById("hero-bg");
+  const kuh = document.getElementById("hero-kuh");
+
+  function onScroll() {
+    const y = window.scrollY;
+    // Hintergrund langsamer scrollen (0.3× Scrollgeschwindigkeit)
+    if (bg)  bg.style.transform  = `translateY(${y * 0.3}px)`;
+    // Kuh etwas schneller (0.15×) — subtiler Tiefeneffekt
+    if (kuh) kuh.style.transform = `translateY(${y * 0.15}px)`;
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+</script>
+
+<style>
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Parallax-Hintergrund */
+.hero__bg {
+  position: absolute;
+  inset: -20% 0;          /* Extra-Höhe damit beim Scrollen kein Rand sichtbar */
+  background-image: url('/images/trk-header-bg.png');
+  background-size: cover;
+  background-position: center top;
+  will-change: transform;
+  z-index: 0;
+}
+
+/* Layout */
+.hero__inner {
+  width: 100%;
+  max-width: var(--max-width-xl, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    padding-inline: var(--space-6);
+  }
+  .hero__visual { display: none; }
+}
+
+/* Linke Spalte */
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.hero__organizer-logo {
+  height: 42px;
+  width: auto;
+}
+
+.hero__kuh {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  display: block;
+  will-change: transform;
+}
+
+/* Rechte Spalte */
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding-block: var(--space-16);
+}
+
+.hero__lead {
+  font-size: var(--text-xl);
+  color: #26282a;
+  max-width: 44ch;
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.hero__event-info {
+  font-family: 'Cubano', sans-serif;
+  font-size: var(--text-2xl);
+  color: #26282a;
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.hero__event-tag {
+  height: 1.4em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero__event-sep {
+  height: 1.2em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+</style>

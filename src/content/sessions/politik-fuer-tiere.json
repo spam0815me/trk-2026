@@ -1,0 +1,24 @@
+{
+  "id": "politik-fuer-tiere",
+  "slug": "politik-fuer-tiere",
+  "year": 2026,
+  "title_de": "Politik für Tiere: Potenzial und Perspektiven",
+  "title_en": "Politics for Animals: Potential and Perspectives",
+  "description_de": "Die Schweiz hat das beste Tierschutzgesetz der Welt – stimmt das wirklich? Was sind die grössten Baustellen, was können wir bewirken und warum braucht es dich in der Politik? Meret Schneider zeigt Wege auf.",
+  "description_en": "Switzerland has the best animal welfare law in the world – is that really true? What are the biggest challenges, what can we achieve, and why does politics need you? Meret Schneider shows the way.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "16:30",
+  "endTime": "17:30",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "meret-schneider"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 5,
+  "durationMinutes": 60
+}

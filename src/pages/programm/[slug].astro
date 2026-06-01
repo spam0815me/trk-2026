@@ -1,0 +1,460 @@
+---
+/**
+ * Session-Detailseite — Deutsch
+ */
+import PageLayout from "../../layouts/PageLayout.astro";
+import { useTranslations, getField } from "../../lib/i18n";
+import { getCollection } from "astro:content";
+import { toSessionView, formatDate, calcDuration } from "../../lib/sessions";
+
+export async function getStaticPaths() {
+  const sessions = await getCollection("sessions");
+  return sessions
+    .filter(s => s.data.year === 2026)
+    .map(s => ({ params: { slug: s.data.slug }, props: { session: s } }));
+}
+
+const { session } = Astro.props;
+const locale = "de";
+const t = useTranslations(locale);
+
+const rooms    = await getCollection("rooms");
+const speakers = await getCollection("speakers");
+
+const roomEntry    = rooms.find(r => r.data.id === session.data.roomId);
+const sessionView  = toSessionView(session, locale);
+const roomName     = getField<string>("name", locale, roomEntry?.data as unknown as Record<string, unknown> ?? {});
+const accessNote   = getField<string>("accessibility", locale, roomEntry?.data as unknown as Record<string, unknown> ?? {});
+const sessionSpeakers = speakers.filter(s => session.data.speakerIds.includes(s.data.id));
+
+// Vorberechnung für Template (TypeScript-Generics dürfen nicht im JSX stehen)
+const speakerDisplayData = sessionSpeakers.map(sp => ({
+  href: `/referentinnen/${sp.data.slug}`,
+  name: sp.data.name,
+  pronouns: sp.data.pronouns,
+  organization: sp.data.organization,
+  photo: sp.data.photo,
+  role: getField<string>("role", locale, sp.data as unknown as Record<string, unknown>),
+  bio:  getField<string>("bio",  locale, sp.data as unknown as Record<string, unknown>),
+}));
+
+const site         = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const canonicalUrl = `${site}programm/${session.data.slug}/`;
+const alternates   = {
+  de: canonicalUrl,
+  en: `${site}en/program/${session.data.slug}/`,
+};
+
+const roomIcons: Record<string, string> = {
+  "saal-a": "/images/Raum_Sandra.svg",
+  "saal-b": "/images/Raum_Yvonne.svg",
+};
+const roomIcon = roomIcons[session.data.roomId];
+
+const typeLabel = t(`program.types.${session.data.type}` as Parameters<typeof t>[0]);
+const langLabel = session.data.language === "de"
+  ? t("program.languages.de")
+  : session.data.language === "en"
+    ? t("program.languages.en")
+    : `${t("program.languages.de")} / ${t("program.languages.en")}`;
+
+// iCal-Daten für Client-Script
+const icalData = {
+  uid: session.data.id,
+  title: sessionView.title,
+  description: sessionView.description,
+  location: roomName,
+  startDate: session.data.date,
+  startTime: session.data.startTime,
+  endTime: session.data.endTime,
+  url: canonicalUrl,
+};
+---
+
+<PageLayout
+  title={sessionView.title}
+  description={sessionView.description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  breadcrumbs={[
+    { label: t("program.title"), href: "/programm" },
+    { label: sessionView.title },
+  ]}
+>
+  <article class="session-detail section" aria-labelledby="session-title">
+    <!-- Header -->
+    <header class="session-detail__header">
+      <div class="session-detail__badges">
+        <span class:list={["badge", `badge--session-type-${session.data.type}`]}>{typeLabel}</span>
+        <span class="badge badge--lang">{langLabel}</span>
+        {session.data.registrationRequired && (
+          <span class="badge badge--accent">{t("session.registrationRequired")}</span>
+        )}
+      </div>
+
+      <h1 class="session-detail__title" id="session-title">{sessionView.title}</h1>
+
+      <!-- Metadaten -->
+      <dl class="session-detail__meta">
+        <div class="session-detail__meta-item">
+          <dt>
+            <img src="/images/Tag.svg" alt="" class="meta-icon" aria-hidden="true" />
+            {t("program.day")}
+          </dt>
+          <dd>{formatDate(session.data.date, locale)}</dd>
+        </div>
+        <div class="session-detail__meta-item">
+          <dt>
+            <img src="/images/Uhrzeit.svg" alt="" class="meta-icon" aria-hidden="true" />
+            {t("program.time")}
+          </dt>
+          <dd>
+            <time>{session.data.startTime}–{session.data.endTime}</time>
+            <span class="session-detail__duration">
+              ({sessionView.durationMinutes} {t("session.minutes")})
+            </span>
+          </dd>
+        </div>
+        <div class="session-detail__meta-item">
+          <dt>
+            <img src="/images/Location.svg" alt="" class="meta-icon" aria-hidden="true" />
+            {t("session.room")}
+          </dt>
+          <dd>
+            {roomIcon
+              ? <img src={roomIcon} alt={roomName} class="room-name-icon" />
+              : roomName
+            }
+          </dd>
+        </div>
+        {session.data.capacity && (
+          <div class="session-detail__meta-item">
+            <dt>{t("session.capacity")}</dt>
+            <dd>{session.data.capacity} {locale === "de" ? "Plätze" : "seats"}</dd>
+          </div>
+        )}
+      </dl>
+
+      <!-- Aktionen -->
+      <div class="session-detail__actions">
+        <button
+          class="bookmark-btn btn btn--primary btn--sm"
+          data-session-id={session.data.id}
+          type="button"
+        >
+          <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+          <span class="bookmark-btn__label">{t("program.addToBookmarks")}</span>
+        </button>
+
+        <button
+          class="ical-btn btn btn--primary btn--sm"
+          data-ical={JSON.stringify(icalData)}
+          data-filename={`trk-2026-${session.data.slug}`}
+          type="button"
+        >
+          <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 20px; height: 20px;" aria-hidden="true"></span>
+          {t("session.exportIcal")}
+        </button>
+      </div>
+    </header>
+
+    <!-- Beschreibung -->
+    <div class="session-detail__body prose">
+      {sessionView.longDescription ? (
+        <p set:html={sessionView.longDescription} />
+      ) : (
+        <p>{sessionView.description}</p>
+      )}
+
+      {sessionView.notes && (
+        <aside class="session-detail__note">
+          <strong>{locale === "de" ? "Hinweis:" : "Note:"}</strong> {sessionView.notes}
+        </aside>
+      )}
+    </div>
+
+    <!-- Referent:innen -->
+    {sessionSpeakers.length > 0 && (
+      <section class="session-detail__speakers" aria-labelledby="session-speakers-heading">
+        <h2 id="session-speakers-heading">{t("session.speakers")}</h2>
+        <ul class="session-speakers-list" role="list">
+          {speakerDisplayData.map(sp => (
+            <li class="session-speaker">
+              {sp.photo && (
+                <a href={sp.href} tabindex="-1" aria-hidden="true">
+                  <img src={sp.photo} alt="" class="session-speaker__photo" width="80" height="80" loading="lazy" />
+                </a>
+              )}
+              <div class="session-speaker__info">
+                <h3 class="session-speaker__name">
+                  <a href={sp.href}>{sp.name}</a>
+                </h3>
+                <p class="session-speaker__role">{sp.role}{sp.organization ? `, ${sp.organization}` : ""}</p>
+                <p class="session-speaker__bio">{sp.bio}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Barrierefreiheitshinweis -->
+    {accessNote && (
+      <aside class="session-detail__access">
+        <span class="access-icon" aria-hidden="true">
+          <img src="/images/yellow-05.png" alt="" class="access-icon__shape" />
+          <img src="/images/icon-behinderte-person.png" alt="" class="access-icon__img" />
+        </span>
+        <div>
+          <h2>{t("session.accessibilityNotes")}</h2>
+          <p>{accessNote}</p>
+        </div>
+      </aside>
+    )}
+
+    <!-- Zurück-Link -->
+    <nav aria-label={locale === "de" ? "Zurück zum Programm" : "Back to program"} class="session-detail__back">
+      <a href="/programm" class="btn btn--primary">
+        <span class="btn-icon" style="--icon-url: url('/images/back.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+        {t("session.back")}
+      </a>
+    </nav>
+  </article>
+</PageLayout>
+
+<script>
+  import { generateICalEvent, downloadIcal } from "../../lib/ical.ts";
+  import type { ICalEvent } from "../../lib/ical.ts";
+
+  // iCal-Button
+  document.querySelectorAll<HTMLButtonElement>(".ical-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      try {
+        const data = JSON.parse(btn.dataset.ical ?? "{}") as ICalEvent;
+        const content = generateICalEvent(data);
+        downloadIcal(content, btn.dataset.filename ?? "session");
+      } catch (e) {
+        console.error("iCal Fehler:", e);
+      }
+    });
+  });
+</script>
+<script src="../../scripts/bookmarks.js" type="module"></script>
+
+<style>
+.bookmark-btn.is-bookmarked .bookmark-btn__label {
+  color: #e5b969;
+}
+
+.bookmark-btn.is-bookmarked .btn-icon {
+  background-color: #e5b969;
+}
+
+.session-detail {
+  max-width: var(--max-width-lg);
+}
+
+.session-detail__header {
+  margin-bottom: var(--space-8);
+}
+
+.session-detail__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.session-detail__title {
+  margin-bottom: var(--space-5);
+}
+
+.session-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
+}
+
+.session-detail__meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.session-detail__meta-item dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: #26282a;
+  margin-bottom: var(--space-1);
+}
+
+.meta-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.access-icon {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.access-icon__shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.access-icon__img {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  z-index: 1;
+  filter: brightness(0) invert(1);
+}
+
+.session-detail__meta-item dd {
+  font-weight: var(--weight-bold);
+  color: #26282a;
+  margin: 0;
+}
+
+.room-name-icon {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.session-detail__duration {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-normal);
+}
+
+.session-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.session-detail__actions .btn {
+  flex: 0 0 13rem;
+  width: 13rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.session-detail__body {
+  margin-bottom: var(--space-8);
+}
+
+.session-detail__note {
+  background: var(--color-warning-bg);
+  border-left: 3px solid var(--color-warning);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.session-detail__access {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.session-detail__access h2 {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
+}
+
+/* Referent:innen */
+.session-detail__speakers {
+  margin-bottom: var(--space-8);
+}
+
+.session-detail__speakers h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-5);
+}
+
+.session-speakers-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  list-style: none;
+}
+
+.session-speaker {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  padding: var(--space-5);
+  background: #26282a;
+  border-radius: var(--radius-lg);
+}
+
+.session-speaker__photo {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.session-speaker__name {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.session-speaker__name a {
+  color: #e3e3dd;
+  text-decoration: none;
+}
+.session-speaker__name a:hover { color: #e5b969; }
+
+.session-speaker__pronouns {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: #e3e3dd;
+}
+
+.session-speaker__role {
+  font-size: var(--text-sm);
+  color: #e5b969;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2);
+  max-width: none;
+}
+
+.session-speaker__bio {
+  font-size: var(--text-sm);
+  color: #fafaff;
+}
+
+.session-detail__back {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+</style>

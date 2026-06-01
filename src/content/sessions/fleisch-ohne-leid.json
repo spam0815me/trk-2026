@@ -1,0 +1,24 @@
+{
+  "id": "fleisch-ohne-leid",
+  "slug": "fleisch-ohne-leid",
+  "year": 2026,
+  "title_de": "Echtes Fleisch ohne Leid? Biotechnologie als Baustein der ethischen Ernährungswende",
+  "title_en": "Real Meat Without Suffering? Biotechnology as a Building Block of the Ethical Food Transition",
+  "description_de": "Moderne Technologien wie Zellkultivierung und Präzisionsfermentation können die globale Abhängigkeit von tierischen Produkten drastisch verringern und bieten einen neuen Ansatz für eine multidimensionale Lösungsstrategie. Swissveg, Herausgeberin des V-Labels, fördert mit dem neuen C-Label und F-Label Transparenz in diesen wachsenden Märkten und eröffnet frühzeitig den Diskurs mit der Industrie, um die Interessen der Tiere zu wahren.",
+  "description_en": "Modern technologies such as cell cultivation and precision fermentation can drastically reduce global dependence on animal products and offer a new approach to a multidimensional solution strategy. Swissveg, publisher of the V-Label, promotes transparency in these growing markets with the new C-Label and F-Label, and opens up early dialogue with the industry to safeguard the interests of animals.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "17:30",
+  "endTime": "18:30",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "lubomir-yotov"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 23,
+  "durationMinutes": 60
+}

@@ -1,0 +1,17 @@
+{
+  "id": "anna-schubert",
+  "slug": "anna-schubert",
+  "year": 2026,
+  "name": "Anna Schubert",
+  "pronouns": "sie/ihr",
+  "role_de": "Recherche-Aktivistin & Agrarwissenschaftlerin",
+  "role_en": "Research Activist & Agricultural Scientist",
+  "organization": "Animal Rights Watch (ARIWA)",
+  "bio_de": "Anna Schubert ist Recherche-Aktivistin und Agrarwissenschaftlerin bei Animal Rights Watch (ARIWA). Seit über einem Jahrzehnt deckt sie durch Undercover-Recherchen die Realität in deutschen Tierhaltungsbetrieben auf. Ihre investigative Arbeit fand Beachtung in ARD, Spiegel und Süddeutscher Zeitung.",
+  "bio_en": "Anna Schubert is a research activist and agricultural scientist at Animal Rights Watch (ARIWA). For over a decade she has exposed conditions in German animal farming through undercover investigations. Her work has been featured in ARD, Der Spiegel and Süddeutsche Zeitung.",
+  "photo": "/images/speakers/Anna_Schubert.png",
+  "sessionIds": [
+    "schlachthof-recherche"
+  ],
+  "sortOrder": 18
+}

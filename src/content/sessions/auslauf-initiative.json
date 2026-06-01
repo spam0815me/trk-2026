@@ -1,0 +1,24 @@
+{
+  "id": "auslauf-initiative",
+  "slug": "auslauf-initiative",
+  "year": 2026,
+  "title_de": "Auslauf-Initiative: Ein politischer Weg hin zu einer tierfreundlicheren Landwirtschaft",
+  "title_en": "Outdoor Initiative: A Political Path Towards More Animal-Friendly Agriculture",
+  "description_de": "In diesem Beitrag präsentiert Sentience die Auslauf-Initiative, die allen Tieren in der Landwirtschaft regelmässigen Auslauf ins Freie gewähren will. Naomi Rey, Kampagnenleiterin, berichtet über Strategien, Planung und nächste Schritte – und wie wir gemeinsam den Wandel hin zu einer tierfreundlicheren Landwirtschaft in der Schweiz vorantreiben können. Nur etwa 15 Prozent aller Tiere in der Landwirtschaft dürfen ins Freie. Das wollen wir ändern.",
+  "description_en": "In this talk, Sentience presents the Outdoor Initiative, which aims to grant all farm animals regular access to the outdoors. Campaign Director Naomi Rey reports on strategies, planning and next steps — and how we can together drive the shift towards more animal-friendly agriculture in Switzerland. Only about 15 percent of all farm animals are allowed outside. We want to change that.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 1,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "naomi-rey"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 24,
+  "durationMinutes": 60
+}

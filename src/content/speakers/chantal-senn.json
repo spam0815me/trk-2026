@@ -1,0 +1,15 @@
+{
+  "id": "chantal-senn",
+  "slug": "chantal-senn",
+  "year": 2026,
+  "name": "Chantal Senn",
+  "pronouns": "",
+  "role_de": "Referentin",
+  "role_en": "Speaker",
+  "organization": "Plant Based Universities",
+  "bio_de": "Informationen folgen.",
+  "bio_en": "Information to follow.",
+  "photo": "/images/speakers/placeholder.svg",
+  "sessionIds": ["plant-based-universities"],
+  "sortOrder": 31
+}

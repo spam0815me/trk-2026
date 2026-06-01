@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<BaseLayout
+  title={t("notFound.title")}
+  description={t("notFound.text")}
+  locale={locale}
+  canonicalUrl={`${site}404/`}
+  noindex
+>
+  <div class="not-found section">
+    <div class="container not-found__inner">
+      <p class="not-found__code" aria-hidden="true">404</p>
+      <h1>{t("notFound.title")}</h1>
+      <p>{t("notFound.text")}</p>
+      <a href="/" class="btn btn--primary">{t("notFound.home")}</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.not-found {
+  min-height: 60dvh;
+  display: flex;
+  align-items: center;
+}
+
+.not-found__inner {
+  text-align: center;
+}
+
+.not-found__code {
+  font-size: 8rem;
+  font-weight: var(--weight-bold);
+  color: var(--color-neutral-200);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+  max-width: none;
+  font-family: var(--font-heading);
+}
+
+.not-found h1 {
+  margin-bottom: var(--space-4);
+}
+
+.not-found p {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+  max-width: none;
+}
+</style>

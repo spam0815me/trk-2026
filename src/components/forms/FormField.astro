@@ -1,0 +1,207 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: "text" | "email" | "tel" | "textarea" | "select" | "checkbox";
+  required?: boolean;
+  placeholder?: string;
+  value?: string;
+  options?: Array<{ value: string; label: string }>;
+  error?: string;
+  hint?: string;
+  autocomplete?: string;
+}
+
+const {
+  id, name, label, type = "text", required = false,
+  placeholder, value, options, error, hint, autocomplete,
+} = Astro.props;
+
+const hasError = !!error;
+const inputId = id;
+const errorId = `${id}-error`;
+const hintId  = `${id}-hint`;
+const ariaDescribedBy = [hasError ? errorId : null, hint ? hintId : null]
+  .filter(Boolean).join(" ") || undefined;
+---
+
+<div class:list={["form-field", { "form-field--error": hasError, "form-field--checkbox": type === "checkbox" }]}>
+  {type === "checkbox" ? (
+    <label class="form-field__checkbox-label" for={inputId}>
+      <input
+        type="checkbox"
+        id={inputId}
+        name={name}
+        required={required}
+        aria-required={required}
+        aria-invalid={hasError || undefined}
+        aria-describedby={ariaDescribedBy}
+        class="form-field__checkbox"
+      />
+      <span class="form-field__checkbox-text">
+        {label}
+        {required && <span class="form-field__required" aria-hidden="true"> *</span>}
+      </span>
+    </label>
+  ) : (
+    <>
+      <label class="form-field__label" for={inputId}>
+        {label}
+        {required && <span class="form-field__required" aria-hidden="true"> *</span>}
+      </label>
+
+      {hint && (
+        <p class="form-field__hint" id={hintId}>{hint}</p>
+      )}
+
+      {type === "textarea" ? (
+        <textarea
+          id={inputId}
+          name={name}
+          placeholder={placeholder}
+          required={required}
+          aria-required={required}
+          aria-invalid={hasError || undefined}
+          aria-describedby={ariaDescribedBy}
+          autocomplete={autocomplete}
+          class="form-field__input form-field__textarea"
+          rows={4}
+        >{value}</textarea>
+      ) : type === "select" ? (
+        <select
+          id={inputId}
+          name={name}
+          required={required}
+          aria-required={required}
+          aria-invalid={hasError || undefined}
+          aria-describedby={ariaDescribedBy}
+          class="form-field__input form-field__select"
+        >
+          {options?.map(opt => (
+            <option value={opt.value} selected={opt.value === value}>{opt.label}</option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type={type}
+          id={inputId}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          required={required}
+          aria-required={required}
+          aria-invalid={hasError || undefined}
+          aria-describedby={ariaDescribedBy}
+          autocomplete={autocomplete}
+          class="form-field__input"
+        />
+      )}
+    </>
+  )}
+
+  {hasError && (
+    <p class="form-field__error" id={errorId} role="alert" aria-live="polite">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      {error}
+    </p>
+  )}
+</div>
+
+<style>
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-field__label {
+  font-weight: var(--weight-medium);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.form-field__required {
+  color: var(--color-error);
+}
+
+.form-field__hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+.form-field__input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-field__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.form-field--error .form-field__input {
+  border-color: var(--color-error);
+}
+
+.form-field--error .form-field__input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 20%, transparent);
+}
+
+.form-field__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-field__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-10);
+}
+
+/* Checkbox */
+.form-field--checkbox .form-field__checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.form-field__checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--color-primary);
+}
+
+.form-field__checkbox-text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: var(--leading-normal);
+}
+
+/* Error */
+.form-field__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  max-width: none;
+}
+</style>

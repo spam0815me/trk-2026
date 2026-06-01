@@ -1,0 +1,25 @@
+{
+  "id": "werbemist",
+  "slug": "werbemist",
+  "year": 2026,
+  "title_de": "Werbemist",
+  "title_en": "Werbemist – Exposing Misleading Animal Farming Ads",
+  "description_de": "Werbung für Tierprodukte zeichnet oft eine falsche Realität der Tierhaltung, verleiht ein gutes Gewissen und befeuert den Konsum. Die Werbemist-Plattform geht dagegen vor, entlarvt problematische Werbung und klärt auf, was wirklich hinter der Schweizer Tierhaltung steckt.",
+  "description_en": "Advertising for animal products often portrays a false reality of animal farming, eases the conscience and fuels consumption. The Werbemist platform fights back, exposing misleading advertising and revealing what really lies behind Swiss animal husbandry.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 1,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "laura-baumann",
+    "joelle-new"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 10,
+  "durationMinutes": 60
+}

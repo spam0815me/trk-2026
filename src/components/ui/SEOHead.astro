@@ -1,0 +1,79 @@
+---
+/**
+ * SEOHead — Meta-Tags, OG, hreflang, Canonical
+ */
+import type { Locale } from "../../lib/i18n";
+import { LOCALES, DEFAULT_LOCALE } from "../../lib/i18n";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalUrl: string;
+  /** Alternativen URLs pro Locale für hreflang */
+  alternates?: Partial<Record<Locale, string>>;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalUrl,
+  alternates = {},
+  ogImage = "/images/og-default.jpg",
+  noindex = false,
+} = Astro.props;
+
+const siteName = locale === "de" ? "Tierrechtskongress" : "Animal Rights Congress";
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+const ogImageAbs = new URL(ogImage, Astro.site ?? canonicalUrl).toString();
+---
+
+<!-- Basis -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Titel & Description -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+
+<!-- Canonical -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- hreflang -->
+{LOCALES.map(lang => {
+  const href = alternates[lang];
+  if (!href) return null;
+  return <link rel="alternate" hreflang={lang} href={href} />;
+})}
+<!-- x-default zeigt auf Deutsch (Default-Locale) -->
+{alternates[DEFAULT_LOCALE] && (
+  <link rel="alternate" hreflang="x-default" href={alternates[DEFAULT_LOCALE]} />
+)}
+
+<!-- Robots -->
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageAbs} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={locale === "de" ? "de_DE" : "en_GB"} />
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageAbs} />
+
+<!-- Favicons — TODO: TIF-Favicon einfügen -->
+<link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
+<link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="/favicons/site.webmanifest" />

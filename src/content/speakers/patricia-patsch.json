@@ -1,0 +1,18 @@
+{
+  "id": "patricia-patsch",
+  "slug": "patricia-patsch",
+  "year": 2026,
+  "name": "Patricia Patsch",
+  "pronouns": "sie/ihr",
+  "role_de": "Tierschutzaktivistin",
+  "role_en": "Animal Welfare Activist",
+  "organization": "Tierschutz Aktiv Grenzenlos",
+  "bio_de": "Patricia Patsch engagiert sich bei Tierschutz Aktiv Grenzenlos für den internationalen Tierschutz, mit Schwerpunkt auf Ungarn und Marokko.",
+  "bio_en": "Patricia Patsch is active with Tierschutz Aktiv Grenzenlos in international animal welfare work, with a focus on Hungary and Morocco.",
+  "photo": "/images/speakers/Patricia_Patsch.jpg",
+  "website": "https://www.tierschutzaktivgrenzenlos.com",
+  "sessionIds": [
+    "auslandstierschutz"
+  ],
+  "sortOrder": 9
+}

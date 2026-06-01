@@ -1,0 +1,243 @@
+{
+  "site": {
+    "name": "Tierrechtskongress",
+    "tagline": "Wissen. Vernetzung. Wandel.",
+    "description": "Der Tierrechtskongress bringt Aktivist:innen, Wissenschaftler:innen und Engagierte zusammen, um über die Befreiung aller Tiere zu diskutieren.",
+    "language": "Deutsch"
+  },
+  "nav": {
+    "home": "Startseite",
+    "program": "Programm",
+    "speakers": "Referent:innen",
+    "venue": "Ort & Anreise",
+    "registration": "Ticket sichern!",
+    "archive": "Archiv",
+    "faq": "FAQ",
+    "contact": "Kontakt",
+    "sponsoring": "Sponsoring",
+    "accessibility": "Barrierefreiheit",
+    "privacy": "Datenschutz",
+    "imprint": "Impressum",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "skipToContent": "Zum Hauptinhalt springen"
+  },
+  "home": {
+    "heroTitle": "Tierrechtskongress 2026",
+    "heroSubtitle": "Wissen. Vernetzung. Wandel.",
+    "heroLead": "Drei Tage Vorträge, Workshops und Diskussionen<br>für eine Welt ohne Tierausbeutung.",
+    "ctaRegister": "Jetzt anmelden",
+    "ctaProgram": "zum Programm",
+    "highlightsTitle": "Highlights",
+    "speakersTitle": "Referent:innen",
+    "speakersLead": "Wissenschaftler:innen, Aktivist:innen und Expert:innen aus aller Welt.",
+    "speakersAll": "Alle Referent:innen",
+    "programTitle": "Programm",
+    "programLead": "Über 40 Vorträge und Workshops an drei Tagen.",
+    "programAll": "Gesamtprogramm ansehen",
+    "venueTitle": "Ort",
+    "venueMore": "Anreise & Infos",
+    "partnersTitle": "Partner:innen & Unterstützer:innen",
+    "newsTitle": "Aktuelles",
+    "registerCTATitle": "Sichere dir deinen Platz",
+    "registerCTAText": "Die Anmeldung ist geöffnet. Melde dich jetzt an und sei dabei.",
+    "registerCTAButton": "Ticket sichern!"
+  },
+  "program": {
+    "title": "Programm",
+    "lead": "Alle Vorträge, Workshops und Veranstaltungen im Überblick.",
+    "filterDay": "Tag",
+    "filterRoom": "Raum",
+    "filterFormat": "Format",
+    "filterLanguage": "Sprache",
+    "filterAll": "Alle",
+    "search": "Suchen",
+    "searchPlaceholder": "Vortrag oder Referent:in suchen…",
+    "noResults": "Keine Ergebnisse gefunden.",
+    "noResultsHint": "Versuche andere Suchbegriffe oder setze die Filter zurück.",
+    "resetFilters": "Filter zurücksetzen",
+    "day": "Tag",
+    "room": "Raum",
+    "time": "Zeit",
+    "type": "Format",
+    "language": "Sprache",
+    "speakers": "Referent:innen",
+    "viewDetail": "Details",
+    "addToBookmarks": "Merken",
+    "removeFromBookmarks": "Entmerken",
+    "bookmarked": "Gemerkt",
+    "exportIcal": "Kalender exportieren",
+    "types": {
+      "talk": "Vortrag",
+      "workshop": "Workshop",
+      "keynote": "Keynote",
+      "panel": "Podiumsdiskussion"
+    },
+    "languages": {
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "status": {
+      "confirmed": "Bestätigt",
+      "draft": "Entwurf",
+      "cancelled": "Abgesagt"
+    }
+  },
+  "session": {
+    "back": "zum Programm",
+    "duration": "Dauer",
+    "minutes": "Min.",
+    "room": "Raum",
+    "type": "Format",
+    "language": "Sprache",
+    "speakers": "Referent:innen",
+    "addToBookmarks": "Zur Merkliste hinzufügen",
+    "removeFromBookmarks": "Von Merkliste entfernen",
+    "exportIcal": "Exportieren",
+    "relatedSessions": "Weitere Sessions dieser Referent:in",
+    "accessibilityNotes": "Hinweis zur Barrierefreiheit",
+    "registrationRequired": "Anmeldung erforderlich",
+    "capacity": "Kapazität",
+    "recording": "Aufzeichnung geplant"
+  },
+  "speakers": {
+    "title": "Referent:innen",
+    "lead": "Alle Referent:innen des Tierrechtskongresses 2026.",
+    "sessions": "Sessions",
+    "website": "Website",
+    "back": "zur Übersicht",
+    "atCongress": "Beim Kongress",
+    "bio": "Biografie"
+  },
+  "venue": {
+    "title": "Ort & Anreise",
+    "lead": "Informationen zum Veranstaltungsort, Anreise und Unterkunft.",
+    "address": "Adresse",
+    "publicTransport": "Öffentliche Verkehrsmittel",
+    "byTrain": "Mit der Bahn",
+    "byCar": "Mit dem Auto",
+    "byBike": "Mit dem Fahrrad",
+    "parking": "Parken",
+    "accommodation": "Unterkunft",
+    "accessibility": "Barrierefreiheit",
+    "directions": "Wegbeschreibung"
+  },
+  "registration": {
+    "title": "Anmeldung",
+    "lead": "Melde dich jetzt für den Tierrechtskongress 2026 an.",
+    "closed": "Die Anmeldung ist aktuell geschlossen.",
+    "form": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail-Adresse",
+      "emailPlaceholder": "deine@email.de",
+      "phone": "Telefonnummer (optional)",
+      "language": "Bevorzugte Sprache",
+      "languageDe": "Deutsch",
+      "languageEn": "Englisch",
+      "ticketCategory": "Ticketkategorie",
+      "remarks": "Bemerkungen (optional)",
+      "remarksPlaceholder": "Weitere Hinweise oder Fragen…",
+      "diet": "Ernährungspräferenz (optional)",
+      "dietNone": "Keine Angabe",
+      "dietVegan": "Vegan",
+      "dietVegetarian": "Vegetarisch",
+      "dietOther": "Sonstiges",
+      "accessibility": "Unterstützungsbedarf / Barrierefreiheit (optional)",
+      "accessibilityPlaceholder": "z.B. Rollstuhl, Gebärdensprachdolmetscher:in…",
+      "privacy": "Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Daten zur Kongressorganisation zu.",
+      "newsletter": "Ich möchte den Newsletter erhalten und über zukünftige Kongresse informiert werden. (optional)",
+      "submit": "Anmeldung absenden",
+      "submitting": "Wird gesendet…",
+      "required": "Pflichtfeld",
+      "privacyLink": "Datenschutzerklärung",
+      "ticketCategories": {
+        "standard": "Standardticket",
+        "reduced": "Ermäßigt (Schüler:in, Student:in, ALG)",
+        "support": "Förderticket",
+        "solidarity": "Solidaritätsticket"
+      }
+    },
+    "success": {
+      "title": "Anmeldung eingegangen!",
+      "text": "Vielen Dank für deine Anmeldung. Wir haben deine Daten erhalten und melden uns in Kürze mit einer Bestätigung.",
+      "home": "Zur Startseite"
+    },
+    "errors": {
+      "required": "Dieses Feld ist erforderlich.",
+      "email": "Bitte eine gültige E-Mail-Adresse eingeben.",
+      "general": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      "summary": "Bitte korrigiere die folgenden Fehler:"
+    }
+  },
+  "bookmarks": {
+    "title": "Meine Merkliste",
+    "empty": "Noch keine Sessions gemerkt.",
+    "emptyHint": "Klicke auf das Lesezeichen-Symbol einer Session, um sie zur Merkliste hinzuzufügen.",
+    "exportIcal": "Merkliste als Kalender exportieren (.ics)",
+    "conflict": "Zeitkonflikt: Diese Sessions überschneiden sich.",
+    "remove": "Entfernen",
+    "goToProgram": "Zum Programm"
+  },
+  "archive": {
+    "title": "Archiv",
+    "lead": "Alle bisherigen Ausgaben des Tierrechtskongresses.",
+    "edition": "Ausgabe",
+    "viewEdition": "Ausgabe ansehen",
+    "sessions": "Sessions",
+    "speakers": "Referent:innen",
+    "back": "Zurück zum Archiv"
+  },
+  "faq": {
+    "title": "Häufige Fragen",
+    "lead": "Antworten auf die wichtigsten Fragen zum Kongress."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "lead": "Fragen, Presseanfragen oder Kooperationen — schreib uns.",
+    "email": "E-Mail",
+    "press": "Presseanfragen",
+    "social": "Social Media"
+  },
+  "sponsoring": {
+    "title": "Sponsoring & Partner:innen",
+    "lead": "Der Kongress wird ermöglicht durch die Unterstützung unserer Partner:innen.",
+    "categories": {
+      "main": "Hauptsponsor:innen",
+      "partner": "Partner:innen",
+      "media": "Medienpartner:innen",
+      "supporter": "Unterstützer:innen"
+    },
+    "becomePartner": "Partner werden",
+    "becomePartnerText": "Möchtest du den Kongress unterstützen? Schreib uns."
+  },
+  "accessibility": {
+    "title": "Barrierefreiheit",
+    "lead": "Wir arbeiten daran, den Kongress für alle zugänglich zu machen."
+  },
+  "privacy": {
+    "title": "Datenschutz",
+    "lead": "Informationen zur Verarbeitung deiner Daten."
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "text": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "home": "Zur Startseite"
+  },
+  "meta": {
+    "editedBy": "Tierrechtskongress Organisationsteam",
+    "congress": "Tierrechtskongress"
+  },
+  "breadcrumbs": {
+    "home": "Startseite"
+  },
+  "ical": {
+    "exportSession": "Session als iCal exportieren",
+    "exportBookmarks": "Merkliste als iCal exportieren",
+    "filename": "session"
+  },
+  "footer": {
+    "copyright": "Tierrechtskongress",
+    "madeWith": "Erstellt mit"
+  }
+}

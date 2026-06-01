@@ -1,0 +1,377 @@
+---
+/**
+ * SessionCard — Kompakte Darstellung einer Session in der Programmübersicht
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  type: string;
+  language: string;
+  startTime: string;
+  endTime: string;
+  durationMinutes: number;
+  day: number;
+  date: string;
+  roomName: string;
+  roomId?: string;
+  speakerNames: string[];
+  speakerPhotos?: string[];
+  speakerSlugs?: string[];
+  locale: Locale;
+  registrationRequired?: boolean;
+  recording?: boolean;
+  status?: string;
+}
+
+const {
+  id, slug, title, description, type, language,
+  startTime, endTime, durationMinutes,
+  roomName, roomId, speakerNames, speakerPhotos = [], locale,
+  registrationRequired = false, status = "confirmed",
+  speakerSlugs = [],
+} = Astro.props;
+
+const speakerBaseHref = locale === "en" ? "/en/speakers/" : "/referentinnen/";
+
+const t = useTranslations(locale);
+const detailHref = locale === "en"
+  ? `/en/program/${slug}`
+  : `/programm/${slug}`;
+
+const typeLabelKey = `program.types.${type}` as Parameters<typeof t>[0];
+const typeLabel = t(typeLabelKey);
+
+const langLabel = language === "de"
+  ? "DE"
+  : language === "en"
+    ? "EN"
+    : "DE / EN";
+
+const roomIcons: Record<string, string> = {
+  "saal-a": "/images/Raum_Sandra.svg",
+  "saal-b": "/images/Raum_Yvonne.svg",
+};
+const roomIcon = roomId ? roomIcons[roomId] : undefined;
+
+// Beschreibung auf max. 2 Sätze kürzen
+const sentenceMatches = description.match(/^.{20,}?[.!?](?:\s|$)/g) ?? [];
+const descPreview = sentenceMatches.length >= 2
+  ? sentenceMatches.slice(0, 2).join("").trim()
+  : description;
+---
+
+<article
+  class:list={["session-card", `session-card--type-${type}`, { "session-card--cancelled": status === "cancelled" }]}
+  data-session-id={id}
+  data-type={type}
+  data-language={language}
+  data-room={roomId}
+>
+  <header class="session-card__header">
+    <div class="session-card__meta">
+      <time class="session-card__time">
+        {startTime}–{endTime}
+        <span class="session-card__duration">({durationMinutes} {t("session.minutes")})</span>
+      </time>
+      <span class="session-card__meta-sep">·</span>
+      {roomIcon
+        ? <img src={roomIcon} alt={roomName} class="session-card__room-icon" />
+        : <span class="session-card__room">{roomName}</span>
+      }
+      <div class="session-card__lang">
+        {language === "en" ? (
+          <img src="/images/Sprache_eng.svg" alt="EN" class="session-card__lang-icon" width="44" height="44" />
+        ) : language === "de" ? (
+          <img src="/images/Sprache_de.svg" alt="DE" class="session-card__lang-icon" width="44" height="44" />
+        ) : (
+          <>
+            <img src="/images/Sprache_de.svg" alt="DE" class="session-card__lang-icon" width="44" height="44" />
+            <img src="/images/Sprache_eng.svg" alt="EN" class="session-card__lang-icon" width="44" height="44" />
+          </>
+        )}
+      </div>
+      {registrationRequired && (
+        <span class="badge badge--sm badge--accent" title={t("session.registrationRequired")}>
+          {locale === "de" ? "Anm. erf." : "Reg. req."}
+        </span>
+      )}
+    </div>
+  </header>
+
+  <div class="session-card__body">
+    <h3 class="session-card__title">
+      <a href={detailHref} class="session-card__title-link">
+        {title}
+      </a>
+    </h3>
+
+    {speakerNames.length > 0 && (
+      <div class="session-card__speakers">
+        {speakerNames.map((name, i) => (
+          <a
+            href={speakerSlugs[i] ? `${speakerBaseHref}${speakerSlugs[i]}` : undefined}
+            class="session-card__speaker"
+          >
+            {speakerPhotos[i] && (
+              <img
+                src={speakerPhotos[i]}
+                alt={name}
+                class="session-card__speaker-photo"
+                width="72"
+                height="72"
+                loading="lazy"
+              />
+            )}
+            <span class="session-card__speaker-name">{name}</span>
+          </a>
+        ))}
+      </div>
+    )}
+
+    <p class="session-card__desc">{descPreview}</p>
+  </div>
+
+  <footer class="session-card__footer">
+    <a href={detailHref} class="card-btn" aria-label={`${t("program.viewDetail")}: ${title}`}>
+      <span class="btn-icon" style="--icon-url: url('/images/eye.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+      {t("program.viewDetail")}
+    </a>
+    <button
+      class="bookmark-btn card-btn"
+      data-session-id={id}
+      aria-label={`${t("program.addToBookmarks")}: ${title}`}
+      type="button"
+    >
+      <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+      <span class="bookmark-btn__label">{t("program.addToBookmarks")}</span>
+    </button>
+  </footer>
+</article>
+
+<style>
+.session-card {
+  background: #26282a;
+  border: none;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+
+
+.session-card--cancelled {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+/* Header */
+.session-card__header {
+  display: flex;
+}
+
+.session-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.session-card__time {
+  font-weight: var(--weight-semibold);
+  color: #fafaff;
+}
+
+.session-card__duration {
+  font-weight: var(--weight-normal);
+  color: rgba(250,250,255,0.5);
+}
+
+.session-card__meta-sep {
+  color: rgba(250,250,255,0.3);
+}
+
+.session-card__room {
+  color: rgba(250,250,255,0.6);
+}
+
+.session-card__room-icon {
+  height: 28px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+
+.session-card__lang {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.session-card__lang-icon {
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* Body */
+.session-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.session-card__title-link {
+  color: #fafaff;
+  text-decoration: none;
+}
+
+.session-card__title-link:hover {
+  color: #e3e3dd;
+}
+
+/* Speakers */
+.session-card__speakers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  min-height: 88px;
+}
+
+.session-card__speaker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.session-card__speaker:hover .session-card__speaker-name {
+  color: #e3e3dd;
+}
+
+.session-card__speaker-photo {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center 20%;
+  flex-shrink: 0;
+  -webkit-mask-image: url('/images/yellow-05.png');
+  mask-image: url('/images/yellow-05.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.session-card__speaker-name {
+  font-size: var(--text-sm);
+  color: #fafaff;
+  font-weight: var(--weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.session-card__desc {
+  font-size: var(--text-sm);
+  color: rgba(250,250,255,0.65);
+  margin-top: var(--space-2);
+}
+
+/* Footer */
+.session-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(250,250,255,0.12);
+}
+
+
+/* Footer-Buttons: eigene Klasse, komplett isoliert vom globalen Button-System */
+.card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6em 2.2em;
+  background-image: url('/images/btn-v2-beige.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1;
+  transition: background-image var(--transition-fast), color var(--transition-fast);
+}
+
+.card-btn .btn-icon {
+  background-color: #26282a;
+}
+
+.card-btn:hover {
+  background-image: url('/images/btn-v2-black.svg');
+  color: #fafaff;
+}
+
+.card-btn:hover .btn-icon {
+  background-color: #fafaff;
+}
+
+.card-btn--yellow {
+  background-image: url('/images/btn-v2-yellow.svg');
+}
+
+.card-btn--yellow:hover {
+  background-image: url('/images/btn-v2-black.svg');
+  color: #fafaff;
+}
+
+.bookmark-btn.is-bookmarked .bookmark-btn__label {
+  color: #e5b969;
+}
+
+.bookmark-btn.is-bookmarked .btn-icon {
+  background-color: #e5b969;
+}
+
+.bookmark-btn__icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.detail-btn__icon {
+  width: auto;
+  height: 1.4em;
+  display: inline-block;
+  flex-shrink: 0;
+}
+</style>

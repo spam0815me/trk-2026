@@ -1,0 +1,17 @@
+{
+  "id": "florian-sisolefski",
+  "slug": "florian-sisolefski",
+  "year": 2026,
+  "name": "Florian Sisolefski",
+  "pronouns": "er/ihm",
+  "role_de": "Transformationsbegleiter",
+  "role_en": "Transformation Consultant",
+  "organization": "TransFARMation",
+  "bio_de": "Florian Sisolefski kommt aus der Betriebswirtschaft mit Schwerpunkt Finance und arbeitet seit fünf Jahren im Bereich der TransFARMation. Er begleitet Betriebe bei ihrer individuellen Umstellung und entwickelt aus systemischer Perspektive Lösungen für die Agrarwende.",
+  "bio_en": "Florian Sisolefski has a background in business administration with a focus on finance and has been working in agricultural transformation for five years. He supports farms in their individual transitions and develops systemic solutions for the agricultural shift.",
+  "photo": "/images/speakers/Florian_Sisolefski.png",
+  "sessionIds": [
+    "transfarmation"
+  ],
+  "sortOrder": 14
+}

@@ -1,0 +1,24 @@
+{
+  "id": "tierethikunterricht",
+  "slug": "tierethikunterricht",
+  "year": 2026,
+  "title_de": "Tierethikunterricht",
+  "title_en": "Animal Ethics Education",
+  "description_de": "Maya Conoci zeigt die Vorteile des Tierethikunterrichts auf – in einem interaktiven Format aus Vortrag und Workshop.",
+  "description_en": "Maya Conoci presents the benefits of animal ethics education in an interactive format combining lecture and workshop.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "10:30",
+  "endTime": "11:30",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "maya-conoci"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 18,
+  "durationMinutes": 60
+}

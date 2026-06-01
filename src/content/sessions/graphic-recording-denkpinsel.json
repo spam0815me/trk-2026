@@ -1,0 +1,24 @@
+{
+  "id": "graphic-recording-denkpinsel",
+  "slug": "graphic-recording-denkpinsel",
+  "year": 2026,
+  "title_de": "Mit dem Denkpinsel gleichberechtigte Zukünfte sichtbar machen",
+  "title_en": "Visualising Equal Futures with the Thinking Brush",
+  "description_de": "Graphic Recording aller Beiträge am Tierrechtskongress. Michael Meier hält die Ideen und Diskussionen des Kongresses visuell fest und macht sie auf einen Blick erfahrbar.",
+  "description_en": "Graphic recording of all contributions at the Animal Rights Congress. Michael Meier captures the ideas and discussions visually, making them accessible at a glance.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "16:00",
+  "endTime": "17:00",
+  "day": 3,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "michael-meier"
+  ],
+  "level": "all",
+  "recording": false,
+  "sortOrder": 3,
+  "durationMinutes": 60
+}

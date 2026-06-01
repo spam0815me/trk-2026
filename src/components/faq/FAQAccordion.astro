@@ -1,0 +1,91 @@
+---
+interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+  category?: string;
+}
+
+interface Props {
+  items: FAQItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq-accordion">
+  {items.map((item) => (
+    <details class="faq-item" id={`faq-${item.id}`}>
+      <summary class="faq-item__question">
+        <span>{item.question}</span>
+        <svg class="faq-item__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </summary>
+      <div class="faq-item__answer prose">
+        <p set:html={item.answer} />
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.faq-item[open] {
+  border-color: var(--color-primary-light);
+}
+
+.faq-item__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  cursor: pointer;
+  list-style: none;
+  background: var(--color-bg);
+  transition: background-color var(--transition-fast);
+}
+
+.faq-item__question::-webkit-details-marker { display: none; }
+
+.faq-item__question:hover,
+.faq-item[open] .faq-item__question {
+  background-color: var(--color-primary-subtle);
+  color: var(--color-primary-dark);
+}
+
+.faq-item__question:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: -3px;
+}
+
+.faq-item__icon {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.faq-item[open] .faq-item__icon {
+  transform: rotate(180deg);
+}
+
+.faq-item__answer {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+}
+</style>

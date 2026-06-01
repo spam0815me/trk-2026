@@ -1,0 +1,37 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("accessibility.title")}
+  description={t("accessibility.lead")}
+  locale={locale}
+  canonicalUrl={`${site}barrierefreiheit/`}
+  alternates={{ de: `${site}barrierefreiheit/`, en: `${site}en/accessibility/` }}
+  breadcrumbs={[{ label: t("accessibility.title") }]}
+>
+  <div class="section prose" style="max-width: var(--max-width-md);">
+    <h1>{t("accessibility.title")}</h1>
+    <p>{t("accessibility.lead")}</p>
+
+    <h2>Veranstaltungsort</h2>
+    <p>Alle Hauptveranstaltungsräume sind stufenlos erreichbar. Rollstuhlgerechte Sanitäranlagen sind vorhanden. Details zum Veranstaltungsort werden ergänzt, sobald dieser feststeht.</p>
+
+    <h2>Unterstützungsbedarf anmelden</h2>
+    <p>Wenn du spezifischen Unterstützungsbedarf hast (z.B. Gebärdensprachdolmetscher:in, taktile Führung, ruhigerer Raum), gib dies bitte bei der Anmeldung an oder <a href="/kontakt">kontaktiere uns</a> direkt. Wir versuchen, jede Anfrage zu berücksichtigen.</p>
+
+    <h2>Simultanübersetzung</h2>
+    <p>Für die Keynote ist Simultanübersetzung Deutsch/Englisch geplant. Weitere Details folgen.</p>
+
+    <h2>Website-Barrierefreiheit</h2>
+    <p>Diese Website ist nach dem WCAG 2.1 AA-Standard gestaltet. Wir arbeiten kontinuierlich an der Verbesserung der Zugänglichkeit. Bei Problemen oder Feedback <a href="/kontakt">schreib uns</a>.</p>
+
+    <h2>Kontakt</h2>
+    <p>Für alle Fragen zur Barrierefreiheit: <a href="mailto:info@tierrechtskongress.de">info@tierrechtskongress.de</a></p>
+  </div>
+</PageLayout>

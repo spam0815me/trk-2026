@@ -1,0 +1,17 @@
+{
+  "id": "celine-schlegel",
+  "slug": "celine-schlegel",
+  "year": 2026,
+  "name": "Céline Schlegel",
+  "pronouns": "sie/ihr",
+  "role_de": "Mitgründerin & Geschäftsleiterin",
+  "role_en": "Co-founder & Executive Director",
+  "organization": "Animal Rights Switzerland",
+  "bio_de": "Céline Schlegel ist Mitgründerin und Geschäftsleiterin von Animal Rights Switzerland. Sie hat Geschichte an der Universität Zürich studiert und mit einer Masterarbeit im Bereich Animal Studies abgeschlossen. Seit 2011 ist sie Teil der Tierrechtsbewegung.",
+  "bio_en": "Céline Schlegel is co-founder and executive director of Animal Rights Switzerland. She studied history at the University of Zurich and completed her master's thesis in Animal Studies. She has been part of the animal rights movement since 2011.",
+  "photo": "/images/speakers/Celine_Schlegel.png",
+  "sessionIds": [
+    "aktivismuspyramide"
+  ],
+  "sortOrder": 4
+}

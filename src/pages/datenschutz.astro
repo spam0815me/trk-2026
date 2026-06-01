@@ -1,0 +1,55 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("privacy.title")}
+  description={t("privacy.lead")}
+  locale={locale}
+  canonicalUrl={`${site}datenschutz/`}
+  alternates={{ de: `${site}datenschutz/`, en: `${site}en/privacy/` }}
+  breadcrumbs={[{ label: t("privacy.title") }]}
+>
+  <div class="section prose" style="max-width: var(--max-width-md);">
+    <h1>{t("privacy.title")}</h1>
+
+    <!-- TODO: Vollständige Datenschutzerklärung von Rechtsanwalt:in prüfen lassen -->
+
+    <h2>Verantwortliche Stelle</h2>
+    <p>
+      Tierrechtskongress<br />
+      [Adresse eintragen]<br />
+      E-Mail: <a href="mailto:info@tierrechtskongress.de">info@tierrechtskongress.de</a>
+    </p>
+
+    <h2>Verarbeitung von Anmeldedaten</h2>
+    <p>Wenn du dich für den Kongress anmeldest, verarbeiten wir folgende Daten zur Organisation der Veranstaltung:</p>
+    <ul>
+      <li>Name und E-Mail-Adresse (Pflicht)</li>
+      <li>Telefonnummer (optional)</li>
+      <li>Sprachpräferenz, Ticketkategorie</li>
+      <li>Ernährungspräferenz und Unterstützungsbedarf (optional)</li>
+      <li>Newsletter-Einwilligung (optional)</li>
+    </ul>
+    <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) und ggf. deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).</p>
+
+    <h2>Weitergabe an Dritte</h2>
+    <p>Deine Daten werden nicht an Dritte weitergegeben, außer es ist zur Durchführung der Veranstaltung zwingend erforderlich oder du hast eingewilligt.</p>
+
+    <h2>Speicherdauer</h2>
+    <p>Deine Daten werden gelöscht, sobald sie für die Zwecke, für die sie erhoben wurden, nicht mehr benötigt werden und keine gesetzlichen Aufbewahrungsfristen entgegenstehen.</p>
+
+    <h2>Deine Rechte</h2>
+    <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wende dich dafür an <a href="mailto:info@tierrechtskongress.de">info@tierrechtskongress.de</a>.</p>
+
+    <h2>Cookies und Tracking</h2>
+    <p>Diese Website verwendet keine Tracking-Cookies und kein Analytics-Tracking. Es werden lediglich technisch notwendige Daten verarbeitet (z.B. Webserver-Logs).</p>
+
+    <p><small>Stand: April 2026 — diese Datenschutzerklärung wird regelmäßig aktualisiert.</small></p>
+  </div>
+</PageLayout>

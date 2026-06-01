@@ -1,0 +1,24 @@
+{
+  "id": "politischer-fortschritt-tiere",
+  "slug": "politischer-fortschritt-tiere",
+  "year": 2026,
+  "title_de": "Zwischen Realismus und Vision: Wie politischer Fortschritt für Tiere möglich wird",
+  "title_en": "Between Realism and Vision: How Political Progress for Animals Becomes Possible",
+  "description_de": "Was heisst eigentlich Fortschritt für Tiere – und wie entsteht er unter realen politischen Machtverhältnissen? Der Vortrag reflektiert den Spannungsraum zwischen Vision und Realismus und zeigt, warum klare Ziele allein nicht ausreichen, um Wirkung für Tiere zu erzielen. Anhand grundlegender Muster politischer Einflussnahme wird deutlich, wie konkrete Verbesserungen möglich werden, auch in einem politisch schwierigen Umfeld.",
+  "description_en": "What does progress for animals actually mean — and how does it emerge under real political power dynamics? This talk reflects on the tension between vision and realism and shows why clear goals alone are not enough to create impact for animals. Through fundamental patterns of political influence, it becomes clear how concrete improvements are possible even in a politically challenging environment.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "17:00",
+  "endTime": "18:00",
+  "day": 1,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "philipp-ryf"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 22,
+  "durationMinutes": 60
+}

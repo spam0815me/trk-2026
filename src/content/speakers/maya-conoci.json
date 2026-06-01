@@ -1,0 +1,17 @@
+{
+  "id": "maya-conoci",
+  "slug": "maya-conoci",
+  "year": 2026,
+  "name": "Maya Conoci",
+  "pronouns": "sie/ihr",
+  "role_de": "Tierethiklehrerin & Geschäftsleiterin",
+  "role_en": "Animal Ethics Teacher & Director",
+  "organization": "DAS TIER + WIR – Stiftung für Ethik im Unterricht",
+  "bio_de": "Maya Conoci ist seit 2004 als Tierethiklehrerin für die Stiftung DAS TIER + WIR tätig. 2013 übernahm sie zusätzlich die Geschäftsleitung bis zu ihrer Pensionierung. Sie ist noch immer als Supervisorin und Springerin aktiv.",
+  "bio_en": "Maya Conoci has been working as an animal ethics teacher for the DAS TIER + WIR foundation since 2004. In 2013 she additionally took over as executive director until her retirement. She remains active as a supervisor and substitute teacher.",
+  "photo": "/images/speakers/Maya_Conoci.jpg",
+  "sessionIds": [
+    "tierethikunterricht"
+  ],
+  "sortOrder": 19
+}

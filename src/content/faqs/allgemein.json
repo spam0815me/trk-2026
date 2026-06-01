@@ -1,0 +1,74 @@
+[
+  {
+    "id": "faq-01",
+    "question_de": "Wann und wo findet der Kongress statt?",
+    "question_en": "When and where does the congress take place?",
+    "answer_de": "Der Tierrechtskongress 2026 findet vom 5. bis 7. September 2026 in Berlin statt. Den genauen Veranstaltungsort findest du auf der Seite »Ort & Anreise«.",
+    "answer_en": "The Animal Rights Congress 2026 takes place from 5 to 7 September 2026 in Berlin. You can find the exact venue on the 'Venue & Travel' page.",
+    "category": "general",
+    "sortOrder": 1
+  },
+  {
+    "id": "faq-02",
+    "question_de": "Wie kann ich mich anmelden?",
+    "question_en": "How can I register?",
+    "answer_de": "Die Anmeldung erfolgt direkt über unsere Website. Klicke auf »Anmeldung« in der Navigation und fülle das Formular aus. Nach dem Absenden erhältst du eine Bestätigung per E-Mail.",
+    "answer_en": "Registration is done directly on our website. Click on 'Registration' in the navigation and fill out the form. After submitting, you will receive a confirmation by email.",
+    "category": "registration",
+    "sortOrder": 2
+  },
+  {
+    "id": "faq-03",
+    "question_de": "Wie viel kostet die Teilnahme?",
+    "question_en": "How much does participation cost?",
+    "answer_de": "Aktuelle Ticketpreise werden in Kürze bekannt gegeben. Wir bieten verschiedene Kategorien an, darunter Ermäßigungen für Schüler:innen, Studierende und Personen mit geringem Einkommen.",
+    "answer_en": "Current ticket prices will be announced shortly. We offer various categories, including reductions for school pupils, students, and people with low incomes.",
+    "category": "registration",
+    "sortOrder": 3
+  },
+  {
+    "id": "faq-04",
+    "question_de": "Ist der Kongress barrierefrei?",
+    "question_en": "Is the congress accessible?",
+    "answer_de": "Wir arbeiten daran, den Kongress für alle Menschen zugänglich zu machen. Alle Hauptveranstaltungsorte sind stufenlos zugänglich. Auf der Seite »Barrierefreiheit« findest du detaillierte Informationen. Bei spezifischem Unterstützungsbedarf kannst du uns im Anmeldeformular oder per E-Mail informieren.",
+    "answer_en": "We are committed to making the congress accessible to everyone. All main venues are step-free. Detailed information can be found on the 'Accessibility' page. If you have specific support needs, you can let us know in the registration form or by email.",
+    "category": "accessibility",
+    "sortOrder": 4
+  },
+  {
+    "id": "faq-05",
+    "question_de": "Wird es veganes Essen geben?",
+    "question_en": "Will there be vegan food?",
+    "answer_de": "Ja. Das gesamte Catering beim Kongress ist vegan. Besondere Ernährungsbedürfnisse kannst du im Anmeldeformular angeben.",
+    "answer_en": "Yes. All catering at the congress is vegan. You can indicate special dietary needs in the registration form.",
+    "category": "general",
+    "sortOrder": 5
+  },
+  {
+    "id": "faq-06",
+    "question_de": "In welchen Sprachen finden die Veranstaltungen statt?",
+    "question_en": "In which languages are the sessions held?",
+    "answer_de": "Die meisten Vorträge finden auf Deutsch oder Englisch statt. Die Sprache jeder Session ist im Programm klar angegeben. Für die Keynote ist Simultanübersetzung Deutsch/Englisch geplant.",
+    "answer_en": "Most talks are held in German or English. The language of each session is clearly indicated in the programme. Simultaneous interpretation German/English is planned for the keynote.",
+    "category": "program",
+    "sortOrder": 6
+  },
+  {
+    "id": "faq-07",
+    "question_de": "Werden die Vorträge aufgezeichnet?",
+    "question_en": "Will the talks be recorded?",
+    "answer_de": "Einzelne Vorträge werden aufgezeichnet und nach dem Kongress veröffentlicht. Ob eine Session aufgezeichnet wird, ist im Programm mit einem Symbol gekennzeichnet.",
+    "answer_en": "Individual talks will be recorded and published after the congress. Whether a session will be recorded is indicated in the programme with a symbol.",
+    "category": "program",
+    "sortOrder": 7
+  },
+  {
+    "id": "faq-08",
+    "question_de": "Kann ich auch spontan teilnehmen?",
+    "question_en": "Can I also participate spontaneously?",
+    "answer_de": "Wir empfehlen eine vorherige Anmeldung, da die Kapazitäten begrenzt sind. Für einzelne Workshops ist eine Anmeldung zwingend erforderlich. An der Tageskasse sind möglicherweise noch Plätze verfügbar.",
+    "answer_en": "We recommend prior registration, as capacity is limited. Registration is mandatory for some workshops. Day-of tickets may be available at the door.",
+    "category": "registration",
+    "sortOrder": 8
+  }
+]

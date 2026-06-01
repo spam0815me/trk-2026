@@ -1,0 +1,24 @@
+{
+  "id": "orang-utan-ethik",
+  "slug": "orang-utan-ethik",
+  "year": 2026,
+  "title_de": "Tier- vs. Artenschutz? Ethische Spannungen in Orang-Utan-Rehabilitationsprogrammen",
+  "title_en": "Animal vs. Species Protection? Ethical Tensions in Orangutan Rehabilitation Programmes",
+  "description_de": "Orang-Utan-Rehabilitations- und Wiederansiedlungsprogramme verbinden Artenschutz mit individueller Fürsorge. Aufbauend auf Ansätzen der Tier- und Umweltethik untersucht Sara Tscholl diese Praxis und ihre inhärenten moralischen Spannungsfelder.",
+  "description_en": "Orangutan rehabilitation and reintroduction programmes combine species conservation with individual care. Drawing on animal and environmental ethics, Sara Tscholl examines this practice and its inherent moral tensions.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "17:00",
+  "endTime": "18:00",
+  "day": 1,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "sara-tscholl"
+  ],
+  "level": "all",
+  "recording": false,
+  "sortOrder": 8,
+  "durationMinutes": 60
+}

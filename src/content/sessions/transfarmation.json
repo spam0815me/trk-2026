@@ -1,0 +1,24 @@
+{
+  "id": "transfarmation",
+  "slug": "transfarmation",
+  "year": 2026,
+  "title_de": "TransFARMation – Im Spannungsfeld von Heute und Morgen",
+  "title_en": "TransFARMation – Between Today and Tomorrow",
+  "description_de": "Der Vortrag gibt Einblicke in den aktuellen Stand der TransFARMation und beleuchtet zentrale Erfahrungen aus der Praxis. Im Fokus stehen die Herausforderungen, Spannungsfelder und offenen Fragen, die den Transformationsprozess zwischen heutiger Realität und zukünftiger Vision prägen.",
+  "description_en": "This talk provides insights into the current state of TransFARMation and highlights key practical experiences. The focus is on the challenges, tensions and open questions that shape the transformation process between today's reality and tomorrow's vision.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "11:30",
+  "endTime": "12:30",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "florian-sisolefski"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 13,
+  "durationMinutes": 60
+}

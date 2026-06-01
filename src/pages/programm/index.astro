@@ -1,0 +1,365 @@
+---
+/**
+ * Programmübersicht — Deutsch
+ */
+import PageLayout from "../../layouts/PageLayout.astro";
+import SessionCard from "../../components/program/SessionCard.astro";
+import { useTranslations, getField } from "../../lib/i18n";
+import { getCollection } from "astro:content";
+import { getCurrentSessions, toSessionView, getUniqueDays } from "../../lib/sessions";
+
+const locale = "de";
+const t = useTranslations(locale);
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const canonicalUrl = `${site}programm/`;
+const alternates = {
+  de: canonicalUrl,
+  en: `${site}en/program/`,
+};
+
+const sessions = await getCurrentSessions(2026);
+const rooms    = await getCollection("rooms");
+const speakers = await getCollection("speakers");
+
+const days = getUniqueDays(sessions);
+
+// Nur Räume anzeigen, die auch wirklich Sessions haben
+const usedRoomIds = new Set(sessions.map(s => s.data.roomId));
+const activeRooms = rooms
+  .filter(r => usedRoomIds.has(r.data.id))
+  .sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
+
+// Raum-Map
+const roomMap = Object.fromEntries(rooms.map(r => [r.data.id, r]));
+// Speaker-Map
+const speakerMap = Object.fromEntries(speakers.map(s => [s.data.id, s]));
+
+// Session-Daten aufbereiten
+function formatDayFull(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("de-CH", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+}
+
+const sessionViews = sessions.map(s => ({
+  view: toSessionView(s, locale),
+  roomName: getField<string>("name", locale, roomMap[s.data.roomId]?.data as unknown as Record<string, unknown> ?? {}),
+  speakerNames: s.data.speakerIds.map(id => speakerMap[id]?.data.name ?? ""),
+  speakerPhotos: s.data.speakerIds.map(id => speakerMap[id]?.data.photo ?? ""),
+  speakerSlugs: s.data.speakerIds.map(id => speakerMap[id]?.data.slug ?? ""),
+}));
+
+// Timetable-Daten: pro Tag → Zeitslots → Räume
+const roomIcons: Record<string, string> = {
+  "saal-a": "/images/Raum_Sandra.svg",
+  "saal-b": "/images/Raum_Yvonne.svg",
+};
+
+const activeRoomData = activeRooms.map(r => ({
+  name:  getField<string>("name",  locale, r.data as unknown as Record<string, unknown> ?? {}),
+  story: getField<string>("story", locale, r.data as unknown as Record<string, unknown> ?? {}),
+  photo: r.data.photo,
+  icon:  roomIcons[r.data.id],
+}));
+
+const timetableData = days.map(day => {
+  const daySessions = sessionViews.filter(sv => sv.view.day === day);
+  const timeSlots = [...new Set(daySessions.map(sv => sv.view.startTime))].sort();
+  return {
+    day,
+    date: daySessions[0]?.view.date ?? "",
+    timeSlots: timeSlots.map(time => ({
+      time,
+      cells: activeRooms.map(room =>
+        daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
+      ),
+    })),
+  };
+});
+---
+
+<PageLayout
+  title={t("program.title")}
+  description={t("program.lead")}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  breadcrumbs={[{ label: t("program.title") }]}
+  fullWidth
+>
+  <div class="container">
+    <header class="section__header" style="padding-top: var(--space-8);">
+      <h1 class="section__title">{t("program.title")}</h1>
+      <p class="section__lead">Drei Tage, zwei Räume, viele Perspektiven. Pro Zeitslot laufen in Raum Sandra und Raum Yvonne gleichzeitig Vorträge — ihr wählt, was euch bewegt.</p>
+    </header>
+
+  </div>
+
+  <!-- Sessions als Timetable (Zeitslots × Räume) -->
+  <div class="container program-list" id="program-list">
+    {timetableData.map(({ day, date, timeSlots }) => (
+      <section class="program-day" data-day={day} aria-labelledby={`day-heading-${day}`}>
+        <h2 class="program-day__heading" id={`day-heading-${day}`}>
+          {formatDayFull(date)}
+        </h2>
+
+        <div class="timetable" style={`--room-count: ${activeRooms.length}`}>
+          <!-- Raum-Header -->
+          <div class="timetable__header">
+            <div class="timetable__time-col"></div>
+            {activeRoomData.map(room => (
+              <div class="timetable__room-card">
+                {room.photo && (
+                  <img src={room.photo} alt={room.name} class="timetable__room-photo" loading="lazy" />
+                )}
+                <div class="timetable__room-info">
+                  {room.icon
+                    ? <img src={room.icon} alt={room.name} class="timetable__room-icon" />
+                    : <strong class="timetable__room-name">{room.name}</strong>
+                  }
+                  {room.story && <p class="timetable__room-story">{room.story}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Zeitslot-Zeilen -->
+          {timeSlots.map(({ time, cells }) => (
+            <div class="timetable__row">
+              <div class="timetable__time">{time}</div>
+              {cells.map(sv => (
+                <div class="timetable__cell">
+                  {sv ? (
+                    <SessionCard
+                      id={sv.view.id}
+                      slug={sv.view.slug}
+                      title={sv.view.title}
+                      description={sv.view.description}
+                      type={sv.view.type}
+                      language={sv.view.language}
+                      startTime={sv.view.startTime}
+                      endTime={sv.view.endTime}
+                      durationMinutes={sv.view.durationMinutes}
+                      day={sv.view.day}
+                      date={sv.view.date}
+                      roomName={sv.roomName}
+                      roomId={sv.view.roomId}
+                      speakerNames={sv.speakerNames}
+                      speakerPhotos={sv.speakerPhotos}
+                      speakerSlugs={sv.speakerSlugs}
+                      locale={locale}
+                      registrationRequired={sv.view.registrationRequired}
+                      recording={sv.view.recording}
+                      status={sv.view.status}
+                    />
+                  ) : (
+                    <div class="timetable__empty" aria-hidden="true"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+  </div>
+</PageLayout>
+
+<script src="../../scripts/bookmarks.js"></script>
+
+<style>
+/* Raum-Geschichten */
+.room-stories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-12);
+}
+
+.room-story {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-6);
+  background: transparent;
+}
+
+.room-story__photo {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  object-position: center 20%;
+  flex-shrink: 0;
+  -webkit-mask-image: url('/images/yellow-05.png');
+  mask-image: url('/images/yellow-05.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.room-story__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.room-story__icon {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.room-story__name {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.room-story__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: none;
+  margin: 0;
+}
+
+/* Tag-Gruppen */
+.program-day {
+  margin-bottom: var(--space-10);
+}
+
+.program-day__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.program-day__date {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-normal);
+  color: var(--color-text-muted);
+}
+
+/* Timetable */
+.timetable {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timetable__header,
+.timetable__row {
+  display: grid;
+  grid-template-columns: 72px repeat(var(--room-count), 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  align-items: stretch;
+  min-width: 480px;
+}
+
+.timetable__header {
+  margin-bottom: var(--space-1);
+}
+
+.timetable__room-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-4);
+}
+
+.timetable__room-photo {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center 20%;
+  flex-shrink: 0;
+  -webkit-mask-image: url('/images/yellow-05.png');
+  mask-image: url('/images/yellow-05.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.timetable__room-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.timetable__room-icon {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.timetable__room-name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.timetable__room-story {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-snug);
+  max-width: none;
+  margin: 0;
+}
+
+.timetable__time-col {
+  /* Platzhalter für die Zeitspalte im Header */
+}
+
+.timetable__time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  padding-top: var(--space-3);
+  text-align: right;
+  padding-right: var(--space-2);
+}
+
+.timetable__cell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.timetable__cell > :global(.session-card) {
+  flex: 1;
+}
+
+.timetable__empty {
+  height: 100%;
+  min-height: 60px;
+  border: 1px dashed rgba(38,40,42,0.12);
+  border-radius: var(--radius-lg);
+}
+
+/* Leer */
+.program-empty {
+  padding: var(--space-12);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* Ausgeblendet durch Filter */
+.program-day[data-hidden] {
+  display: none;
+}
+</style>

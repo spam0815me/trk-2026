@@ -1,0 +1,17 @@
+{
+  "id": "meret-schneider",
+  "slug": "meret-schneider",
+  "year": 2026,
+  "name": "Meret Schneider",
+  "pronouns": "sie/ihr",
+  "role_de": "Nationalrätin",
+  "role_en": "Member of Parliament",
+  "organization": "Grüne Schweiz",
+  "bio_de": "Meret Schneider ist Nationalrätin der Grünen, arbeitet als Projektleiterin beim Kampagnenforum und engagiert sich seit Jahren politisch für alle empfindungsfähigen Lebewesen. Sie hat Umweltwissenschaften, Publizistik & Kommunikation und Linguistik studiert.",
+  "bio_en": "Meret Schneider is a Green Party member of the Swiss National Council and works as a project manager at the Campaign Forum. She has long been politically engaged for all sentient beings and studied environmental sciences, journalism and linguistics.",
+  "photo": "/images/speakers/Meret_Schneider.jpg",
+  "sessionIds": [
+    "politik-fuer-tiere"
+  ],
+  "sortOrder": 5
+}

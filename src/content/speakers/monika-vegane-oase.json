@@ -1,0 +1,15 @@
+{
+  "id": "monika-vegane-oase",
+  "slug": "monika-vegane-oase",
+  "year": 2026,
+  "name": "Monika",
+  "pronouns": "",
+  "role_de": "Referentin",
+  "role_en": "Speaker",
+  "organization": "Vegane Oase",
+  "bio_de": "Informationen folgen.",
+  "bio_en": "Information to follow.",
+  "photo": "/images/speakers/placeholder.svg",
+  "sessionIds": ["vegane-oase"],
+  "sortOrder": 33
+}

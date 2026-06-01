@@ -1,0 +1,77 @@
+---
+/**
+ * BaseLayout — Grundgerüst für alle Seiten
+ * Enthält <html>, <head>, Header, Footer und Skip-Link.
+ */
+import type { Locale } from "../lib/i18n";
+import SEOHead from "../components/ui/SEOHead.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalUrl: string;
+  alternates?: Partial<Record<Locale, string>>;
+  ogImage?: string;
+  noindex?: boolean;
+  currentPath?: string;
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalUrl,
+  alternates,
+  ogImage,
+  noindex,
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+
+// Alternate URL für Sprachumschalter
+const alternateLocale = locale === "de" ? "en" : "de";
+const alternateUrl = alternates?.[alternateLocale] ?? (locale === "de" ? `/en/` : `/`);
+---
+
+<!doctype html>
+<html lang={locale} dir="ltr">
+  <head>
+    <!-- Google Fonts: Poppins (Headings/Buttons) + DM Sans (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cubano&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@600;700&display=swap"
+    />
+    <SEOHead
+      title={title}
+      description={description}
+      locale={locale}
+      canonicalUrl={canonicalUrl}
+      alternates={alternates}
+      ogImage={ogImage}
+      noindex={noindex}
+    />
+  </head>
+  <body>
+    <!-- Skip Link für Tastatur-Nutzer:innen -->
+    <a href="#main-content" class="skip-link">
+      {locale === "de" ? "Zum Hauptinhalt springen" : "Skip to main content"}
+    </a>
+
+    <Header
+      locale={locale}
+      currentPath={currentPath}
+      alternateUrl={alternateUrl}
+    />
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+  </body>
+</html>

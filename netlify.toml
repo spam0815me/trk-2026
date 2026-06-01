@@ -1,0 +1,22 @@
+# netlify.toml
+# Astro + Netlify Functions Konfiguration
+
+[build]
+  command   = "npm run build"
+  publish   = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Wichtig: Umgebungsvariablen NIE hier eintragen!
+# Stattdessen im Netlify-Dashboard: Site Settings → Environment Variables
+#
+# Benötigte Variablen:
+#   PAYREXX_INSTANCE   → tierimfokus
+#   PAYREXX_API_KEY    → dein API-Key (neu erstellen nach dem Leak!)
+
+[[redirects]]
+  from   = "/.netlify/functions/*"
+  to     = "/.netlify/functions/:splat"
+  status = 200

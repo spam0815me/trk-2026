@@ -1,0 +1,17 @@
+{
+  "id": "mirjam-walser",
+  "slug": "mirjam-walser",
+  "year": 2026,
+  "name": "Mirjam Walser",
+  "pronouns": "sie/ihr",
+  "role_de": "Gründerin & Speakerin",
+  "role_en": "Founder & Speaker",
+  "organization": "Vegan Business School",
+  "bio_de": "Mirjam Walser ist Gründerin der Vegan Business School und unterstützt Menschen dabei, ihr eigenes veganes Business aufzubauen. Als Kolumnistin und Speakerin bringt sie Tiere dorthin, wo sie hingehören: ins Zentrum gesellschaftlicher Debatten.",
+  "bio_en": "Mirjam Walser is the founder of the Vegan Business School, supporting people in building their own vegan businesses. As a columnist and speaker, she brings animals where they belong: to the centre of societal debates.",
+  "photo": "/images/speakers/Mirjam_Walser.jpg",
+  "sessionIds": [
+    "ki-und-tiere"
+  ],
+  "sortOrder": 6
+}

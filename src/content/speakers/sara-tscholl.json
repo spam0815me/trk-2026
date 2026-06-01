@@ -1,0 +1,17 @@
+{
+  "id": "sara-tscholl",
+  "slug": "sara-tscholl",
+  "year": 2026,
+  "name": "Sara Tscholl",
+  "pronouns": "sie/ihr",
+  "role_de": "Tierethikerin & Wissenschaftlerin",
+  "role_en": "Animal Ethicist & Researcher",
+  "organization": "Messerli-Forschungsinstitut Wien",
+  "bio_de": "Nach ihrem Bachelorabschluss an der Vetsuisse-Fakultät in Bern vertiefte Sara Tscholl sich im Masterstudium «Mensch-Tier-Beziehung» am Messerli-Forschungsinstitut in Wien. Die Arbeit mit Tieren auf verschiedenen Kontinenten hat ihre Perspektiven nachhaltig geprägt.",
+  "bio_en": "After her bachelor's degree at the Vetsuisse Faculty in Bern, Sara Tscholl deepened her studies in the Human–Animal Relations master's programme at the Messerli Research Institute in Vienna. Her work with animals across multiple continents has profoundly shaped her perspective.",
+  "photo": "/images/speakers/Sara_Tscholl.jpg",
+  "sessionIds": [
+    "orang-utan-ethik"
+  ],
+  "sortOrder": 8
+}

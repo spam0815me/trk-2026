@@ -1,0 +1,22 @@
+{
+  "name": "Tierrechtskongress 2026",
+  "short_name": "TRK 2026",
+  "description": "Tierrechtskongress — Wissen. Vernetzung. Wandel.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a5c3a",
+  "icons": [
+    {
+      "src": "/favicons/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

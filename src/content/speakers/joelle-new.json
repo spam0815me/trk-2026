@@ -1,0 +1,17 @@
+{
+  "id": "joelle-new",
+  "slug": "joelle-new",
+  "year": 2026,
+  "name": "Joëlle New",
+  "pronouns": "sie/ihr",
+  "role_de": "Kommunikation",
+  "role_en": "Communications",
+  "organization": "TIR – Tier im Recht",
+  "bio_de": "Joëlle New ist für die Kommunikation bei TIR (Tier im Recht) zuständig und engagiert sich im Werbemist-Projekt, das falsche Darstellungen der Schweizer Tierhaltung in der Werbung aufdeckt.",
+  "bio_en": "Joëlle New handles communications at TIR (Tier im Recht) and is involved in the Werbemist project, exposing misleading portrayals of Swiss animal farming in advertising.",
+  "photo": "/images/speakers/joelle-new.jpg",
+  "sessionIds": [
+    "werbemist"
+  ],
+  "sortOrder": 11
+}

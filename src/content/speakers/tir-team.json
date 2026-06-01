@@ -1,0 +1,15 @@
+{
+  "id": "tir-team",
+  "slug": "tir-team",
+  "year": 2026,
+  "name": "Tier im Recht (TIR)",
+  "pronouns": "",
+  "role_de": "Stiftung für das Tier im Recht",
+  "role_en": "Foundation for the Animal in Law",
+  "organization": "Tier im Recht",
+  "bio_de": "Informationen folgen.",
+  "bio_en": "Information to follow.",
+  "photo": "/images/speakers/placeholder.svg",
+  "sessionIds": ["tir-session"],
+  "sortOrder": 29
+}

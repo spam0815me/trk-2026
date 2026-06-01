@@ -1,0 +1,16 @@
+{
+  "id": "michael-meier",
+  "slug": "michael-meier",
+  "year": 2026,
+  "name": "Michael Meier",
+  "pronouns": "er/ihm",
+  "role_de": "Graphic Recorder & Visual Facilitator",
+  "role_en": "Graphic Recorder & Visual Facilitator",
+  "bio_de": "Michael Meier ist Denkpinsel und Hofnarr, arbeitet als Graphic Recorder und Visual Facilitator an Grossveranstaltungen und Konferenzen. Als Aha-Erlebnis-Junkie ist es für ihn das Grösste, neue Perspektiven einzunehmen und zu ermöglichen.",
+  "bio_en": "Michael Meier works as a graphic recorder and visual facilitator at large events and conferences. He loves capturing complex ideas visually and enabling new perspectives.",
+  "photo": "/images/speakers/Michael_Meier.jpg",
+  "sessionIds": [
+    "graphic-recording-denkpinsel"
+  ],
+  "sortOrder": 3
+}

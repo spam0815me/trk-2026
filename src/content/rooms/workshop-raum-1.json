@@ -1,0 +1,13 @@
+{
+  "id": "workshop-raum-1",
+  "name_de": "Workshop-Raum 1",
+  "name_en": "Workshop Room 1",
+  "building": "Nebengebäude",
+  "floor": "Erdgeschoss",
+  "description_de": "Kleiner Workshop-Raum für bis zu 30 Personen.",
+  "description_en": "Small workshop room for up to 30 people.",
+  "accessibility_de": "Stufenloser Zugang.",
+  "accessibility_en": "Step-free access.",
+  "capacity": 30,
+  "sortOrder": 3
+}

@@ -1,0 +1,24 @@
+{
+  "id": "taubenschlaege",
+  "slug": "taubenschlaege",
+  "year": 2026,
+  "title_de": "Wieso wir betreute Taubenschläge brauchen",
+  "title_en": "Why We Need Managed Pigeon Lofts",
+  "description_de": "Eine Präsentation über das Augsburger Modell und wie es sich vom Basler Modell unterscheidet – inklusive Debunking von Vorurteilen gegen Stadttauben und einem Überblick über die rechtliche Lage in der Schweiz.",
+  "description_en": "A presentation on the Augsburg model and how it differs from the Basel model — including debunking myths about urban pigeons and an overview of the legal situation in Switzerland.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "nina-bachellerie"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 11,
+  "durationMinutes": 60
+}

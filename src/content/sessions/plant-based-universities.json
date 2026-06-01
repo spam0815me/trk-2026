@@ -1,0 +1,22 @@
+{
+  "id": "plant-based-universities",
+  "slug": "plant-based-universities",
+  "year": 2026,
+  "title_de": "Plant Based Universities — Titel folgt",
+  "title_en": "Plant Based Universities — Title to follow",
+  "description_de": "Beschreibung folgt.",
+  "description_en": "Description to follow.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "14:00",
+  "endTime": "15:00",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": ["chantal-senn"],
+  "level": "all",
+  "recording": true,
+  "durationMinutes": 60,
+  "sortOrder": 29
+}

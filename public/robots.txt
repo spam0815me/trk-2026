@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Keine Bestätigungs- oder Merkliste-Seiten indexieren
+Disallow: /bestaetigung/
+Disallow: /merkliste/
+Disallow: /en/confirmation/
+Disallow: /en/bookmarks/
+
+Sitemap: https://tierrechtskongress.de/sitemap.xml

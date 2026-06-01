@@ -1,0 +1,24 @@
+{
+  "id": "ki-und-tiere",
+  "slug": "ki-und-tiere",
+  "year": 2026,
+  "title_de": "Game Changer oder Game Over? Wie KI den Umgang mit Tieren neu definiert",
+  "title_en": "Game Changer or Game Over? How AI is Redefining our Relationship with Animals",
+  "description_de": "KI wird unsere Beziehung zu Tieren grundlegend verändern. Sie entscheidet mit darüber, ob Tierleid weiter skaliert oder erstmals systematisch reduziert wird. Der Vortrag gibt einen Überblick über die wichtigsten Chancen und Risiken und zeigt, wo die Tierrechtsbewegung jetzt konkret ansetzen kann.",
+  "description_en": "AI will fundamentally change our relationship with animals. It will help determine whether animal suffering continues to scale or is systematically reduced for the first time. This talk gives an overview of key opportunities and risks, and shows where the animal rights movement can take concrete action.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "14:00",
+  "endTime": "15:00",
+  "day": 3,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "mirjam-walser"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 6,
+  "durationMinutes": 60
+}

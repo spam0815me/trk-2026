@@ -1,0 +1,24 @@
+{
+  "id": "aktivismus-wirksamkeit",
+  "slug": "aktivismus-wirksamkeit",
+  "year": 2026,
+  "title_de": "Vom Aktivismus zur Wirksamkeit: 9 Erkenntnisse – und die 3, die alles verändern",
+  "title_en": "From Activism to Impact: 9 Insights – and the 3 That Change Everything",
+  "description_de": "9 Erkenntnisse aus praktischer Aktivismus-Arbeit zeigen, warum Engagement allein nicht ausreicht – und warum viele Aktivist:innen trotz grossem Einsatz nur einen Bruchteil ihrer möglichen Wirkung entfalten. Der Schlüssel liegt darin, Kommunikation, Mindset und Strategie bewusst zu entwickeln, statt sich allein auf Leidenschaft zu verlassen.",
+  "description_en": "9 insights from hands-on activism work show why commitment alone is not enough — and why many activists achieve only a fraction of their potential impact despite great effort. The key lies in consciously developing communication, mindset and strategy, rather than relying on passion alone.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "16:00",
+  "endTime": "17:00",
+  "day": 1,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "anja-glivar"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 26,
+  "durationMinutes": 60
+}

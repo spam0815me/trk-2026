@@ -1,0 +1,17 @@
+{
+  "id": "ann-kathrin-freude",
+  "slug": "ann-kathrin-freude",
+  "year": 2026,
+  "name": "Ann-Kathrin Freude",
+  "pronouns": "sie/ihr",
+  "role_de": "Investigativjournalistin",
+  "role_en": "Investigative Journalist",
+  "organization": "The Marker",
+  "bio_de": "Ann-Kathrin Freude ist Mitgründerin von The Marker. Nachdem sie einige Jahre beim Verein Gegen Tierfabriken in Österreich als Campaignerin tätig war, arbeitet sie nun investigativ-journalistisch zu den Themen Tierschutz, Umweltschutz und Menschenrechte.",
+  "bio_en": "Ann-Kathrin Freude is co-founder of The Marker. After working as a campaigner for the association Gegen Tierfabriken in Austria, she now works as an investigative journalist on animal protection, environmental protection, and human rights.",
+  "photo": "/images/speakers/Ann-Kathrin_Freude.jpg",
+  "sessionIds": [
+    "lost-in-transit"
+  ],
+  "sortOrder": 22
+}

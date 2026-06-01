@@ -1,0 +1,24 @@
+{
+  "id": "kreativer-protest",
+  "slug": "kreativer-protest",
+  "year": 2026,
+  "title_de": "Kreativer Protest / Poetischer Aktivismus",
+  "title_en": "Creative Protest / Poetic Activism",
+  "description_de": "Mit Expertise und jahrelanger Erfahrung in Performances und Kunstprojekten gibt Ralf Assmann Einblick in seine Arbeit und teilt eine effektive Planungsmethode – das «Scoring» – mit den Teilnehmenden.",
+  "description_en": "Drawing on years of experience in performances and art projects, Ralf Assmann shares insights into his work and introduces an effective planning method — \"scoring\" — with participants.",
+  "type": "workshop",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "16:30",
+  "endTime": "17:30",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "ralf-assmann"
+  ],
+  "level": "all",
+  "recording": false,
+  "sortOrder": 7,
+  "durationMinutes": 60
+}

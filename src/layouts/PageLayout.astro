@@ -1,0 +1,62 @@
+---
+/**
+ * PageLayout — Standard-Seiten-Layout mit Breadcrumbs und optionalem Hero
+ */
+import type { Locale } from "../lib/i18n";
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  canonicalUrl: string;
+  alternates?: Partial<Record<Locale, string>>;
+  breadcrumbs?: BreadcrumbItem[];
+  ogImage?: string;
+  noindex?: boolean;
+  /** Wenn true: volle Breite ohne Container-Wrap */
+  fullWidth?: boolean;
+}
+
+const {
+  title,
+  description,
+  locale,
+  canonicalUrl,
+  alternates,
+  breadcrumbs,
+  ogImage,
+  noindex,
+  fullWidth = false,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  ogImage={ogImage}
+  noindex={noindex}
+>
+  {breadcrumbs && breadcrumbs.length > 0 && (
+    <div class="container" style="padding-top: var(--space-4);">
+      <Breadcrumbs items={breadcrumbs} locale={locale} />
+    </div>
+  )}
+
+  {fullWidth ? (
+    <slot />
+  ) : (
+    <div class="container">
+      <slot />
+    </div>
+  )}
+</BaseLayout>

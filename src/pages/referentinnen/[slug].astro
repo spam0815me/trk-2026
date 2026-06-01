@@ -1,0 +1,178 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import SessionCard from "../../components/program/SessionCard.astro";
+import { useTranslations, getField } from "../../lib/i18n";
+import { getCollection } from "astro:content";
+import { toSessionView } from "../../lib/sessions";
+
+export async function getStaticPaths() {
+  const speakers = await getCollection("speakers");
+  return speakers
+    .filter(s => s.data.year === 2026)
+    .map(s => ({ params: { slug: s.data.slug }, props: { speaker: s } }));
+}
+
+const { speaker } = Astro.props;
+const locale = "de";
+const t = useTranslations(locale);
+
+const sessions  = await getCollection("sessions");
+const rooms     = await getCollection("rooms");
+
+const roomMap = Object.fromEntries(rooms.map(r => [r.data.id, r]));
+const spkSessions = sessions.filter(s => speaker.data.sessionIds.includes(s.data.id));
+
+const role    = getField<string>("role",    locale, speaker.data as unknown as Record<string, unknown>);
+const bio     = getField<string>("bio",     locale, speaker.data as unknown as Record<string, unknown>);
+const longBio = getField<string>("longBio", locale, speaker.data as unknown as Record<string, unknown>);
+
+// Vorberechnung für Template (TypeScript-Generics dürfen nicht im JSX stehen)
+const sessionCardData = spkSessions.map(s => {
+  const view = toSessionView(s, locale);
+  const room = roomMap[s.data.roomId];
+  const roomName = getField<string>("name", locale, room?.data as unknown as Record<string, unknown> ?? {});
+  return { view, roomName };
+});
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const canonicalUrl = `${site}referentinnen/${speaker.data.slug}/`;
+---
+
+<PageLayout
+  title={speaker.data.name}
+  description={bio}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={{ de: canonicalUrl, en: `${site}en/speakers/${speaker.data.slug}/` }}
+  breadcrumbs={[
+    { label: t("speakers.title"), href: "/referentinnen" },
+    { label: speaker.data.name },
+  ]}
+>
+  <article class="speaker-detail section">
+    <div class="speaker-detail__header">
+      {speaker.data.photo && (
+        <img
+          src={speaker.data.photo}
+          alt={speaker.data.name}
+          class="speaker-detail__photo"
+          width="200" height="200"
+        />
+      )}
+      <div class="speaker-detail__intro">
+        <h1 class="speaker-detail__name">
+          {speaker.data.name}
+        </h1>
+        <p class="speaker-detail__role">
+          {role}{speaker.data.organization ? `, ${speaker.data.organization}` : ""}
+        </p>
+        {speaker.data.website && (
+          <a href={speaker.data.website} class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+            {t("speakers.website")} ↗
+          </a>
+        )}
+      </div>
+    </div>
+
+    <section class="speaker-detail__bio" aria-labelledby="bio-heading">
+      <h2 id="bio-heading">{t("speakers.bio")}</h2>
+      <div class="prose">
+        <p>{longBio || bio}</p>
+      </div>
+    </section>
+
+    {spkSessions.length > 0 && (
+      <section class="speaker-detail__sessions" aria-labelledby="sessions-heading">
+        <h2 id="sessions-heading">{t("speakers.atCongress")}</h2>
+        <div class="grid grid--2">
+          {sessionCardData.map(({ view, roomName }) => (
+            <SessionCard
+              id={view.id} slug={view.slug} title={view.title}
+              description={view.description} type={view.type}
+              language={view.language} startTime={view.startTime}
+              endTime={view.endTime} durationMinutes={view.durationMinutes}
+              day={view.day} date={view.date} roomName={roomName}
+              speakerNames={[speaker.data.name]} locale={locale}
+              registrationRequired={view.registrationRequired}
+              recording={view.recording} status={view.status}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <nav class="speaker-detail__back">
+      <a href="/referentinnen" class="btn btn--primary">
+        <span class="btn-icon" style="--icon-url: url('/images/back.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+        {t("speakers.back")}
+      </a>
+    </nav>
+  </article>
+</PageLayout>
+
+<style>
+.speaker-detail__header {
+  display: flex;
+  gap: var(--space-8);
+  align-items: flex-start;
+  margin-bottom: var(--space-10);
+  flex-wrap: wrap;
+}
+
+.speaker-detail__photo {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center 20%;
+  flex-shrink: 0;
+  -webkit-mask-image: url('/images/yellow-05.png');
+  mask-image: url('/images/yellow-05.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.speaker-detail__name {
+  margin-bottom: var(--space-2);
+}
+
+.speaker-detail__pronouns {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-normal);
+  color: var(--color-text-muted);
+}
+
+.speaker-detail__role {
+  font-size: var(--text-lg);
+  color: var(--color-primary);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-4);
+  max-width: none;
+}
+
+.speaker-detail__bio {
+  margin-bottom: var(--space-10);
+}
+
+.speaker-detail__bio h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-4);
+}
+
+.speaker-detail__sessions {
+  margin-bottom: var(--space-10);
+}
+
+.speaker-detail__sessions h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-5);
+}
+
+.speaker-detail__back {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+}
+</style>

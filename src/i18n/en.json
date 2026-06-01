@@ -1,0 +1,243 @@
+{
+  "site": {
+    "name": "Animal Rights Congress",
+    "tagline": "Knowledge. Network. Change.",
+    "description": "The Animal Rights Congress brings together activists, researchers, and advocates to discuss the liberation of all animals.",
+    "language": "English"
+  },
+  "nav": {
+    "home": "Home",
+    "program": "Program",
+    "speakers": "Speakers",
+    "venue": "Venue & Travel",
+    "registration": "Get Ticket!",
+    "archive": "Archive",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "sponsoring": "Sponsoring",
+    "accessibility": "Accessibility",
+    "privacy": "Privacy",
+    "imprint": "Imprint",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to main content"
+  },
+  "home": {
+    "heroTitle": "Animal Rights Congress 2026",
+    "heroSubtitle": "Knowledge. Network. Change.",
+    "heroLead": "Three days of talks, workshops, and discussions<br>for a world without animal exploitation.",
+    "ctaRegister": "Register now",
+    "ctaProgram": "to the Program",
+    "highlightsTitle": "Highlights",
+    "speakersTitle": "Speakers",
+    "speakersLead": "Researchers, activists, and experts from around the world.",
+    "speakersAll": "All speakers",
+    "programTitle": "Program",
+    "programLead": "Over 40 talks and workshops across three days.",
+    "programAll": "View full program",
+    "venueTitle": "Venue",
+    "venueMore": "Travel & Info",
+    "partnersTitle": "Partners & Supporters",
+    "newsTitle": "News",
+    "registerCTATitle": "Reserve your spot",
+    "registerCTAText": "Registration is open. Sign up now and join us.",
+    "registerCTAButton": "Get Ticket!"
+  },
+  "program": {
+    "title": "Program",
+    "lead": "All talks, workshops, and events at a glance.",
+    "filterDay": "Day",
+    "filterRoom": "Room",
+    "filterFormat": "Format",
+    "filterLanguage": "Language",
+    "filterAll": "All",
+    "search": "Search",
+    "searchPlaceholder": "Search talks or speakers…",
+    "noResults": "No results found.",
+    "noResultsHint": "Try different search terms or reset the filters.",
+    "resetFilters": "Reset filters",
+    "day": "Day",
+    "room": "Room",
+    "time": "Time",
+    "type": "Format",
+    "language": "Language",
+    "speakers": "Speakers",
+    "viewDetail": "Details",
+    "addToBookmarks": "Save",
+    "removeFromBookmarks": "Remove",
+    "bookmarked": "Saved",
+    "exportIcal": "Export calendar",
+    "types": {
+      "talk": "Talk",
+      "workshop": "Workshop",
+      "keynote": "Keynote",
+      "panel": "Panel discussion"
+    },
+    "languages": {
+      "de": "German",
+      "en": "English"
+    },
+    "status": {
+      "confirmed": "Confirmed",
+      "draft": "Draft",
+      "cancelled": "Cancelled"
+    }
+  },
+  "session": {
+    "back": "to Program",
+    "duration": "Duration",
+    "minutes": "min.",
+    "room": "Room",
+    "type": "Format",
+    "language": "Language",
+    "speakers": "Speakers",
+    "addToBookmarks": "Add to bookmarks",
+    "removeFromBookmarks": "Remove from bookmarks",
+    "exportIcal": "Export",
+    "relatedSessions": "More sessions by this speaker",
+    "accessibilityNotes": "Accessibility note",
+    "registrationRequired": "Registration required",
+    "capacity": "Capacity",
+    "recording": "Recording planned"
+  },
+  "speakers": {
+    "title": "Speakers",
+    "lead": "All speakers at the Animal Rights Congress 2026.",
+    "sessions": "Sessions",
+    "website": "Website",
+    "back": "to Overview",
+    "atCongress": "At the congress",
+    "bio": "Biography"
+  },
+  "venue": {
+    "title": "Venue & Travel",
+    "lead": "Information about the venue, travel, and accommodation.",
+    "address": "Address",
+    "publicTransport": "Public transport",
+    "byTrain": "By train",
+    "byCar": "By car",
+    "byBike": "By bike",
+    "parking": "Parking",
+    "accommodation": "Accommodation",
+    "accessibility": "Accessibility",
+    "directions": "Directions"
+  },
+  "registration": {
+    "title": "Registration",
+    "lead": "Register now for the Animal Rights Congress 2026.",
+    "closed": "Registration is currently closed.",
+    "form": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone number (optional)",
+      "language": "Preferred language",
+      "languageDe": "German",
+      "languageEn": "English",
+      "ticketCategory": "Ticket category",
+      "remarks": "Remarks (optional)",
+      "remarksPlaceholder": "Additional notes or questions…",
+      "diet": "Dietary preference (optional)",
+      "dietNone": "No preference",
+      "dietVegan": "Vegan",
+      "dietVegetarian": "Vegetarian",
+      "dietOther": "Other",
+      "accessibility": "Accessibility needs / support (optional)",
+      "accessibilityPlaceholder": "e.g. wheelchair, sign language interpreter…",
+      "privacy": "I have read the privacy policy and consent to the processing of my data for congress organisation.",
+      "newsletter": "I would like to receive the newsletter and be informed about future congresses. (optional)",
+      "submit": "Submit registration",
+      "submitting": "Sending…",
+      "required": "Required field",
+      "privacyLink": "Privacy policy",
+      "ticketCategories": {
+        "standard": "Standard ticket",
+        "reduced": "Reduced (student, unemployed)",
+        "support": "Support ticket",
+        "solidarity": "Solidarity ticket"
+      }
+    },
+    "success": {
+      "title": "Registration received!",
+      "text": "Thank you for registering. We have received your data and will send a confirmation shortly.",
+      "home": "Back to home"
+    },
+    "errors": {
+      "required": "This field is required.",
+      "email": "Please enter a valid email address.",
+      "general": "An error occurred. Please try again.",
+      "summary": "Please correct the following errors:"
+    }
+  },
+  "bookmarks": {
+    "title": "My bookmarks",
+    "empty": "No sessions saved yet.",
+    "emptyHint": "Click the bookmark icon on any session to save it to your list.",
+    "exportIcal": "Export bookmarks as calendar (.ics)",
+    "conflict": "Time conflict: these sessions overlap.",
+    "remove": "Remove",
+    "goToProgram": "Go to program"
+  },
+  "archive": {
+    "title": "Archive",
+    "lead": "All previous editions of the Animal Rights Congress.",
+    "edition": "Edition",
+    "viewEdition": "View edition",
+    "sessions": "Sessions",
+    "speakers": "Speakers",
+    "back": "Back to archive"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "lead": "Answers to the most important questions about the congress."
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Questions, press inquiries, or collaborations — write to us.",
+    "email": "Email",
+    "press": "Press inquiries",
+    "social": "Social media"
+  },
+  "sponsoring": {
+    "title": "Sponsoring & Partners",
+    "lead": "The congress is made possible by the support of our partners.",
+    "categories": {
+      "main": "Main sponsors",
+      "partner": "Partners",
+      "media": "Media partners",
+      "supporter": "Supporters"
+    },
+    "becomePartner": "Become a partner",
+    "becomePartnerText": "Would you like to support the congress? Write to us."
+  },
+  "accessibility": {
+    "title": "Accessibility",
+    "lead": "We are committed to making the congress accessible to everyone."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "lead": "Information on the processing of your data."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The requested page does not exist or has been moved.",
+    "home": "Back to home"
+  },
+  "meta": {
+    "editedBy": "Animal Rights Congress Organising Team",
+    "congress": "Animal Rights Congress"
+  },
+  "breadcrumbs": {
+    "home": "Home"
+  },
+  "ical": {
+    "exportSession": "Export session as iCal",
+    "exportBookmarks": "Export bookmarks as iCal",
+    "filename": "session"
+  },
+  "footer": {
+    "copyright": "Animal Rights Congress",
+    "madeWith": "Made with"
+  }
+}

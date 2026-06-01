@@ -1,0 +1,18 @@
+{
+  "id": "renato-pichler",
+  "slug": "renato-pichler",
+  "year": 2026,
+  "name": "Renato Pichler",
+  "pronouns": "er/ihm",
+  "role_de": "Gründer",
+  "role_en": "Founder",
+  "organization": "Swissveg / V-Label",
+  "bio_de": "Renato Pichler ist der Pionier der veganen Bewegung in der Schweiz. Als Gründer von Swissveg (1993) und des V-Labels (1996) hat er die Bewegung massgeblich geprägt – nicht nur national, sondern auch international.",
+  "bio_en": "Renato Pichler is the pioneer of the vegan movement in Switzerland. As founder of Swissveg (1993) and the V-Label (1996), he has significantly shaped the movement — not only nationally, but also internationally.",
+  "photo": "/images/speakers/Renato_Pichler.jpg",
+  "photoPosition": "center 35%",
+  "sessionIds": [
+    "v-label"
+  ],
+  "sortOrder": 17
+}

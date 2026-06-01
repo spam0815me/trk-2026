@@ -1,0 +1,254 @@
+---
+import PageLayout from "../../../layouts/PageLayout.astro";
+import SessionCard from "../../../components/program/SessionCard.astro";
+import { useTranslations, getField } from "../../../lib/i18n";
+import { getCollection } from "astro:content";
+import { getCurrentSessions, toSessionView, getUniqueDays, getUniqueTypes, getUniqueLanguages } from "../../../lib/sessions";
+
+const locale = "en";
+const t = useTranslations(locale);
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const canonicalUrl = `${site}en/program/`;
+const alternates = {
+  de: `${site}programm/`,
+  en: canonicalUrl,
+};
+
+const sessions = await getCurrentSessions(2026);
+const rooms    = await getCollection("rooms");
+const speakers = await getCollection("speakers");
+
+const days      = getUniqueDays(sessions);
+const types     = getUniqueTypes(sessions);
+const languages = getUniqueLanguages(sessions);
+
+const usedRoomIds = new Set(sessions.map(s => s.data.roomId));
+const activeRooms = rooms
+  .filter(r => usedRoomIds.has(r.data.id))
+  .sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
+
+const typeLabels: Record<string, string> = {
+  talk: t("program.types.talk"),
+  workshop: t("program.types.workshop"),
+  keynote: t("program.types.keynote"),
+  panel: t("program.types.panel"),
+};
+const langLabels: Record<string, string> = {
+  de: t("program.languages.de"),
+  en: t("program.languages.en"),
+};
+const roomMap    = Object.fromEntries(rooms.map(r => [r.data.id, r]));
+const speakerMap = Object.fromEntries(speakers.map(s => [s.data.id, s]));
+
+function formatDayFull(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+}
+
+const sessionViews = sessions.map(s => ({
+  view: toSessionView(s, locale),
+  roomName: getField<string>("name", locale, roomMap[s.data.roomId]?.data as unknown as Record<string, unknown> ?? {}),
+  speakerNames: s.data.speakerIds.map(id => speakerMap[id]?.data.name ?? ""),
+  speakerPhotos: s.data.speakerIds.map(id => speakerMap[id]?.data.photo ?? ""),
+  speakerSlugs: s.data.speakerIds.map(id => speakerMap[id]?.data.slug ?? ""),
+}));
+---
+
+<PageLayout
+  title={t("program.title")}
+  description={t("program.lead")}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+  breadcrumbs={[{ label: t("program.title") }]}
+  fullWidth
+>
+  <div class="container">
+    <header class="section__header" style="padding-top: var(--space-8);">
+      <h1 class="section__title">{t("program.title")}</h1>
+      <p class="section__lead">{t("program.lead")}</p>
+    </header>
+  </div>
+
+  <!-- Filter & Search -->
+  <div class="program-toolbar container">
+    <div class="program-toolbar__filterbar">
+      <button class="filter-toggle-btn" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-panel">
+        Filter
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true" class="filter-toggle-icon"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <button class="filter-reset-btn" id="reset-filters" type="button" hidden>
+        ✕ {t("program.resetFilters")}
+      </button>
+    </div>
+
+    <div class="program-toolbar__filters" id="filter-panel" hidden>
+      <!-- Search -->
+      <div class="filter-group filter-group--search">
+        <label for="search-input" class="filter-group__label">{t("program.search")}</label>
+        <input
+          type="search"
+          id="search-input"
+          class="program-search__input"
+          placeholder={t("program.searchPlaceholder")}
+          aria-label={t("program.search")}
+        />
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-group__label" id="day-filter-label">{t("program.filterDay")}</span>
+        <div class="filter-group__btns" role="group" aria-labelledby="day-filter-label">
+          <button class="filter-btn filter-btn--active" data-filter="day" data-value="all" type="button">{t("program.filterAll")}</button>
+          {days.map(day => {
+            const dateStr = sessions.find(s => s.data.day === day)?.data.date ?? "";
+            const weekday = dateStr
+              ? new Date(dateStr + "T00:00:00").toLocaleDateString("en-GB", { weekday: "long" })
+              : `Day ${day}`;
+            return <button class="filter-btn" data-filter="day" data-value={String(day)} type="button">{weekday}</button>;
+          })}
+        </div>
+      </div>
+
+      {types.length > 1 && (
+        <div class="filter-group">
+          <span class="filter-group__label" id="type-filter-label">{t("program.filterFormat")}</span>
+          <div class="filter-group__btns" role="group" aria-labelledby="type-filter-label">
+            <button class="filter-btn filter-btn--active" data-filter="type" data-value="all" type="button">{t("program.filterAll")}</button>
+            {types.map(type => (
+              <button class="filter-btn" data-filter="type" data-value={type} type="button">{typeLabels[type] ?? type}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {languages.length > 1 && (
+        <div class="filter-group">
+          <span class="filter-group__label" id="lang-filter-label">{t("program.filterLanguage")}</span>
+          <div class="filter-group__btns" role="group" aria-labelledby="lang-filter-label">
+            <button class="filter-btn filter-btn--active" data-filter="language" data-value="all" type="button">{t("program.filterAll")}</button>
+            {languages.map(lang => (
+              <button class="filter-btn" data-filter="language" data-value={lang} type="button">{langLabels[lang] ?? lang}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="filter-group">
+        <span class="filter-group__label" id="room-filter-label">Room</span>
+        <div class="filter-group__btns" role="group" aria-labelledby="room-filter-label">
+          <button class="filter-btn filter-btn--active" data-filter="room" data-value="all" type="button">{t("program.filterAll")}</button>
+          {activeRooms.map(room => (
+            <button class="filter-btn" data-filter="room" data-value={room.data.id} type="button">{room.data.name_en}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result count & bookmarks link -->
+  <div class="container program-meta">
+    <p class="program-count" id="program-count" aria-live="polite" aria-atomic="true">
+      <span id="count-num">{sessions.length}</span> sessions
+    </p>
+    <a href="/en/program/bookmarks/" class="bookmark-link" id="bookmark-nav-link">
+      <img src="/images/x-separator.svg" alt="" class="bookmark-link__icon" aria-hidden="true" />
+      Bookmarks (<span id="bookmark-nav-count">0</span>)
+    </a>
+  </div>
+
+  <!-- Sessions grouped by day -->
+  <div class="container program-list" id="program-list">
+    {days.map(day => {
+      const daySessions = sessionViews.filter(sv => sv.view.day === day);
+      return (
+        <section class="program-day" data-day={day} aria-labelledby={`day-heading-${day}`}>
+          <h2 class="program-day__heading" id={`day-heading-${day}`}>
+            {formatDayFull(daySessions[0]?.view.date ?? "")}
+          </h2>
+          <div class="program-day__sessions">
+            {daySessions.map(({ view, roomName, speakerNames, speakerPhotos, speakerSlugs }) => (
+              <SessionCard
+                id={view.id}
+                slug={view.slug}
+                title={view.title}
+                description={view.description}
+                type={view.type}
+                language={view.language}
+                startTime={view.startTime}
+                endTime={view.endTime}
+                durationMinutes={view.durationMinutes}
+                day={view.day}
+                date={view.date}
+                roomName={roomName}
+                roomId={view.roomId}
+                speakerNames={speakerNames}
+                speakerPhotos={speakerPhotos}
+                speakerSlugs={speakerSlugs}
+                locale={locale}
+                registrationRequired={view.registrationRequired}
+                recording={view.recording}
+                status={view.status}
+              />
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    <div id="no-results" hidden class="program-empty" role="status" aria-live="polite">
+      <p><strong>{t("program.noResults")}</strong></p>
+      <p>{t("program.noResultsHint")}</p>
+    </div>
+  </div>
+</PageLayout>
+
+<script src="../../../scripts/program-filter.js"></script>
+<script src="../../../scripts/bookmarks.js"></script>
+
+<style>
+.program-toolbar {
+  padding-block: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+.program-toolbar__search { max-width: 400px; }
+.program-search__input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  background: var(--color-bg);
+}
+.program-search__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+.program-toolbar__filterbar { display: flex; align-items: center; gap: var(--space-3); }
+.filter-toggle-btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: none; border-radius: var(--border-radius-button); font-family: var(--brand-font-bold); font-size: var(--text-sm); font-weight: var(--weight-medium); background: #e3e3dd; color: #26282a; cursor: pointer; transition: background var(--transition-fast), color var(--transition-fast); }
+.filter-toggle-btn:hover, .filter-toggle-btn[aria-expanded="true"] { background: #26282a; color: #fafaff; }
+.filter-toggle-icon { transition: transform var(--transition-fast); }
+.filter-toggle-btn[aria-expanded="true"] .filter-toggle-icon { transform: rotate(180deg); }
+.program-toolbar__filters { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: flex-start; padding-top: var(--space-4); }
+.program-toolbar__filters[hidden] { display: none; }
+.filter-group { display: flex; flex-direction: column; gap: var(--space-2); }
+.filter-group__label { font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
+.filter-group__btns { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.filter-btn { padding: var(--space-1) var(--space-3); border: none; border-radius: var(--border-radius-button); font-size: var(--text-sm); font-family: var(--brand-font-bold); background: #e3e3dd; color: #26282a; cursor: pointer; transition: background var(--transition-fast), color var(--transition-fast); white-space: nowrap; }
+.filter-btn:hover, .filter-btn--active { background: #26282a; color: #fafaff; }
+.filter-reset-btn { padding: var(--space-2) var(--space-3); border: none; background: transparent; color: var(--color-text-muted); font-size: var(--text-sm); cursor: pointer; text-decoration: underline; }
+.program-count { font-size: var(--text-sm); color: var(--color-text-muted); max-width: none; margin-bottom: var(--space-4); }
+.bookmark-link { display: inline-flex; align-items: center; gap: var(--space-2); font-family: 'Cubano', sans-serif; font-size: var(--text-xl); color: #26282a; text-decoration: none; transition: color var(--transition-fast); }
+.bookmark-link:hover { color: var(--brand-green); }
+.bookmark-link__icon { width: 1.2em; height: 1.2em; }
+.program-day { margin-bottom: var(--space-10); }
+.program-day__heading { display: flex; align-items: center; gap: var(--space-4); font-size: var(--text-2xl); margin-bottom: var(--space-5); padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-primary); }
+.program-day__sessions { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }
+.program-empty { padding: var(--space-12); text-align: center; color: var(--color-text-muted); }
+.program-day[data-hidden] { display: none; }
+</style>

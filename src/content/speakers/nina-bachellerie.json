@@ -1,0 +1,17 @@
+{
+  "id": "nina-bachellerie",
+  "slug": "nina-bachellerie",
+  "year": 2026,
+  "name": "Nina Bachellerie",
+  "pronouns": "sie/ihr",
+  "role_de": "Vorstandsmitglied",
+  "role_en": "Board Member",
+  "organization": "Verein Stadttauben Schweiz",
+  "bio_de": "Nina Bachellerie ist im Vorstand des Vereins Stadttauben Schweiz und seit 2017 für Tierrechte aktiv. Zuvor engagierte sie sich vor allem gegen Echtpelz in der Mode.",
+  "bio_en": "Nina Bachellerie is on the board of Verein Stadttauben Schweiz and has been active in animal rights since 2017. Previously she campaigned mainly against real fur in fashion.",
+  "photo": "/images/speakers/Nina_Bachellerie.jpg",
+  "sessionIds": [
+    "taubenschlaege"
+  ],
+  "sortOrder": 12
+}

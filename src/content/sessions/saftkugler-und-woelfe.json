@@ -1,0 +1,24 @@
+{
+  "id": "saftkugler-und-woelfe",
+  "slug": "saftkugler-und-woelfe",
+  "year": 2026,
+  "title_de": "«Wir wissen, was wir tun» – Über Saftkugler, Wölfe und das seltsamste Tier der Welt",
+  "title_en": "«We Know What We Are Doing» – On Pill Bugs, Wolves and the Strangest Animal in the World",
+  "description_de": "Der Saftkugler arbeitet seit 400 Millionen Jahren, ohne Applaus. Der Wolf gestaltet Ökosysteme, ohne es zu wissen. Und dann gibt es uns – das einzige Tier, das genau weiss, was auf dem Spiel steht. Und trotzdem spielt.",
+  "description_en": "The pill bug has been working for 400 million years without applause. The wolf shapes ecosystems without knowing it. And then there is us — the only animal that knows exactly what is at stake. And plays anyway.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "11:00",
+  "endTime": "12:00",
+  "day": 3,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "beat-mumenthaler"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 20,
+  "durationMinutes": 60
+}

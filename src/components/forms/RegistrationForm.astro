@@ -1,0 +1,386 @@
+---
+/**
+ * RegistrationForm
+ *
+ * Netlify Forms als Standard-Backend.
+ * Validierung client-seitig via registration.js.
+ * Honeypot-Feld gegen Spam.
+ * Adapter-Struktur: Backend über src/lib/forms/adapter.ts austauschbar.
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+import FormField from "./FormField.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const successUrl = locale === "en" ? "/en/confirmation" : "/bestaetigung";
+
+const choose = locale === "de" ? "Bitte wählen" : "Please choose";
+const ticketOptions = [
+  { value: "",             label: `— ${choose} —` },
+  { value: "3day-normal",  label: locale === "de" ? "3-Tagespass Normal – CHF 150" : "3-Day Pass Regular – CHF 150" },
+  { value: "3day-reduced", label: locale === "de" ? "3-Tagespass Reduziert – CHF 100" : "3-Day Pass Reduced – CHF 100" },
+  { value: "3day-soli",    label: locale === "de" ? "3-Tagespass Solidarität – CHF 200" : "3-Day Pass Solidarity – CHF 200" },
+  { value: "fri-normal",   label: locale === "de" ? "1-Tagespass Freitag Normal – CHF 55" : "1-Day Pass Friday Regular – CHF 55" },
+  { value: "fri-reduced",  label: locale === "de" ? "1-Tagespass Freitag Reduziert – CHF 40" : "1-Day Pass Friday Reduced – CHF 40" },
+  { value: "fri-soli",     label: locale === "de" ? "1-Tagespass Freitag Solidarität – CHF 75" : "1-Day Pass Friday Solidarity – CHF 75" },
+  { value: "sat-normal",   label: locale === "de" ? "1-Tagespass Samstag Normal – CHF 80" : "1-Day Pass Saturday Regular – CHF 80" },
+  { value: "sat-reduced",  label: locale === "de" ? "1-Tagespass Samstag Reduziert – CHF 55" : "1-Day Pass Saturday Reduced – CHF 55" },
+  { value: "sat-soli",     label: locale === "de" ? "1-Tagespass Samstag Solidarität – CHF 100" : "1-Day Pass Saturday Solidarity – CHF 100" },
+  { value: "sun-normal",   label: locale === "de" ? "1-Tagespass Sonntag Normal – CHF 55" : "1-Day Pass Sunday Regular – CHF 55" },
+  { value: "sun-reduced",  label: locale === "de" ? "1-Tagespass Sonntag Reduziert – CHF 40" : "1-Day Pass Sunday Reduced – CHF 40" },
+  { value: "sun-soli",     label: locale === "de" ? "1-Tagespass Sonntag Solidarität – CHF 75" : "1-Day Pass Sunday Solidarity – CHF 75" },
+];
+
+const dietOptions = [
+  { value: "",           label: t("registration.form.dietNone") },
+  { value: "vegan",      label: t("registration.form.dietVegan") },
+  { value: "vegetarian", label: t("registration.form.dietVegetarian") },
+  { value: "other",      label: t("registration.form.dietOther") },
+];
+
+const langOptions = [
+  { value: "de", label: t("registration.form.languageDe") },
+  { value: "en", label: t("registration.form.languageEn") },
+];
+
+const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
+---
+
+<form
+  id="registration-form"
+  class="reg-form"
+  novalidate
+  data-locale={locale}
+  data-success-url={successUrl}
+>
+  <!-- Fehler-Zusammenfassung -->
+  <div id="form-errors" class="reg-form__error-summary" hidden role="alert" aria-live="assertive">
+    <p class="reg-form__error-title">
+      <strong>{t("registration.errors.summary")}</strong>
+    </p>
+    <ul class="reg-form__error-list" id="error-list" role="list"></ul>
+  </div>
+
+  <!-- Felder: Persönliche Daten -->
+  <fieldset class="reg-form__fieldset">
+    <legend class="reg-form__legend">
+      {locale === "de" ? "Persönliche Angaben" : "Personal details"}
+    </legend>
+    <div class="reg-form__grid reg-form__grid--2">
+      <FormField
+        id="firstName" name="firstName"
+        label={t("registration.form.firstName")}
+        type="text" required
+        autocomplete="given-name"
+      />
+      <FormField
+        id="lastName" name="lastName"
+        label={t("registration.form.lastName")}
+        type="text" required
+        autocomplete="family-name"
+      />
+    </div>
+    <FormField
+      id="email" name="email"
+      label={t("registration.form.email")}
+      type="email" required
+      placeholder={t("registration.form.emailPlaceholder")}
+      autocomplete="email"
+    />
+    <FormField
+      id="phone" name="phone"
+      label={t("registration.form.phone")}
+      type="tel"
+      autocomplete="tel"
+    />
+    <FormField
+      id="language" name="language"
+      label={t("registration.form.language")}
+      type="select"
+      options={langOptions}
+    />
+  </fieldset>
+
+  <!-- Felder: Kongress -->
+  <fieldset class="reg-form__fieldset">
+    <legend class="reg-form__legend">
+      {locale === "de" ? "Kongress-Angaben" : "Congress details"}
+    </legend>
+    <FormField
+      id="ticketCategory" name="ticketCategory"
+      label={t("registration.form.ticketCategory")}
+      type="select" required
+      options={ticketOptions}
+    />
+    <FormField
+      id="diet" name="diet"
+      label={t("registration.form.diet")}
+      type="select"
+      options={dietOptions}
+    />
+    <FormField
+      id="accessibilityNeeds" name="accessibilityNeeds"
+      label={t("registration.form.accessibility")}
+      type="textarea"
+      placeholder={t("registration.form.accessibilityPlaceholder")}
+    />
+    <FormField
+      id="remarks" name="remarks"
+      label={t("registration.form.remarks")}
+      type="textarea"
+      placeholder={t("registration.form.remarksPlaceholder")}
+    />
+  </fieldset>
+
+  <!-- Felder: Einwilligungen -->
+  <fieldset class="reg-form__fieldset">
+    <legend class="reg-form__legend">
+      {locale === "de" ? "Einwilligungen" : "Consent"}
+    </legend>
+    <FormField
+      id="privacyConsent" name="privacyConsent"
+      label={`${t("registration.form.privacy")} (<a href="${privacyHref}">${t("registration.form.privacyLink")}</a>)`}
+      type="checkbox"
+      required
+    />
+    <FormField
+      id="newsletterConsent" name="newsletterConsent"
+      label={t("registration.form.newsletter")}
+      type="checkbox"
+    />
+  </fieldset>
+
+  <button type="submit" class="btn btn--primary btn--lg reg-form__submit" id="submit-btn">
+    <span class="submit-label">{t("registration.form.submit")}</span>
+    <span class="submit-loading" hidden aria-live="polite">{t("registration.form.submitting")}</span>
+  </button>
+</form>
+
+<script>
+  /**
+   * Client-seitige Validierung und Formular-Handling
+   * Nutzt den Adapter aus src/lib/forms/adapter.ts (via inline-import für client-side)
+   */
+  const form = document.getElementById("registration-form") as HTMLFormElement | null;
+  if (!form) throw new Error("Registration form not found");
+
+  const errorContainer = document.getElementById("form-errors") as HTMLDivElement;
+  const errorList      = document.getElementById("error-list") as HTMLUListElement;
+  const submitBtn      = document.getElementById("submit-btn") as HTMLButtonElement;
+  const submitLabel    = submitBtn.querySelector(".submit-label") as HTMLSpanElement;
+  const submitLoading  = submitBtn.querySelector(".submit-loading") as HTMLSpanElement;
+  const locale         = form.dataset.locale as "de" | "en" ?? "de";
+  const successUrl     = form.dataset.successUrl ?? "/bestaetigung";
+
+  const msgs = {
+    de: {
+      required: "Dieses Feld ist erforderlich.",
+      email: "Bitte eine gültige E-Mail-Adresse eingeben.",
+      privacy: "Bitte stimme der Datenschutzerklärung zu.",
+      general: "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    },
+    en: {
+      required: "This field is required.",
+      email: "Please enter a valid email address.",
+      privacy: "Please agree to the privacy policy.",
+      general: "An error occurred. Please try again.",
+    },
+  };
+
+  const m = msgs[locale];
+
+  function validate(): Record<string, string> {
+    const errors: Record<string, string> = {};
+    const data = new FormData(form!);
+
+    if (!String(data.get("firstName") ?? "").trim()) errors.firstName = m.required;
+    if (!String(data.get("lastName") ?? "").trim()) errors.lastName = m.required;
+    const email = String(data.get("email") ?? "").trim();
+    if (!email) errors.email = m.required;
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = m.email;
+    if (!String(data.get("ticketCategory") ?? "").trim()) errors.ticketCategory = m.required;
+    if (!data.get("privacyConsent")) errors.privacyConsent = m.privacy;
+
+    return errors;
+  }
+
+  function showErrors(errors: Record<string, string>) {
+    errorList.innerHTML = "";
+    Object.entries(errors).forEach(([field, msg]) => {
+      const input = form!.querySelector(`[name="${field}"]`) as HTMLElement | null;
+      const label = form!.querySelector(`label[for="${field}"]`)?.textContent?.trim() ?? field;
+
+      // Fehler am Feld anzeigen
+      let errorEl = document.getElementById(`${field}-error`);
+      if (!errorEl) {
+        errorEl = document.createElement("p");
+        errorEl.id = `${field}-error`;
+        errorEl.className = "form-field__error";
+        errorEl.setAttribute("role", "alert");
+        input?.parentElement?.appendChild(errorEl);
+      }
+      errorEl.textContent = msg;
+      input?.setAttribute("aria-invalid", "true");
+      input?.closest(".form-field")?.classList.add("form-field--error");
+
+      // Fehler in Zusammenfassung
+      const li = document.createElement("li");
+      const a  = document.createElement("a");
+      a.href   = `#${field}`;
+      a.textContent = `${label}: ${msg}`;
+      li.appendChild(a);
+      errorList.appendChild(li);
+    });
+
+    errorContainer.hidden = false;
+    errorContainer.focus();
+  }
+
+  function clearErrors() {
+    errorContainer.hidden = true;
+    errorList.innerHTML = "";
+    form!.querySelectorAll(".form-field--error").forEach(el => el.classList.remove("form-field--error"));
+    form!.querySelectorAll("[aria-invalid]").forEach(el => el.removeAttribute("aria-invalid"));
+    form!.querySelectorAll(".form-field__error[id$='-error']").forEach(el => el.textContent = "");
+  }
+
+  function setLoading(loading: boolean) {
+    submitBtn.disabled = loading;
+    submitLabel.hidden = loading;
+    submitLoading.hidden = !loading;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      showErrors(errors);
+      return;
+    }
+
+    setLoading(true);
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch("/.netlify/functions/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName:      data.get("firstName"),
+          lastName:       data.get("lastName"),
+          email:          data.get("email"),
+          ticketCategory: data.get("ticketCategory"),
+          language:       locale,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.url) {
+        window.location.href = result.url;
+      } else {
+        console.error("Payment error:", result);
+        showErrors({ _general: m.general });
+      }
+    } catch {
+      showErrors({ _general: m.general });
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
+
+<style>
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* Honeypot verstecken (nicht mit display:none — das blockiert Screenreader nicht wirklich) */
+.reg-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.reg-form__fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.reg-form__legend {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  padding-inline: var(--space-2);
+  color: var(--color-text);
+}
+
+.reg-form__grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.reg-form__grid--2 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+}
+
+.reg-form__note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  max-width: none;
+}
+
+.reg-form__submit {
+  align-self: flex-start;
+}
+
+/* Fehler-Zusammenfassung */
+.reg-form__error-summary {
+  border: 2px solid var(--color-error);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  background: var(--color-error-bg);
+}
+
+.reg-form__error-title {
+  color: var(--color-error);
+  margin-bottom: var(--space-3);
+  max-width: none;
+}
+
+.reg-form__error-list {
+  padding-left: var(--space-5);
+}
+
+.reg-form__error-list li + li {
+  margin-top: var(--space-1);
+}
+
+.reg-form__error-list a {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+}
+</style>

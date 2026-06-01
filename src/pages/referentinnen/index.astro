@@ -1,0 +1,49 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import SpeakerCard from "../../components/speakers/SpeakerCard.astro";
+import { useTranslations, getField } from "../../lib/i18n";
+import { getCollection } from "astro:content";
+
+const locale = "de";
+const t = useTranslations(locale);
+
+const speakersRaw = await getCollection("speakers");
+const speakers = speakersRaw
+  .filter(s => s.data.year === 2026)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("speakers.title")}
+  description={t("speakers.lead")}
+  locale={locale}
+  canonicalUrl={`${site}referentinnen/`}
+  alternates={{ de: `${site}referentinnen/`, en: `${site}en/speakers/` }}
+  breadcrumbs={[{ label: t("speakers.title") }]}
+>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">{t("speakers.title")}</h1>
+      <p class="section__lead">{t("speakers.lead")}</p>
+    </header>
+    <div class="grid grid--3">
+      {speakers.map(s => (
+        <SpeakerCard
+          id={s.data.id}
+          slug={s.data.slug}
+          name={s.data.name}
+          pronouns={s.data.pronouns}
+          role={getField("role", locale, s.data as unknown as Record<string, unknown>)}
+          organization={s.data.organization}
+          bio={getField("bio", locale, s.data as unknown as Record<string, unknown>)}
+          photo={s.data.photo}
+          photoPosition={s.data.photoPosition}
+          sessionCount={s.data.sessionIds.length}
+          locale={locale}
+        />
+      ))}
+    </div>
+  </div>
+</PageLayout>

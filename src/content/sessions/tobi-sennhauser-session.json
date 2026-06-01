@@ -1,0 +1,22 @@
+{
+  "id": "tobi-sennhauser-session",
+  "slug": "tobi-sennhauser-session",
+  "year": 2026,
+  "title_de": "Tobi Sennhauser — Titel folgt",
+  "title_en": "Tobi Sennhauser — Title to follow",
+  "description_de": "Beschreibung folgt.",
+  "description_en": "Description to follow.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": ["tobi-sennhauser"],
+  "level": "all",
+  "recording": true,
+  "durationMinutes": 60,
+  "sortOrder": 30
+}

@@ -1,0 +1,24 @@
+{
+  "id": "schlachthof-recherche",
+  "slug": "schlachthof-recherche",
+  "year": 2026,
+  "title_de": "Rechtsbruch für das öffentliche Interesse – Mit versteckten Kameras gegen die Blackbox der Tierindustrie",
+  "title_en": "Breaking the Law for the Public Interest – Hidden Cameras Against the Black Box of the Animal Industry",
+  "description_de": "Die Tierindustrie meidet Transparenz. Um das Leid in Schlachthäusern sichtbar zu machen, hat Anna Schubert mit versteckten Kameras die CO₂-Betäubung von Schweinen dokumentiert. Dafür wurde sie verhaftet und verklagt. Ihr Vortrag beleuchtet das Spannungsfeld zwischen öffentlichem Interesse und Rechtsbruch.",
+  "description_en": "The animal industry avoids transparency. To expose suffering in slaughterhouses, Anna Schubert documented CO₂ stunning of pigs with hidden cameras — and was arrested and sued as a result. Her talk examines the tension between public interest and breaking the law.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "16:00",
+  "endTime": "17:00",
+  "day": 1,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "anna-schubert"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 17,
+  "durationMinutes": 60
+}

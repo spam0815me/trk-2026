@@ -1,0 +1,17 @@
+{
+  "id": "laura-baumann",
+  "slug": "laura-baumann",
+  "year": 2026,
+  "name": "Laura Baumann",
+  "pronouns": "sie/ihr",
+  "role_de": "Kampagnen-Mitarbeiterin",
+  "role_en": "Campaigns Officer",
+  "organization": "Sentience",
+  "bio_de": "Laura Baumann arbeitet als Kampagnen-Mitarbeiterin bei Sentience und ist im Werbemist-Projekt engagiert, das problematische Tierhaltungs-Werbung entlarvt und aufklärt.",
+  "bio_en": "Laura Baumann works as a campaigns officer at Sentience and is involved in the Werbemist project, which exposes misleading advertising around animal farming.",
+  "photo": "/images/speakers/Laura_Baumann.png",
+  "sessionIds": [
+    "werbemist"
+  ],
+  "sortOrder": 10
+}

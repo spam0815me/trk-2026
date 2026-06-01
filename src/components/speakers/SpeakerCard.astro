@@ -1,0 +1,162 @@
+---
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  id: string;
+  slug: string;
+  name: string;
+  pronouns?: string;
+  role: string;
+  organization?: string;
+  bio: string;
+  photo?: string;
+  photoPosition?: string;
+  sessionCount?: number;
+  locale: Locale;
+}
+
+const {
+  slug, name, pronouns, role, organization, bio, photo, photoPosition = "center 20%", sessionCount = 0, locale,
+} = Astro.props;
+
+const t = useTranslations(locale);
+const href = locale === "en" ? `/en/speakers/${slug}` : `/referentinnen/${slug}`;
+
+// Ersten Satz extrahieren — mind. 30 Zeichen, damit Abkürzungen (Dr., Prof.) übersprungen werden
+const firstSentenceMatch = bio.match(/^.{30,}?[.!?]/);
+const bioPreview = firstSentenceMatch ? firstSentenceMatch[0] : bio;
+const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
+---
+
+<article class="speaker-card">
+  <a href={href} class="speaker-card__photo-link" tabindex="-1" aria-hidden="true">
+    <img
+      src={photoSrc}
+      alt=""
+      class="speaker-card__photo"
+      width="200"
+      height="200"
+      loading="lazy"
+      style={`object-position: ${photoPosition}`}
+    />
+  </a>
+  <div class="speaker-card__body">
+    <h3 class="speaker-card__name">
+      <a href={href} class="speaker-card__name-link">
+        {name}
+      </a>
+    </h3>
+    <p class="speaker-card__role">
+      {role}{organization ? `, ${organization}` : ""}
+    </p>
+    <p class="speaker-card__bio">{bioPreview}</p>
+    <a href={href} class="btn btn--primary btn--sm speaker-card__link">
+      <span class="btn-icon" style="--icon-url: url('/images/eye.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+      {locale === "de" ? "zum Profil" : "View profile"}
+    </a>
+  </div>
+</article>
+
+<style>
+.speaker-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: #e3e3dd;
+  border: none;
+  border-radius: var(--radius-lg);
+  transition: box-shadow var(--transition-fast);
+}
+
+.speaker-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.speaker-card__photo-link {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-5);
+}
+
+.speaker-card__photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: transform var(--transition-slow), filter var(--transition-slow);
+  -webkit-mask-image: url('/images/yellow-05.png');
+  mask-image: url('/images/yellow-05.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.speaker-card:hover .speaker-card__photo {
+  transform: scale(1.03);
+  filter: grayscale(0%);
+}
+
+.speaker-card__body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.speaker-card__name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.speaker-card__name-link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.speaker-card__name-link:hover {
+  color: var(--color-primary);
+}
+
+.speaker-card__pronouns {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-normal);
+  color: var(--color-text-muted);
+}
+
+.speaker-card__role {
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  font-weight: var(--weight-medium);
+  max-width: none;
+}
+
+.speaker-card__bio {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.speaker-card__sessions {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  font-weight: var(--weight-medium);
+  max-width: none;
+}
+
+.speaker-card__link {
+  margin-top: auto;
+  align-self: flex-start;
+  border: none;
+}
+</style>

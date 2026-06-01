@@ -1,0 +1,17 @@
+{
+  "id": "ralf-assmann",
+  "slug": "ralf-assmann",
+  "year": 2026,
+  "name": "Ralf Assmann",
+  "pronouns": "er/ihm",
+  "role_de": "Künstler, Performer & Pädagoge",
+  "role_en": "Artist, Performer & Educator",
+  "organization": "TierART",
+  "bio_de": "Ralf ist ein vielseitiger interdisziplinärer Künstler, Performer, Liedermacher, Poet, Pädagoge und Prozessbegleiter. Der ursprüngliche Chemnitzer lebt seit acht Jahren in Bern und setzt sich in Schul- und kreativen Performanceprojekten für die Vermittlung von Artenkenntnis einheimischer Tiere ein.",
+  "bio_en": "Ralf is a versatile interdisciplinary artist, performer, songwriter, poet, educator and process facilitator. Originally from Chemnitz, he has lived in Bern for eight years and promotes knowledge of native animals through school and creative performance projects.",
+  "photo": "/images/speakers/Ralf_Assmann.jpg",
+  "sessionIds": [
+    "kreativer-protest"
+  ],
+  "sortOrder": 7
+}

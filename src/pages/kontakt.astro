@@ -1,0 +1,262 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("contact.title")}
+  description={t("contact.lead")}
+  locale={locale}
+  canonicalUrl={`${site}kontakt/`}
+  alternates={{ de: `${site}kontakt/`, en: `${site}en/contact/` }}
+  breadcrumbs={[{ label: t("contact.title") }]}
+>
+  <div class="section">
+    <header class="section__header container--narrow">
+      <h1 class="section__title">{t("contact.title")}</h1>
+      <p class="section__lead">{t("contact.lead")}</p>
+    </header>
+
+    <div class="contact-layout container--narrow">
+
+      <!-- Kontaktformular -->
+      <div class="contact-form-wrap">
+        <form
+          name="kontakt"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/bestaetigung"
+          novalidate
+          id="contact-form"
+        >
+          <input type="hidden" name="form-name" value="kontakt" />
+          <p class="contact-form__honeypot" aria-hidden="true">
+            <label>Nicht ausfüllen: <input name="bot-field" /></label>
+          </p>
+
+          <div class="contact-form__grid">
+            <div class="form-field">
+              <label class="form-field__label" for="cf-name">Name <span aria-hidden="true">*</span></label>
+              <input
+                class="form-field__input"
+                type="text"
+                id="cf-name"
+                name="name"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="cf-email">E-Mail <span aria-hidden="true">*</span></label>
+              <input
+                class="form-field__input"
+                type="email"
+                id="cf-email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder="deine@email.ch"
+              />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="cf-subject">Betreff</label>
+            <input
+              class="form-field__input"
+              type="text"
+              id="cf-subject"
+              name="subject"
+            />
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="cf-message">Nachricht <span aria-hidden="true">*</span></label>
+            <textarea
+              class="form-field__input form-field__textarea"
+              id="cf-message"
+              name="message"
+              required
+              rows="6"
+              placeholder="Wie können wir dir helfen?"
+            ></textarea>
+          </div>
+
+          <!-- Fehleranzeige -->
+          <div id="cf-errors" class="contact-form__errors" hidden role="alert">
+            <p>Bitte fülle alle Pflichtfelder aus.</p>
+          </div>
+
+          <button type="submit" class="btn btn--primary" id="cf-submit">
+            <span class="cf-label">Nachricht senden</span>
+            <span class="cf-loading" hidden aria-live="polite">Wird gesendet…</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Kontaktinfos -->
+      <div class="contact-info">
+        <div class="contact-block">
+          <h2>E-Mail</h2>
+          <p><a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a></p>
+        </div>
+        <div class="contact-block">
+          <h2>Impressum</h2>
+          <p>
+            <strong>Tier im Fokus (TIF)</strong><br />
+            Postfach 3159<br />
+            3001 Bern<br />
+            <a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</PageLayout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const errors = document.getElementById("cf-errors") as HTMLDivElement;
+  const submit = document.getElementById("cf-submit") as HTMLButtonElement;
+
+  form?.addEventListener("submit", (e) => {
+    const name    = (form.querySelector("#cf-name") as HTMLInputElement).value.trim();
+    const email   = (form.querySelector("#cf-email") as HTMLInputElement).value.trim();
+    const message = (form.querySelector("#cf-message") as HTMLTextAreaElement).value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!name || !email || !message || !emailOk) {
+      e.preventDefault();
+      errors.hidden = false;
+      errors.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    errors.hidden = true;
+    submit.disabled = true;
+    (submit.querySelector(".cf-label") as HTMLSpanElement).hidden = true;
+    (submit.querySelector(".cf-loading") as HTMLSpanElement).hidden = false;
+  });
+</script>
+
+<style>
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Formular */
+.contact-form-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 480px) {
+  .contact-form__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.form-field__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.form-field__input {
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  background: #e3e3dd;
+  color: var(--color-text);
+  width: 100%;
+  transition: box-shadow var(--transition-fast);
+}
+
+.form-field__input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(38, 40, 42, 0.15);
+}
+
+.form-field__textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.contact-form__errors {
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--color-error);
+  font-size: var(--text-sm);
+}
+
+.contact-form__errors p {
+  margin: 0;
+  max-width: none;
+}
+
+/* Infos */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contact-block {
+  padding: var(--space-5);
+  background: #e3e3dd;
+  border-radius: var(--radius-lg);
+}
+
+.contact-block h2 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.contact-block p {
+  max-width: none;
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-sm);
+}
+</style>

@@ -1,0 +1,24 @@
+{
+  "id": "ende-von-tierversuchen-planen",
+  "slug": "ende-von-tierversuchen-planen",
+  "year": 2026,
+  "title_de": "Wie man das Ende von Tierversuchen plant",
+  "title_en": "Planning the End of Animal Experiments",
+  "description_de": "Wie kommen wir weg von Tierversuchen? Ein Verbot ist offenbar nicht mehrheitsfähig, doch nur in Alternativmethoden zu investieren reicht auch nicht. Nico Müller spricht über die Ergebnisse seines Forschungsprojekts zu gradueller Ausstiegsplanung.",
+  "description_en": "How do we move away from animal experiments? A ban is evidently not feasible, yet investing only in alternative methods is not enough. Nico Müller presents the findings of his research project on gradual phase-out planning.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "18:00",
+  "endTime": "19:00",
+  "day": 1,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "nico-mueller"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 2,
+  "durationMinutes": 60
+}

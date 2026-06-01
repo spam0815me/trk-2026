@@ -1,0 +1,45 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import { useTranslations } from "../../lib/i18n";
+const locale = "en";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+<PageLayout title={t("contact.title")} description={t("contact.lead")} locale={locale}
+  canonicalUrl={`${site}en/contact/`} alternates={{ de: `${site}kontakt/`, en: `${site}en/contact/` }}
+  breadcrumbs={[{ label: t("contact.title") }]}>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">{t("contact.title")}</h1>
+      <p class="section__lead">{t("contact.lead")}</p>
+    </header>
+    <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer" class="tif-logo-link">
+      <img src="/images/tif-logo-dark.png" alt="Tier im Fokus" class="tif-logo" />
+    </a>
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h2>Email</h2>
+        <p><a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a></p>
+      </div>
+      <div class="contact-block contact-block--imprint">
+        <h2>Imprint</h2>
+        <p>
+          <strong>Tier im Fokus (TIF)</strong><br />
+          Postfach 3159<br />
+          3001 Bern<br />
+          <a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</PageLayout>
+<style>
+.contact-grid { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.contact-block { padding: var(--space-6); background: #e3e3dd; border-radius: var(--radius-lg); }
+.contact-block h2 { font-size: var(--text-lg); margin-bottom: var(--space-3); }
+.contact-block p { max-width: none; color: var(--color-text-muted); line-height: var(--leading-relaxed); }
+.contact-block p + p { margin-top: var(--space-3); }
+.contact-block--imprint p { color: #26282a; }
+.tif-logo-link { display: inline-block; margin-bottom: var(--space-8); }
+.tif-logo { width: 200px; height: auto; }
+</style>

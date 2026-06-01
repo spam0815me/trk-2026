@@ -1,0 +1,24 @@
+{
+  "id": "aktivismuspyramide",
+  "slug": "aktivismuspyramide",
+  "year": 2026,
+  "title_de": "Wie werden Menschen für Tiere aktiv? Unsere Erfahrungen und die «Aktivismuspyramide»",
+  "title_en": "How Do People Become Active for Animals? Our Experiences and the Activism Pyramid",
+  "description_de": "Tiere brauchen eine starke Tierrechtsbewegung. Céline Schlegel stellt das Modell der «Aktivismuspyramide» vor und teilt Erfahrungen darüber, wie Menschen in den Aktivismus finden und ihr Engagement ausbauen. Zudem werden Strategien für Organisationen und Einzelpersonen diskutiert.",
+  "description_en": "Animals need a strong animal rights movement. Céline Schlegel presents the activism pyramid model and shares experiences on how people find their way into activism and grow their engagement, including strategies for organisations and individuals.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "10:30",
+  "endTime": "11:30",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "celine-schlegel"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 4,
+  "durationMinutes": 60
+}

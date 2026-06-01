@@ -1,0 +1,73 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  buttonLabel: string;
+  buttonHref: string;
+  variant?: "primary" | "subtle";
+}
+
+const { title, text, buttonLabel, buttonHref, variant = "primary" } = Astro.props;
+---
+
+<section class:list={["cta-block", `cta-block--${variant}`]} aria-labelledby="cta-title">
+  <div class="container cta-block__inner">
+    <div class="cta-block__content">
+      <h2 class="cta-block__title" id="cta-title">{title}</h2>
+      <p class="cta-block__text">{text}</p>
+    </div>
+    <a href={buttonHref} class:list={["btn btn--lg", variant === "primary" ? "btn--organic-yellow" : "btn--primary"]}>
+      <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 28px; height: 28px;" aria-hidden="true"></span>
+      {buttonLabel}
+    </a>
+  </div>
+</section>
+
+<style>
+.cta-block {
+  padding-block: var(--space-12);
+}
+
+.cta-block--primary {
+  background: var(--brand-black);
+  color: var(--brand-white);
+}
+
+.cta-block--subtle {
+  background: var(--color-bg-subtle);
+}
+
+.cta-block__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.cta-block__title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-2);
+  color: inherit;
+}
+
+.cta-block__text {
+  font-size: var(--text-lg);
+  opacity: 0.9;
+  max-width: 55ch;
+}
+
+.cta-block--subtle .cta-block__title,
+.cta-block--subtle .cta-block__text {
+  color: var(--color-text);
+}
+
+.cta-block--primary .btn--organic-yellow:hover {
+  background-image: url('/images/btn-v2-beige.svg');
+  color: #26282a;
+}
+
+.cta-block--primary .btn--organic-yellow:hover .btn-icon {
+  background-color: #26282a;
+}
+</style>

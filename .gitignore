@@ -1,0 +1,28 @@
+# Abhängigkeiten
+node_modules/
+.pnpm-store/
+
+# Build-Output
+dist/
+.output/
+
+# Astro Cache
+.astro/
+
+# Environment-Variablen (nie committen!)
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*

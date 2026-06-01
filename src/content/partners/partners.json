@@ -1,0 +1,72 @@
+[
+  {
+    "id": "tir",
+    "name": "Stiftung für das Tier im Recht (TIR)",
+    "logo": "/images/partners/tir.png",
+    "url": "https://tierimrecht.org",
+    "category": "main",
+    "description_de": "Stiftung für das Tier im Recht — Pionierarbeit für Tierrechte in der Schweiz.",
+    "description_en": "Foundation for Animal Rights Law — pioneering animal rights in Switzerland.",
+    "sortOrder": 1
+  },
+  {
+    "id": "swissveg",
+    "name": "Swissveg",
+    "logo": "/images/partners/swissveg.png",
+    "url": "https://swissveg.ch",
+    "category": "main",
+    "description_de": "Schweizer Verband für vegane und vegetarische Lebensweise.",
+    "description_en": "Swiss association for vegan and vegetarian lifestyles.",
+    "sortOrder": 2
+  },
+  {
+    "id": "transfarmation",
+    "name": "Hof Narr & TransFARMation",
+    "logo": "/images/partners/transfarmation.png",
+    "url": "https://transfarmation.ch",
+    "category": "main",
+    "description_de": "Pioniere für eine tierleidfreie Landwirtschaft.",
+    "description_en": "Pioneers for farming without animal suffering.",
+    "sortOrder": 3
+  },
+  {
+    "id": "animal-rights-switzerland",
+    "name": "Animal Rights Switzerland",
+    "logo": "/images/partners/animal-rights-switzerland.png",
+    "url": "https://animal-rights-switzerland.ch",
+    "category": "partner",
+    "description_de": "Setzt sich für die Rechte aller Tiere in der Schweiz ein.",
+    "description_en": "Advocates for the rights of all animals in Switzerland.",
+    "sortOrder": 4
+  },
+  {
+    "id": "stadttauben-schweiz",
+    "name": "Stadttauben Schweiz",
+    "logo": "/images/partners/stadttauben-schweiz.png",
+    "url": "https://stadttauben.ch",
+    "category": "partner",
+    "description_de": "Engagiert für ein tierwürdiges Zusammenleben mit Stadttauben.",
+    "description_en": "Committed to humane coexistence with urban pigeons.",
+    "sortOrder": 5
+  },
+  {
+    "id": "dbt",
+    "name": "Dachverband Berner Tierschutzorganisationen (DBT)",
+    "logo": "/images/partners/dbt.png",
+    "url": "http://www.tierschutzkantonbern.ch/",
+    "category": "partner",
+    "description_de": "Dachverband der Berner Tierschutzorganisationen.",
+    "description_en": "Umbrella organisation of Bernese animal protection organisations.",
+    "sortOrder": 6
+  },
+  {
+    "id": "films-for-future",
+    "name": "Films for Future",
+    "logo": "/images/partners/films-for-future.png",
+    "url": "https://films-for-future.org",
+    "category": "partner",
+    "description_de": "Film als Werkzeug für gesellschaftlichen Wandel.",
+    "description_en": "Film as a tool for social change.",
+    "sortOrder": 7
+  }
+]

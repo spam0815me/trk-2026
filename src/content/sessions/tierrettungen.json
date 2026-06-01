@@ -1,0 +1,24 @@
+{
+  "id": "tierrettungen",
+  "slug": "tierrettungen",
+  "year": 2026,
+  "title_de": "Tierrettungen – Ein Leitfaden für die Praxis",
+  "title_en": "Animal Rescues – A Practical Guide",
+  "description_de": "Tierrettungen sind ein wichtiger Bestandteil der Tierrechtsbewegung. Valentina Zibung gibt einen praxisnahen Überblick: vom Rechtlichen über mögliche Krankheiten, Zusammenführung, Kosten bis zur Pflege.",
+  "description_en": "Animal rescues are an important part of the animal rights movement. Valentina Zibung provides a practical overview covering legal aspects, possible illnesses, integration, costs and care.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "11:00",
+  "endTime": "12:00",
+  "day": 3,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "valentina-zibung"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 15,
+  "durationMinutes": 60
+}

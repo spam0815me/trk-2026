@@ -1,0 +1,24 @@
+{
+  "id": "v-label",
+  "slug": "v-label",
+  "year": 2026,
+  "title_de": "Das V-Label – ein Tierrechtsprojekt?",
+  "title_en": "The V-Label – An Animal Rights Project?",
+  "description_de": "Das grün-gelbe V-Label von Swissveg ist weltweit als Symbol für vegane Produkte bekannt. Was steckt dahinter? Wie hilft das Label der weltweiten veganen Bewegung? Wie konnte es so bekannt werden?",
+  "description_en": "The green-and-yellow V-Label from Swissveg is known worldwide as a symbol for vegan products. What's behind it? How does the label help the global vegan movement? And how did it become so well known?",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 3,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "renato-pichler"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 16,
+  "durationMinutes": 60
+}

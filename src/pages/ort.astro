@@ -1,0 +1,165 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+---
+
+<PageLayout
+  title={t("venue.title")}
+  description={t("venue.lead")}
+  locale={locale}
+  canonicalUrl={`${site}ort/`}
+  alternates={{ de: `${site}ort/`, en: `${site}en/venue/` }}
+  breadcrumbs={[{ label: t("venue.title") }]}
+>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">{t("venue.title")}</h1>
+      <p class="section__lead">{t("venue.lead")}</p>
+    </header>
+
+    <div class="venue-map">
+      <iframe
+        src="https://www.google.com/maps?q=Photobastei,+Sihlquai+125,+8005+Z%C3%BCrich&output=embed"
+        width="100%"
+        height="420"
+        style="border:0;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Standort Photobastei Zürich"
+        aria-label="Google Maps Karte: Photobastei, Sihlquai 125, 8005 Zürich"
+      ></iframe>
+    </div>
+
+    <section class="venue-sections">
+      <div class="venue-section">
+        <h2 class="venue-section__title">
+          <div class="venue-icon-wrap" aria-hidden="true">
+            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
+            <svg class="venue-icon__svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          {t("venue.address")}
+        </h2>
+        <address>
+          <strong>Photobastei Zürich</strong><br />
+          Sihlquai 125<br />
+          8005 Zürich
+        </address>
+      </div>
+
+      <div class="venue-section">
+        <h2 class="venue-section__title">
+          <div class="venue-icon-wrap" aria-hidden="true">
+            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
+            <svg class="venue-icon__svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="16" height="13" rx="2"/><path d="M4 11h16"/><path d="M8 19l-2 2"/><path d="M16 19l2 2"/><path d="M8 19h8"/><circle cx="9" cy="15" r="1" fill="white" stroke="none"/><circle cx="15" cy="15" r="1" fill="white" stroke="none"/>
+            </svg>
+          </div>
+          {t("venue.publicTransport")}
+        </h2>
+        <p>Die Photobastei ist gut mit dem öffentlichen Verkehr erreichbar. Der nächste Bahnhof ist Zürich HB (ca. 10 Gehminuten). Zahlreiche Tram- und Buslinien halten in unmittelbarer Nähe.</p>
+      </div>
+
+      <div class="venue-section">
+        <h2 class="venue-section__title">
+          <div class="venue-icon-wrap" aria-hidden="true">
+            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
+            <img src="/images/behinderte-person.png" alt="" class="venue-icon__img" />
+          </div>
+          {t("venue.accessibility")}
+        </h2>
+        <p>Wir stellen sicher, dass der Veranstaltungsort barrierefrei zugänglich ist. Bei spezifischem Unterstützungsbedarf <a href="/kontakt">kontaktiere uns</a>.</p>
+      </div>
+    </section>
+  </div>
+</PageLayout>
+
+<style>
+.venue-map {
+  margin-bottom: var(--space-10);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.venue-placeholder {
+  padding: var(--space-8);
+  background: var(--color-bg-subtle);
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  margin-bottom: var(--space-8);
+  color: var(--color-text-muted);
+}
+
+.venue-sections {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.venue-section {
+  padding: var(--space-6);
+  background: #e3e3dd;
+  border-radius: var(--radius-lg);
+}
+
+.venue-section h2 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+.venue-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.venue-icon-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.venue-icon__shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.venue-icon__svg {
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.venue-icon__img {
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.venue-section p, .venue-section address {
+  color: var(--color-text-muted);
+  font-style: normal;
+  line-height: var(--leading-relaxed);
+  max-width: none;
+}
+</style>

@@ -1,0 +1,122 @@
+---
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Partner {
+  id: string;
+  name: string;
+  logo?: string;
+  url?: string;
+  category: string;
+  description?: string;
+}
+
+interface Props {
+  partners: Partner[];
+  locale: Locale;
+  category?: string;
+  showDescription?: boolean;
+}
+
+const { partners, locale, category, showDescription = false } = Astro.props;
+const t = useTranslations(locale);
+
+const filtered = category ? partners.filter(p => p.category === category) : partners;
+---
+
+{filtered.length > 0 && (
+  <ul class="partner-grid" role="list">
+    {filtered.map(partner => (
+      <li class="partner-item">
+        {partner.url ? (
+          <a
+            href={partner.url}
+            class="partner-item__link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={partner.name}
+          >
+            {partner.logo ? (
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                class="partner-item__logo"
+                loading="lazy"
+              />
+            ) : (
+              <span class="partner-item__name">{partner.name}</span>
+            )}
+          </a>
+        ) : (
+          <div class="partner-item__link">
+            {partner.logo ? (
+              <img
+                src={partner.logo}
+                alt={partner.name}
+                class="partner-item__logo"
+                loading="lazy"
+              />
+            ) : (
+              <span class="partner-item__name">{partner.name}</span>
+            )}
+          </div>
+        )}
+        {showDescription && partner.description && (
+          <p class="partner-item__desc">{partner.description}</p>
+        )}
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+.partner-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8) var(--space-8);
+  list-style: none;
+  padding: var(--space-6) 0;
+}
+
+.partner-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 90px;
+}
+
+.partner-item__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+a.partner-item__link:hover {
+  opacity: 0.65;
+}
+
+.partner-item__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.partner-item__name {
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.partner-item__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+</style>

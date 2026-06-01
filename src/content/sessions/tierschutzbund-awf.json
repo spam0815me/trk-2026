@@ -1,0 +1,24 @@
+{
+  "id": "tierschutzbund-awf",
+  "slug": "tierschutzbund-awf",
+  "year": 2026,
+  "title_de": "Tierschutz international: TSB/AWF und globale Missstände",
+  "title_en": "Animal Welfare Internationally: TSB/AWF and Global Abuses",
+  "description_de": "Josephine Cornes stellt die Arbeit von Tierschutzbund Zürich und Animal Welfare Foundation vor und beleuchtet Rindermastbetriebe in Südamerika, die Pferdefleischindustrie in Uruguay sowie ein neues Projekt zu Schweizer Schweinen.",
+  "description_en": "Josephine Cornes presents the work of Tierschutzbund Zürich and Animal Welfare Foundation, covering cattle feedlots in South America, the horse meat industry in Uruguay, and a new project on Swiss pigs.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-23",
+  "startTime": "18:00",
+  "endTime": "19:00",
+  "day": 1,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "josephine-cornes"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 12,
+  "durationMinutes": 60
+}

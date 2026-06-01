@@ -1,0 +1,24 @@
+{
+  "id": "fleischmythen",
+  "slug": "fleischmythen",
+  "year": 2026,
+  "title_de": "Zwischen Fakten und Fleischmythen: Wie Fehlinformationen unseren Blick auf Tiere verzerren",
+  "title_en": "Between Facts and Meat Myths: How Misinformation Distorts Our View of Animals",
+  "description_de": "Kurze Videos, starke Behauptungen und emotionale Anekdoten prägen viele Debatten über Veganismus, Ernährung und Tierschutz. In diesem Vortrag werden konkrete Video-Beispiele analysiert: Welche Red Flags weisen auf Fehlinformationen hin? Warum wirken bestimmte Fleischmythen psychologisch so überzeugend? Und wie können wir sie faktenbasiert und wirkungsvoll einordnen? Der Vortrag verbindet Social-Media-Analyse, kritisches Denken, Ernährungswissenschaft und Kommunikationspsychologie.",
+  "description_en": "Short videos, strong claims and emotional anecdotes shape many debates about veganism, nutrition and animal welfare. This talk analyses concrete video examples: What red flags indicate misinformation? Why do certain meat myths feel so psychologically convincing? And how can we address them effectively with facts? The talk combines social media analysis, critical thinking, nutritional science and communication psychology.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "09:30",
+  "endTime": "10:30",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "luca-pasquariello"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 25,
+  "durationMinutes": 60
+}

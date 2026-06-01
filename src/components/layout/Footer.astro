@@ -1,0 +1,182 @@
+---
+/**
+ * Footer — Navigationslinks, Rechtliches, Copyright
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const base = locale === "en" ? "/en" : "";
+
+const legalLinks = [
+  { href: `${base}/${locale === "en" ? "privacy" : "datenschutz"}`, label: t("nav.privacy") },
+  { href: `${base}/${locale === "en" ? "contact" : "kontakt"}`,     label: t("nav.imprint") },
+  { href: `${base}/${locale === "en" ? "accessibility" : "barrierefreiheit"}`, label: t("nav.accessibility") },
+];
+
+const navLinks = [
+  { href: `${base}/${locale === "en" ? "program" : "programm"}`,     label: t("nav.program") },
+  { href: `${base}/${locale === "en" ? "speakers" : "referentinnen"}`, label: t("nav.speakers") },
+  { href: `${base}/${locale === "en" ? "venue" : "ort"}`,             label: t("nav.venue") },
+  { href: `${base}/${locale === "en" ? "registration" : "anmeldung"}`, label: t("nav.registration") },
+  { href: `${base}/${locale === "en" ? "archive" : "archiv"}`,        label: t("nav.archive") },
+  { href: `${base}/${locale === "en" ? "faq" : "faq"}`,               label: t("nav.faq") },
+  { href: `${base}/${locale === "en" ? "sponsoring" : "sponsoring"}`, label: t("nav.sponsoring") },
+  { href: `${base}/${locale === "en" ? "contact" : "kontakt"}`,       label: t("nav.contact") },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container site-footer__inner">
+    <!-- Spalte: Info -->
+    <div class="site-footer__brand">
+      <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer" class="site-footer__logo-link">
+        <img src="/images/tif-logo-white.png" alt="Tier im Fokus (TIF)" class="site-footer__logo" />
+      </a>
+      <p class="site-footer__name">{t("site.name")}</p>
+      <p class="site-footer__tagline">{t("site.tagline")}</p>
+    </div>
+
+    <!-- Spalte: Navigation -->
+    <nav aria-label={locale === "de" ? "Footer Navigation" : "Footer navigation"} class="site-footer__nav">
+      <ul role="list" class="site-footer__nav-list">
+        {navLinks.map(link => (
+          <li><a href={link.href} class="site-footer__nav-link">{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Rechtliches -->
+  <div class="site-footer__legal">
+    <div class="container site-footer__legal-inner">
+      <p class="site-footer__copyright">
+        &copy; {year} {t("footer.copyright")}
+      </p>
+      <nav aria-label={locale === "de" ? "Rechtliche Links" : "Legal links"}>
+        <ul role="list" class="site-footer__legal-list">
+          {legalLinks.map(link => (
+            <li><a href={link.href} class="site-footer__legal-link">{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background: var(--brand-black);
+  color: var(--color-neutral-300);
+  margin-top: auto;
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-10);
+}
+
+@media (min-width: 640px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-12);
+  }
+}
+
+/* Brand */
+.site-footer__logo-link {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+}
+
+.site-footer__logo {
+  height: 40px;
+  width: auto;
+}
+
+.site-footer__name {
+  font-family: var(--brand-font-bold); /* Poppins */
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--brand-green); /* TIF accent in footer */
+  margin-bottom: var(--space-2);
+}
+
+.site-footer__tagline {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-400);
+  max-width: none;
+}
+
+/* Nav */
+.site-footer__nav-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-2) var(--space-6);
+  list-style: none;
+}
+
+.site-footer__nav-link {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__nav-link:hover {
+  color: #fff;
+}
+
+.site-footer__nav-link:focus-visible {
+  outline-color: var(--color-primary-light);
+}
+
+/* Legal */
+.site-footer__legal {
+  border-top: 1px solid var(--color-neutral-800);
+  padding-block: var(--space-6);
+}
+
+.site-footer__legal-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.site-footer__copyright {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+  max-width: none;
+}
+
+.site-footer__legal-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.site-footer__legal-link {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__legal-link:hover {
+  color: var(--color-neutral-300);
+}
+</style>

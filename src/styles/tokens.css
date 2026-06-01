@@ -1,0 +1,206 @@
+/**
+ * Design Tokens — Tierrechtskongress
+ * Quelle: tierimfokus.ch CI (veganwebagency_child Theme)
+ *
+ * Markenfarben, Schriften, Abstände und Radien direkt aus dem TIF-Stylesheet übernommen.
+ * Schriften: Poppins (Google Fonts, entspricht --brand-font-bold) +
+ *            DM Sans (Google Fonts, visuelle Alternative zu Greycliff CF)
+ */
+
+:root {
+  /* ─── Markenfarben (TIF CI) ─────────────────────────────────────────────── */
+  --brand-black:    #26282a;
+  --brand-white:    #FAFAFF;
+  --brand-platinum: #E3E3DD;
+  --brand-green:    #e5b969;
+  --brand-red:      #e5b969;
+  --color-white-transparent: rgba(255, 255, 255, 0.5);
+
+  /* Aliasse für das Projekt */
+  --color-primary:        var(--brand-green);
+  --color-primary-light:  #eec97a;
+  --color-primary-dark:   #c9a050;
+  --color-primary-subtle: #fdf6e3;
+
+  --color-accent:       var(--brand-red);
+  --color-accent-light: #d4796e;
+  --color-accent-dark:  #9e4035;
+
+  --color-secondary:        var(--brand-platinum);
+  --color-secondary-subtle: #f4f4f0;
+
+  /* Neutrale Töne (basierend auf --brand-black / --brand-platinum) */
+  --color-neutral-50:  #f9f9f8;
+  --color-neutral-100: #f0f0ed;
+  --color-neutral-200: var(--brand-platinum);   /* #E3E3DD */
+  --color-neutral-300: #ccccc6;
+  --color-neutral-400: #a8a8a2;
+  --color-neutral-500: #828280;
+  --color-neutral-600: #5e5e5c;
+  --color-neutral-700: #464644;
+  --color-neutral-800: #363634;
+  --color-neutral-900: var(--brand-black);      /* #26282a */
+
+  /* Hintergrund & Text */
+  --color-bg:          var(--brand-white);      /* #FAFAFF */
+  --color-bg-subtle:   #f4f4f0;
+  --color-bg-muted:    var(--brand-platinum);   /* #E3E3DD */
+  --color-bg-dark:     var(--brand-black);      /* #26282a */
+
+  --color-text:          var(--brand-black);    /* #26282a */
+  --color-text-muted:    #5e5e5c;
+  --color-text-subtle:   #828280;
+  --color-text-on-dark:  var(--brand-white);
+  --color-text-on-primary: var(--brand-white);
+
+  --color-border:       var(--brand-platinum);  /* #E3E3DD */
+  --color-border-strong: #ccccc6;
+
+  /* Zustände */
+  --color-focus:      #2563eb;
+  --color-error:      #e5b969;
+  --color-error-bg:   #fdf6e3;
+  --color-success:    #5a8c60;
+  --color-success-bg: #eef5ef;
+  --color-warning:    #c08b2a;
+  --color-warning-bg: #fdf4e3;
+
+  /* ─── Typografie (TIF CI) ───────────────────────────────────────────────── */
+  /* Poppins = --brand-font-bold (Überschriften, Buttons, Labels)             */
+  /* DM Sans  = Alternative zu Greycliff CF (Fließtext)                       */
+  --brand-font:      'DM Sans', 'Greycliff CF', system-ui, sans-serif;
+  --brand-font-bold: 'Poppins', system-ui, sans-serif;
+
+  --font-heading: var(--brand-font-bold);
+  --font-body:    var(--brand-font);
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Schriftgrößen (1:1 aus TIF) */
+  --font-size-9:        54px;
+  --font-size-8:        46px;
+  --font-size-7:        38px;
+  --font-size-6:        32px;
+  --font-size-5:        28px;
+  --font-size-4-5:      26px;
+  --font-size-4:        24px;
+  --font-size-3:        20px;
+  --font-size-2:        18px;
+  --font-size-standard: 22px;
+  --font-size-1:        16px;
+
+  /* Mapped auf Projekt-Variablen */
+  --text-xs:   13px;
+  --text-sm:   var(--font-size-1);     /* 16px */
+  --text-base: var(--font-size-2);     /* 18px */
+  --text-lg:   var(--font-size-3);     /* 20px */
+  --text-xl:   var(--font-size-4);     /* 24px */
+  --text-2xl:  var(--font-size-5);     /* 28px */
+  --text-3xl:  var(--font-size-6);     /* 32px */
+  --text-4xl:  var(--font-size-7);     /* 38px */
+
+  /* Schriftstärken */
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Zeilenhöhen (TIF: 1.35 tight, 1.6 normal) */
+  --leading-tight:   var(--line-height-2);  /* 1.35 */
+  --leading-snug:    1.45;
+  --leading-normal:  var(--line-height-1);  /* 1.6 */
+  --leading-relaxed: 1.7;
+  --line-height-2:   1.35;
+  --line-height-1:   1.6;
+
+  /* ─── Abstände (1:1 aus TIF) ────────────────────────────────────────────── */
+  --spacing-12: 200px;
+  --spacing-11: 180px;
+  --spacing-10: 140px;
+  --spacing-9:  100px;
+  --spacing-8:  80px;
+  --spacing-7:  70px;
+  --spacing-6-5: 60px;
+  --spacing-6:  50px;
+  --spacing-5:  40px;
+  --spacing-4-5: 35px;
+  --spacing-4:  30px;
+  --spacing-3-5: 25px;
+  --spacing-3:  20px;
+  --spacing-2-5: 15px;
+  --spacing-2:  12px;
+  --spacing-1:  10px;
+
+  /* Mapped auf Projekt-Variablen */
+  --space-1:  var(--spacing-1);   /* 10px */
+  --space-2:  var(--spacing-2);   /* 12px */
+  --space-3:  var(--spacing-2-5); /* 15px */
+  --space-4:  var(--spacing-3);   /* 20px */
+  --space-5:  var(--spacing-3-5); /* 25px */
+  --space-6:  var(--spacing-4);   /* 30px */
+  --space-8:  var(--spacing-5);   /* 40px */
+  --space-10: var(--spacing-6);   /* 50px */
+  --space-12: var(--spacing-7);   /* 70px */
+  --space-16: var(--spacing-8);   /* 80px */
+  --space-20: var(--spacing-9);   /* 100px */
+  --space-24: var(--spacing-10);  /* 140px */
+
+  /* ─── Radien (TIF CI) ───────────────────────────────────────────────────── */
+  --border-radius:         20px;
+  --border-radius-small:   10px;
+  --border-radius-button:  12px 5px;
+  --border-radius-button-reverse: 5px 12px;
+
+  --radius-sm:   var(--border-radius-small); /* 10px */
+  --radius-md:   var(--border-radius-small); /* 10px */
+  --radius-lg:   var(--border-radius);       /* 20px */
+  --radius-xl:   var(--border-radius);       /* 20px */
+  --radius-full: 9999px;
+
+  /* ─── Schatten (TIF CI) ─────────────────────────────────────────────────── */
+  --box-shadow-2: 0px 0px 25px rgba(61, 61, 60, 0.2);
+  --box-shadow-1: 0px 0px 25px rgba(61, 61, 60, 0.15);
+
+  --shadow-sm: var(--box-shadow-1);
+  --shadow-md: var(--box-shadow-2);
+  --shadow-lg: 0px 0px 40px rgba(61, 61, 60, 0.25);
+  --shadow-xl: 0px 0px 60px rgba(61, 61, 60, 0.3);
+
+  /* ─── Übergänge (TIF CI) ────────────────────────────────────────────────── */
+  --transition-delay: 0.15s;
+  --transition-4:     1s;
+  --transition-3:     0.75s;
+  --transition-2:     0.5s;
+  --transition-1:     0.25s;
+
+  --transition-fast:   var(--transition-1); /* 0.25s */
+  --transition-normal: var(--transition-2); /* 0.5s */
+  --transition-slow:   var(--transition-3); /* 0.75s */
+
+  /* ─── Layout (TIF CI) ───────────────────────────────────────────────────── */
+  --height-header:   95px;
+  --width-content:   1600px;
+  --width-text:      900px;
+
+  --header-height:   var(--height-header);
+  --max-width-sm:    640px;
+  --max-width-md:    var(--width-text);     /* 900px */
+  --max-width-lg:    1240px;
+  --max-width-xl:    1400px;
+  --max-width-2xl:   var(--width-content);  /* 1600px */
+
+  /* ─── Opazität (TIF CI) ─────────────────────────────────────────────────── */
+  --opacity-2: 0.7;
+  --opacity-1: 0.5;
+}
+
+/* ─── Reduzierte Bewegung ───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-1: 0.01ms;
+    --transition-2: 0.01ms;
+    --transition-3: 0.01ms;
+    --transition-fast:   0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-slow:   0.01ms;
+  }
+}
