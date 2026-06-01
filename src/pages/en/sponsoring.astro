@@ -29,7 +29,7 @@ const categories = ["main", "partner", "media", "supporter"] as const;
       if (catPartners.length === 0) return null;
       return (
         <section class="sponsors-section">
-          <h2 class="sponsors-section__title">{t(`sponsoring.categories.${cat}` as Parameters<typeof t>[0])}</h2>
+          <h2 class="sponsors-section__title">{t(`sponsoring.categories.${cat}` as any)}</h2>
           <PartnerGrid partners={catPartners} locale={locale} showDescription />
         </section>
       );
