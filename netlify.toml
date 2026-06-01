@@ -16,7 +16,4 @@
 #   PAYREXX_INSTANCE   → tierimfokus
 #   PAYREXX_API_KEY    → dein API-Key (neu erstellen nach dem Leak!)
 
-[[redirects]]
-  from   = "/.netlify/functions/*"
-  to     = "/.netlify/functions/:splat"
-  status = 200
+
