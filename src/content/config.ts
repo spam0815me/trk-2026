@@ -48,6 +48,9 @@ const sessions = defineCollection({
     registrationRequired: z.boolean().default(false),
     recording: z.boolean().default(false),
 
+    // Highlight auf Startseite
+    highlight: z.boolean().default(false),
+
     // Sortierung
     sortOrder: z.number().default(0),
   }),

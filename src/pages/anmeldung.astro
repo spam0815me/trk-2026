@@ -1,6 +1,5 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import RegistrationForm from "../components/forms/RegistrationForm.astro";
 import { useTranslations } from "../lib/i18n";
 
 const locale = "de";
@@ -24,147 +23,190 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 
     <!-- Preisübersicht -->
     <div class="container--narrow">
-      <div class="ticket-table-wrap">
-        <h2 class="ticket-table__heading">Ticketpreise</h2>
-        <p class="ticket-table__note">Reduziert gilt für Studierende, Rentner:innen und Personen in finanziell schwierigen Verhältnissen. Solidarität unterstützt die Teilnahme anderer.</p>
-        <div class="ticket-table-scroll">
-          <table class="ticket-table">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Reduziert</th>
-                <th scope="col">Normal</th>
-                <th scope="col">Solidarität</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="ticket-table__row--featured">
-                <th scope="row">3-Tagespass<br><span>Freitag, Samstag &amp; Sonntag</span></th>
-                <td>CHF 100</td>
-                <td>CHF 150</td>
-                <td>CHF 200</td>
-              </tr>
-              <tr>
-                <th scope="row">1-Tagespass Freitag<br><span>23. Oktober</span></th>
-                <td>CHF 40</td>
-                <td>CHF 55</td>
-                <td>CHF 75</td>
-              </tr>
-              <tr>
-                <th scope="row">1-Tagespass Samstag<br><span>24. Oktober</span></th>
-                <td>CHF 55</td>
-                <td>CHF 80</td>
-                <td>CHF 100</td>
-              </tr>
-              <tr>
-                <th scope="row">1-Tagespass Sonntag<br><span>25. Oktober</span></th>
-                <td>CHF 40</td>
-                <td>CHF 55</td>
-                <td>CHF 75</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <p class="ticket-note">Reduziert gilt für Studierende, Rentner:innen und Personen in finanziell schwierigen Verhältnissen. Soli unterstützt die Teilnahme anderer.</p>
+    </div>
+    <div class="container">
+      <div class="ticket-grid">
 
-      <RegistrationForm locale={locale} />
+        <a class="ticket-card ticket-card--featured btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+          <img src="/images/tickets/Eintritt_3-Tages.png" alt="3-Tagespass" class="ticket-card__img" />
+          <div class="ticket-card__body">
+            <h2 class="ticket-card__title">3-Tagespass</h2>
+            <p class="ticket-card__dates">Freitag, Samstag &amp; Sonntag</p>
+            <ul class="ticket-card__prices">
+              <li><span>Reduziert</span><strong>CHF 100</strong></li>
+              <li><span>Normal</span><strong>CHF 150</strong></li>
+              <li><span>Soli</span><strong>CHF 200</strong></li>
+            </ul>
+          </div>
+        </a>
+
+        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+          <img src="/images/tickets/Eintritt_Freitag.png" alt="Eintritt Freitag" class="ticket-card__img" />
+          <div class="ticket-card__body">
+            <h2 class="ticket-card__title">1-Tagespass Freitag</h2>
+            <p class="ticket-card__dates">23. Oktober</p>
+            <ul class="ticket-card__prices">
+              <li><span>Reduziert</span><strong>CHF 40</strong></li>
+              <li><span>Normal</span><strong>CHF 55</strong></li>
+              <li><span>Soli</span><strong>CHF 75</strong></li>
+            </ul>
+          </div>
+        </a>
+
+        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+          <img src="/images/tickets/Eintritt_Samstag.png" alt="Eintritt Samstag" class="ticket-card__img" />
+          <div class="ticket-card__body">
+            <h2 class="ticket-card__title">1-Tagespass Samstag</h2>
+            <p class="ticket-card__dates">24. Oktober</p>
+            <ul class="ticket-card__prices">
+              <li><span>Reduziert</span><strong>CHF 55</strong></li>
+              <li><span>Normal</span><strong>CHF 80</strong></li>
+              <li><span>Soli</span><strong>CHF 100</strong></li>
+            </ul>
+          </div>
+        </a>
+
+        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+          <img src="/images/tickets/Eintritt_Sonntag.png" alt="Eintritt Sonntag" class="ticket-card__img" />
+          <div class="ticket-card__body">
+            <h2 class="ticket-card__title">1-Tagespass Sonntag</h2>
+            <p class="ticket-card__dates">25. Oktober</p>
+            <ul class="ticket-card__prices">
+              <li><span>Reduziert</span><strong>CHF 40</strong></li>
+              <li><span>Normal</span><strong>CHF 55</strong></li>
+              <li><span>Soli</span><strong>CHF 75</strong></li>
+            </ul>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Payrexx Modal -->
+    <div class="container--narrow">
+      <div class="payrexx-cta">
+        <a class="btn btn--organic-yellow btn--lg btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d" style="align-self: center;">
+          <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 28px; height: 28px;" aria-hidden="true"></span>
+          Ticket sichern!
+        </a>
+      </div>
     </div>
   </div>
 </PageLayout>
 
+
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script is:inline src="https://media.payrexx.com/modal/v1/modal.min.js"></script>
+<script is:inline>
+  jQuery(".btn-payrexx-modal").payrexxModal();
+</script>
+
 <style>
-.ticket-table-wrap {
+.ticket-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
   margin-bottom: var(--space-10);
 }
 
-.ticket-table__heading {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-2);
+.ticket-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #f0f0ee;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.ticket-table__note {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-5);
+.ticket-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(38,40,42,0.12);
 }
 
-.ticket-table-scroll {
-  overflow-x: auto;
-}
-
-.ticket-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
-}
-
-.ticket-table thead tr {
-  background: #26282a;
-  color: #fafaff;
-}
-
-.ticket-table thead th {
-  padding: var(--space-3) var(--space-5);
-  text-align: left;
-  font-weight: var(--weight-semibold);
-  white-space: nowrap;
-}
-
-.ticket-table thead th:not(:first-child) {
-  text-align: center;
-}
-
-.ticket-table tbody tr {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.ticket-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.ticket-table tbody tr:hover {
-  background: var(--color-bg-subtle);
-}
-
-.ticket-table__row--featured {
+.ticket-card--featured {
   background: #e3e3dd;
 }
 
-.ticket-table__row--featured:hover {
-  background: #d8d8d2;
+.ticket-card__img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
 }
 
-.ticket-table tbody th {
-  padding: var(--space-4) var(--space-5);
+.ticket-card__body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.ticket-card__title {
+  font-size: var(--text-base);
   font-weight: var(--weight-semibold);
   color: var(--color-text);
-  text-align: left;
-  white-space: nowrap;
+  margin: 0;
 }
 
-.ticket-table tbody th span {
-  display: block;
+.ticket-card__dates {
   font-size: var(--text-xs);
-  font-weight: var(--weight-normal);
   color: var(--color-text-muted);
-  margin-top: 2px;
+  margin: 0;
 }
 
-.ticket-table tbody td {
-  padding: var(--space-4) var(--space-5);
-  text-align: center;
-  font-weight: var(--weight-medium);
-  color: #26282a;
+.ticket-card__prices {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
-.payrexx-wrap {
+.ticket-card__title,
+.ticket-card__dates {
+  text-align: left;
+}
+
+.ticket-card__prices li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid rgba(38,40,42,0.08);
+  padding-bottom: var(--space-1);
+}
+
+.ticket-card__prices li:last-child {
+  border-bottom: none;
+}
+
+.ticket-card__prices span {
+  color: var(--color-text-muted);
+}
+
+.ticket-card__prices strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+.payrexx-cta {
   margin-top: var(--space-8);
-}
-
-.payrexx-wrap iframe {
-  border: none;
-  background: transparent;
-  display: block;
-  transition: height 0.3s ease;
+  margin-bottom: var(--space-10);
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 </style>

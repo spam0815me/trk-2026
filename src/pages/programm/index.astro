@@ -62,18 +62,45 @@ const activeRoomData = activeRooms.map(r => ({
   icon:  roomIcons[r.data.id],
 }));
 
+// Pausen & Rahmenprogramm pro Tag
+const breaksByDay: Record<number, { time: string; label: string; icon: string }[]> = {
+  1: [
+    { time: "19:00", label: "zNacht", icon: "/images/Znacht.svg" },
+    { time: "20:30", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
+  ],
+  2: [
+    { time: "12:30", label: "Mittagspause", icon: "/images/Mittag.svg" },
+    { time: "16:00", label: "Kaffeepause", icon: "/images/Pause.svg" },
+    { time: "18:30", label: "zNacht", icon: "/images/Znacht.svg" },
+    { time: "20:00", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
+  ],
+  3: [
+    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg" },
+    { time: "13:00", label: "Mittagspause", icon: "/images/Mittag.svg" },
+  ],
+};
+
 const timetableData = days.map(day => {
   const daySessions = sessionViews.filter(sv => sv.view.day === day);
-  const timeSlots = [...new Set(daySessions.map(sv => sv.view.startTime))].sort();
+  const sessionTimes = [...new Set(daySessions.map(sv => sv.view.startTime))];
+  const breakTimes = (breaksByDay[day] ?? []).map(b => b.time);
+  const allTimes = [...new Set([...sessionTimes, ...breakTimes])].sort();
+
   return {
     day,
     date: daySessions[0]?.view.date ?? "",
-    timeSlots: timeSlots.map(time => ({
-      time,
-      cells: activeRooms.map(room =>
-        daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
-      ),
-    })),
+    timeSlots: allTimes.map(time => {
+      const breakEntry = (breaksByDay[day] ?? []).find(b => b.time === time);
+      return {
+        time,
+        isBreak: !!breakEntry,
+        breakLabel: breakEntry?.label ?? "",
+        breakIcon: breakEntry?.icon ?? "",
+        cells: activeRooms.map(room =>
+          daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
+        ),
+      };
+    }),
   };
 });
 ---
@@ -90,7 +117,7 @@ const timetableData = days.map(day => {
   <div class="container">
     <header class="section__header" style="padding-top: var(--space-8);">
       <h1 class="section__title">{t("program.title")}</h1>
-      <p class="section__lead">Drei Tage, zwei Räume, viele Perspektiven. Pro Zeitslot laufen in Raum Sandra und Raum Yvonne gleichzeitig Vorträge — ihr wählt, was euch bewegt.</p>
+      <p class="section__lead"><strong>Drei Tage, zwei Räume, viele Perspektiven.</strong> Pro Zeitslot laufen in Raum Sandra und Raum Yvonne gleichzeitig Vorträge — du wählst, was dich bewegt.</p>
     </header>
 
   </div>
@@ -109,55 +136,58 @@ const timetableData = days.map(day => {
             <div class="timetable__time-col"></div>
             {activeRoomData.map(room => (
               <div class="timetable__room-card">
-                {room.photo && (
-                  <img src={room.photo} alt={room.name} class="timetable__room-photo" loading="lazy" />
-                )}
                 <div class="timetable__room-info">
-                  {room.icon
-                    ? <img src={room.icon} alt={room.name} class="timetable__room-icon" />
-                    : <strong class="timetable__room-name">{room.name}</strong>
-                  }
-                  {room.story && <p class="timetable__room-story">{room.story}</p>}
+                  {room.icon && <img src={room.icon} alt={room.name} class="timetable__room-icon" />}
                 </div>
+                {day === 1 && room.story && <p class="timetable__room-story">{room.story}</p>}
               </div>
             ))}
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, cells }) => (
-            <div class="timetable__row">
-              <div class="timetable__time">{time}</div>
-              {cells.map(sv => (
-                <div class="timetable__cell">
-                  {sv ? (
-                    <SessionCard
-                      id={sv.view.id}
-                      slug={sv.view.slug}
-                      title={sv.view.title}
-                      description={sv.view.description}
-                      type={sv.view.type}
-                      language={sv.view.language}
-                      startTime={sv.view.startTime}
-                      endTime={sv.view.endTime}
-                      durationMinutes={sv.view.durationMinutes}
-                      day={sv.view.day}
-                      date={sv.view.date}
-                      roomName={sv.roomName}
-                      roomId={sv.view.roomId}
-                      speakerNames={sv.speakerNames}
-                      speakerPhotos={sv.speakerPhotos}
-                      speakerSlugs={sv.speakerSlugs}
-                      locale={locale}
-                      registrationRequired={sv.view.registrationRequired}
-                      recording={sv.view.recording}
-                      status={sv.view.status}
-                    />
-                  ) : (
-                    <div class="timetable__empty" aria-hidden="true"></div>
-                  )}
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, cells }) => (
+            isBreak ? (
+              <div class="timetable__break-row">
+                <span class="timetable__break-time">{time}</span>
+                <div class="timetable__break">
+                  {breakIcon && <img src={breakIcon} alt={breakLabel} class="timetable__break-icon" />}
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div class="timetable__row">
+                <div class="timetable__time">{time}</div>
+                {cells.map(sv => (
+                  <div class="timetable__cell">
+                    {sv ? (
+                      <SessionCard
+                        id={sv.view.id}
+                        slug={sv.view.slug}
+                        title={sv.view.title}
+                        description={sv.view.description}
+                        type={sv.view.type}
+                        language={sv.view.language}
+                        startTime={sv.view.startTime}
+                        endTime={sv.view.endTime}
+                        durationMinutes={sv.view.durationMinutes}
+                        day={sv.view.day}
+                        date={sv.view.date}
+                        roomName={sv.roomName}
+                        roomId={sv.view.roomId}
+                        speakerNames={sv.speakerNames}
+                        speakerPhotos={sv.speakerPhotos}
+                        speakerSlugs={sv.speakerSlugs}
+                        locale={locale}
+                        registrationRequired={sv.view.registrationRequired}
+                        recording={sv.view.recording}
+                        status={sv.view.status}
+                      />
+                    ) : (
+                      <div class="timetable__empty" aria-hidden="true"></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )
           ))}
         </div>
       </section>
@@ -275,7 +305,6 @@ const timetableData = days.map(day => {
   align-items: flex-start;
   gap: var(--space-3);
   padding-bottom: var(--space-4);
-  border-bottom: 2px solid var(--color-border);
   margin-bottom: var(--space-4);
 }
 
@@ -297,12 +326,13 @@ const timetableData = days.map(day => {
 
 .timetable__room-info {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
 }
 
 .timetable__room-icon {
-  height: 36px;
+  height: 56px;
   width: auto;
   display: block;
 }
@@ -349,6 +379,39 @@ const timetableData = days.map(day => {
   min-height: 60px;
   border: 1px dashed rgba(38,40,42,0.12);
   border-radius: var(--radius-lg);
+}
+
+/* Pausen */
+.timetable__break-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  min-width: 480px;
+  align-items: center;
+}
+
+.timetable__break-time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  text-align: right;
+  padding-right: var(--space-2);
+  flex-shrink: 0;
+}
+
+.timetable__break {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e3e3dd;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.timetable__break-icon {
+  height: 40px;
+  width: auto;
 }
 
 /* Leer */

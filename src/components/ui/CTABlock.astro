@@ -10,12 +10,8 @@ interface Props {
 const { title, text, buttonLabel, buttonHref, variant = "primary" } = Astro.props;
 ---
 
-<section class:list={["cta-block", `cta-block--${variant}`]} aria-labelledby="cta-title">
+<section class:list={["cta-block", `cta-block--${variant}`]}>
   <div class="container cta-block__inner">
-    <div class="cta-block__content">
-      <h2 class="cta-block__title" id="cta-title">{title}</h2>
-      <p class="cta-block__text">{text}</p>
-    </div>
     <a href={buttonHref} class:list={["btn btn--lg", variant === "primary" ? "btn--organic-yellow" : "btn--primary"]}>
       <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 28px; height: 28px;" aria-hidden="true"></span>
       {buttonLabel}
@@ -25,7 +21,7 @@ const { title, text, buttonLabel, buttonHref, variant = "primary" } = Astro.prop
 
 <style>
 .cta-block {
-  padding-block: var(--space-12);
+  padding-block: var(--space-6);
 }
 
 .cta-block--primary {
@@ -39,10 +35,7 @@ const { title, text, buttonLabel, buttonHref, variant = "primary" } = Astro.prop
 
 .cta-block__inner {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-6);
+  justify-content: center;
 }
 
 .cta-block__title {
@@ -55,6 +48,33 @@ const { title, text, buttonLabel, buttonHref, variant = "primary" } = Astro.prop
   font-size: var(--text-lg);
   opacity: 0.9;
   max-width: 55ch;
+}
+
+.cta-block__logo {
+  height: 320px;
+  width: auto;
+}
+
+.cta-block__org {
+  font-size: var(--text-sm);
+  color: rgba(250,250,255,0.6);
+  margin: 0 0 var(--space-1);
+  max-width: none;
+}
+
+.cta-block__event {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: #fafaff;
+  margin: 0 0 var(--space-2);
+  max-width: none;
+}
+
+.cta-block__tagline {
+  font-size: var(--text-sm);
+  color: rgba(250,250,255,0.7);
+  margin: 0;
+  max-width: none;
 }
 
 .cta-block--subtle .cta-block__title,

@@ -40,7 +40,7 @@
     "partnersTitle": "Partner:innen & Unterstützer:innen",
     "newsTitle": "Aktuelles",
     "registerCTATitle": "Sichere dir deinen Platz",
-    "registerCTAText": "Die Anmeldung ist geöffnet. Melde dich jetzt an und sei dabei.",
+    "registerCTAText": "Sei dabei.",
     "registerCTAButton": "Ticket sichern!"
   },
   "program": {
@@ -194,7 +194,7 @@
   },
   "contact": {
     "title": "Kontakt",
-    "lead": "Fragen, Presseanfragen oder Kooperationen — schreib uns.",
+    "lead": "Fragen? Schreib uns!",
     "email": "E-Mail",
     "press": "Presseanfragen",
     "social": "Social Media"

@@ -38,12 +38,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
     <section class="venue-sections">
       <div class="venue-section">
         <h2 class="venue-section__title">
-          <div class="venue-icon-wrap" aria-hidden="true">
-            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
-            <svg class="venue-icon__svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
-            </svg>
-          </div>
+          <img src="/images/Photobastei.svg" alt="" class="venue-icon" aria-hidden="true" />
           {t("venue.address")}
         </h2>
         <address>
@@ -55,23 +50,15 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 
       <div class="venue-section">
         <h2 class="venue-section__title">
-          <div class="venue-icon-wrap" aria-hidden="true">
-            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
-            <svg class="venue-icon__svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="3" width="16" height="13" rx="2"/><path d="M4 11h16"/><path d="M8 19l-2 2"/><path d="M16 19l2 2"/><path d="M8 19h8"/><circle cx="9" cy="15" r="1" fill="white" stroke="none"/><circle cx="15" cy="15" r="1" fill="white" stroke="none"/>
-            </svg>
-          </div>
-          {t("venue.publicTransport")}
+          <img src="/images/OeV.svg" alt="" class="venue-icon" aria-hidden="true" />
+          Anreise
         </h2>
         <p>Die Photobastei ist gut mit dem öffentlichen Verkehr erreichbar. Der nächste Bahnhof ist Zürich HB (ca. 10 Gehminuten). Zahlreiche Tram- und Buslinien halten in unmittelbarer Nähe.</p>
       </div>
 
       <div class="venue-section">
         <h2 class="venue-section__title">
-          <div class="venue-icon-wrap" aria-hidden="true">
-            <img src="/images/yellow-05.png" alt="" class="venue-icon__shape" />
-            <img src="/images/behinderte-person.png" alt="" class="venue-icon__img" />
-          </div>
+          <img src="/images/behinderte-person.svg" alt="" class="venue-icon" aria-hidden="true" />
           {t("venue.accessibility")}
         </h2>
         <p>Wir stellen sicher, dass der Veranstaltungsort barrierefrei zugänglich ist. Bei spezifischem Unterstützungsbedarf <a href="/kontakt">kontaktiere uns</a>.</p>
@@ -117,43 +104,16 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 
 .venue-section__title {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 
-.venue-icon-wrap {
-  position: relative;
-  width: 48px;
-  height: 48px;
+.venue-icon {
+  height: 80px;
+  width: auto;
   flex-shrink: 0;
-}
-
-.venue-icon__shape {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.venue-icon__svg {
-  position: absolute;
-  width: 55%;
-  height: 55%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.venue-icon__img {
-  position: absolute;
-  width: 55%;
-  height: 55%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+  display: block;
 }
 
 .venue-section p, .venue-section address {

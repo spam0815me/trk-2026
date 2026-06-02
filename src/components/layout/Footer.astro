@@ -14,45 +14,46 @@ const t = useTranslations(locale);
 
 const base = locale === "en" ? "/en" : "";
 
+const imprintHref = `${base}/${locale === "en" ? "contact" : "kontakt"}`;
+
 const legalLinks = [
+  { href: `${base}/${locale === "en" ? "archive" : "archiv"}`, label: t("nav.archive") },
   { href: `${base}/${locale === "en" ? "privacy" : "datenschutz"}`, label: t("nav.privacy") },
-  { href: `${base}/${locale === "en" ? "contact" : "kontakt"}`,     label: t("nav.imprint") },
   { href: `${base}/${locale === "en" ? "accessibility" : "barrierefreiheit"}`, label: t("nav.accessibility") },
 ];
 
-const navLinks = [
-  { href: `${base}/${locale === "en" ? "program" : "programm"}`,     label: t("nav.program") },
-  { href: `${base}/${locale === "en" ? "speakers" : "referentinnen"}`, label: t("nav.speakers") },
-  { href: `${base}/${locale === "en" ? "venue" : "ort"}`,             label: t("nav.venue") },
-  { href: `${base}/${locale === "en" ? "registration" : "anmeldung"}`, label: t("nav.registration") },
-  { href: `${base}/${locale === "en" ? "archive" : "archiv"}`,        label: t("nav.archive") },
-  { href: `${base}/${locale === "en" ? "faq" : "faq"}`,               label: t("nav.faq") },
-  { href: `${base}/${locale === "en" ? "sponsoring" : "sponsoring"}`, label: t("nav.sponsoring") },
-  { href: `${base}/${locale === "en" ? "contact" : "kontakt"}`,       label: t("nav.contact") },
-];
+
+const ticketHref = `${base}/${locale === "en" ? "registration" : "anmeldung"}`;
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer" role="contentinfo">
   <div class="container site-footer__inner">
-    <!-- Spalte: Info -->
+    <!-- Spalte: Brand -->
     <div class="site-footer__brand">
-      <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer" class="site-footer__logo-link">
-        <img src="/images/tif-logo-white.png" alt="Tier im Fokus (TIF)" class="site-footer__logo" />
-      </a>
-      <p class="site-footer__name">{t("site.name")}</p>
-      <p class="site-footer__tagline">{t("site.tagline")}</p>
+      <img src="/images/TRK_26_Logo_negativ.png" alt="Tierrechtskongress 2026" class="site-footer__trk-logo" />
     </div>
 
-    <!-- Spalte: Navigation -->
-    <nav aria-label={locale === "de" ? "Footer Navigation" : "Footer navigation"} class="site-footer__nav">
-      <ul role="list" class="site-footer__nav-list">
-        {navLinks.map(link => (
-          <li><a href={link.href} class="site-footer__nav-link">{link.label}</a></li>
-        ))}
-      </ul>
-    </nav>
+    <!-- Spalte: Ticket -->
+    <div class="site-footer__ticket-col">
+      <a href={ticketHref} class="site-footer__ticket-btn">
+        <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 36px; height: 36px; background-color: #26282a;" aria-hidden="true"></span>
+        {t("nav.registration")}
+      </a>
+    </div>
+
+    <!-- Spalte: TIF + Credit -->
+    <div class="site-footer__meta">
+      <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer">
+        <img src="/images/tif-logo-white.png" alt="Tier im Fokus (TIF)" class="site-footer__meta-tif-logo" />
+      </a>
+      <p class="site-footer__address">
+        Tier im Fokus (TIF)<br />
+        <a href="mailto:info@tierimfokus.ch" class="site-footer__address-link">info@tierimfokus.ch</a>
+      </p>
+      <p class="site-footer__credit">Layout &amp; Design:<br />Jessica Ladanie</p>
+    </div>
   </div>
 
   <!-- Rechtliches -->
@@ -82,15 +83,17 @@ const year = new Date().getFullYear();
 .site-footer__inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-10);
-  padding-top: var(--space-12);
-  padding-bottom: var(--space-10);
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-6);
 }
 
 @media (min-width: 640px) {
   .site-footer__inner {
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-12);
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    justify-items: center;
   }
 }
 
@@ -105,30 +108,58 @@ const year = new Date().getFullYear();
   width: auto;
 }
 
-.site-footer__name {
-  font-family: var(--brand-font-bold); /* Poppins */
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--brand-green); /* TIF accent in footer */
-  margin-bottom: var(--space-2);
+.site-footer__trk-logo {
+  height: 220px;
+  width: auto;
 }
 
-.site-footer__tagline {
-  font-size: var(--text-sm);
-  color: var(--color-neutral-400);
-  max-width: none;
+.site-footer__meta-tif-logo {
+  height: 40px;
+  width: auto;
 }
 
-/* Nav */
+.site-footer__ticket-col {
+  display: flex;
+  align-items: flex-start;
+}
+
+.site-footer__ticket-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.7em 2em;
+  background-image: url('/images/btn-v2-yellow.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.site-footer__ticket-btn:hover {
+  background-image: url('/images/btn-v2-beige.svg');
+  color: #26282a;
+}
+
+.site-footer__ticket-btn:hover .btn-icon {
+  background-color: #26282a;
+}
+
+/* Nav — 3 Zeilen à ~3 Links */
 .site-footer__nav-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-2) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   list-style: none;
 }
 
 .site-footer__nav-link {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   color: var(--color-neutral-400);
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -142,10 +173,56 @@ const year = new Date().getFullYear();
   outline-color: var(--color-primary-light);
 }
 
+/* Meta: Impressum + Credit */
+.site-footer__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+  text-align: right;
+}
+
+.site-footer__imprint-link {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__imprint-link:hover {
+  color: #fff;
+}
+
+.site-footer__address {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+  max-width: none;
+  margin: 0;
+  line-height: var(--leading-relaxed);
+}
+
+.site-footer__address-link {
+  color: var(--color-neutral-500);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__address-link:hover {
+  color: var(--color-neutral-300);
+}
+
+.site-footer__credit {
+  font-size: var(--text-xs);
+  color: var(--color-neutral-500);
+  max-width: none;
+  margin: 0;
+  line-height: var(--leading-snug);
+}
+
 /* Legal */
 .site-footer__legal {
   border-top: 1px solid var(--color-neutral-800);
-  padding-block: var(--space-6);
+  padding-block: var(--space-4);
 }
 
 .site-footer__legal-inner {

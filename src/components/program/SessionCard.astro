@@ -53,8 +53,8 @@ const langLabel = language === "de"
     : "DE / EN";
 
 const roomIcons: Record<string, string> = {
-  "saal-a": "/images/Raum_Sandra.svg",
-  "saal-b": "/images/Raum_Yvonne.svg",
+  "saal-a": "/images/Icon_Sandra.svg",
+  "saal-b": "/images/Icon_Yvonne.svg",
 };
 const roomIcon = roomId ? roomIcons[roomId] : undefined;
 
@@ -76,7 +76,6 @@ const descPreview = sentenceMatches.length >= 2
     <div class="session-card__meta">
       <time class="session-card__time">
         {startTime}–{endTime}
-        <span class="session-card__duration">({durationMinutes} {t("session.minutes")})</span>
       </time>
       <span class="session-card__meta-sep">·</span>
       {roomIcon
@@ -122,8 +121,8 @@ const descPreview = sentenceMatches.length >= 2
                 src={speakerPhotos[i]}
                 alt={name}
                 class="session-card__speaker-photo"
-                width="72"
-                height="72"
+                width="64"
+                height="64"
                 loading="lazy"
               />
             )}
@@ -251,17 +250,20 @@ const descPreview = sentenceMatches.length >= 2
 /* Speakers */
 .session-card__speakers {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-  min-height: 88px;
+  flex-wrap: nowrap;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+  align-items: flex-start;
 }
 
 .session-card__speaker {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-2);
   text-decoration: none;
+  min-width: 0;
 }
 
 .session-card__speaker:hover .session-card__speaker-name {
@@ -269,8 +271,8 @@ const descPreview = sentenceMatches.length >= 2
 }
 
 .session-card__speaker-photo {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   object-fit: cover;
   object-position: center 20%;
   flex-shrink: 0;
@@ -289,6 +291,7 @@ const descPreview = sentenceMatches.length >= 2
   color: #fafaff;
   font-weight: var(--weight-medium);
   transition: color var(--transition-fast);
+  line-height: var(--leading-snug);
 }
 
 .session-card__desc {

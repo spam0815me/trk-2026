@@ -99,12 +99,6 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
       type="tel"
       autocomplete="tel"
     />
-    <FormField
-      id="language" name="language"
-      label={t("registration.form.language")}
-      type="select"
-      options={langOptions}
-    />
   </fieldset>
 
   <!-- Felder: Kongress -->
@@ -117,12 +111,6 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
       label={t("registration.form.ticketCategory")}
       type="select" required
       options={ticketOptions}
-    />
-    <FormField
-      id="diet" name="diet"
-      label={t("registration.form.diet")}
-      type="select"
-      options={dietOptions}
     />
     <FormField
       id="accessibilityNeeds" name="accessibilityNeeds"
@@ -316,9 +304,8 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 }
 
 .reg-form__fieldset {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
+  border: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-5);

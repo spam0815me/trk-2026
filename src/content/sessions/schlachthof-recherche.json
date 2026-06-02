@@ -20,5 +20,6 @@
   "level": "all",
   "recording": true,
   "sortOrder": 17,
-  "durationMinutes": 60
+  "durationMinutes": 60,
+  "highlight": true
 }

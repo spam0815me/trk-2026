@@ -46,13 +46,7 @@ const {
   ogImage={ogImage}
   noindex={noindex}
 >
-  {breadcrumbs && breadcrumbs.length > 0 && (
-    <div class="container" style="padding-top: var(--space-4);">
-      <Breadcrumbs items={breadcrumbs} locale={locale} />
-    </div>
-  )}
-
-  {fullWidth ? (
+{fullWidth ? (
     <slot />
   ) : (
     <div class="container">

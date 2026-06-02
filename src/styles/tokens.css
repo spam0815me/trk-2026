@@ -48,8 +48,8 @@
   --color-bg-dark:     var(--brand-black);      /* #26282a */
 
   --color-text:          var(--brand-black);    /* #26282a */
-  --color-text-muted:    #5e5e5c;
-  --color-text-subtle:   #828280;
+  --color-text-muted:    var(--brand-black);    /* #26282a */
+  --color-text-subtle:   #5e5e5c;
   --color-text-on-dark:  var(--brand-white);
   --color-text-on-primary: var(--brand-white);
 

@@ -136,22 +136,22 @@ const ariaDescribedBy = [hasError ? errorId : null, hint ? hintId : null]
 .form-field__input {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border-strong);
+  border: none;
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   color: var(--color-text);
-  background: var(--color-bg);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background: #f0f0ee;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .form-field__input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  background: #e8e8e5;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
 .form-field--error .form-field__input {
-  border-color: var(--color-error);
+  background: color-mix(in srgb, var(--color-error) 8%, #f0f0ee);
 }
 
 .form-field--error .form-field__input:focus {
@@ -182,7 +182,7 @@ const ariaDescribedBy = [hasError ? errorId : null, hint ? hintId : null]
 .form-field__checkbox {
   width: 18px;
   height: 18px;
-  border: 2px solid var(--color-border-strong);
+  border: none;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
   margin-top: 2px;
