@@ -26,15 +26,18 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
       <!-- Kontaktformular -->
       <div class="contact-form-wrap">
         <form
+          name="kontakt"
           method="POST"
-          action="https://formsubmit.co/info@tierimfokus.ch"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          action="/bestaetigung"
           novalidate
           id="contact-form"
         >
-          <input type="hidden" name="_subject" value="Anfrage Formular Tierrechtskongress" />
-          <input type="hidden" name="_next" value="https://tierrechtskongress.ch/bestaetigung" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="text" name="_honey" style="display:none" />
+          <input type="hidden" name="form-name" value="kontakt" />
+          <p class="contact-form__honeypot" aria-hidden="true">
+            <label>Nicht ausfüllen: <input name="bot-field" /></label>
+          </p>
 
           <div class="contact-form__grid">
             <div class="form-field">
