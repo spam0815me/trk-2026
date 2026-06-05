@@ -73,7 +73,6 @@ const highlights = sessionsRaw
   <Hero
     lead={t("home.heroLead")}
     ctaPrimary={{ href: "/anmeldung", label: t("home.ctaRegister") }}
-    ctaSecondary={{ href: "/programm", label: t("home.ctaProgram") }}
     size="large"
     pushDown
   />
@@ -193,7 +192,7 @@ const highlights = sessionsRaw
         <h2 class="section__title" id="speakers-home-title" style="color: #fafaff;">{t("home.speakersTitle")}</h2>
         <p class="section__lead" style="color: #e3e3dd;">{t("home.speakersLead")}</p>
       </header>
-      <div class="grid grid--4 speakers-random" id="speakers-home" style="justify-content: center;">
+      <div class="speakers-random" id="speakers-home">
         {speakers.map(s => (
           <SpeakerCard
             id={s.data.id}
@@ -242,6 +241,45 @@ const highlights = sessionsRaw
 .btn--speakers-all:hover {
   background-image: url('/images/btn-v2-beige.svg') !important;
   color: #26282a !important;
+}
+
+/* Referent:innen — Mobile Karussell */
+.speakers-random {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.speakers-random::-webkit-scrollbar {
+  display: none;
+}
+
+.speakers-random > :global(.speaker-card) {
+  scroll-snap-align: start;
+  flex: 0 0 80%;
+  min-width: 260px;
+  max-width: 320px;
+}
+
+@media (min-width: 640px) {
+  .speakers-random {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    justify-content: center;
+    padding-bottom: 0;
+  }
+
+  .speakers-random > :global(.speaker-card) {
+    flex: unset;
+    min-width: unset;
+    max-width: unset;
+  }
 }
 /* ── Highlight Karussell ─────────────────────────────────── */
 .hl-block {
@@ -407,12 +445,45 @@ const highlights = sessionsRaw
   }
 
   .hl-block__meta,
-  .hl-block__speaker {
+  .hl-block__speaker,
+  .hl-block__actions {
     justify-content: center;
   }
 
   .hl-block__title {
     font-size: var(--text-2xl);
+  }
+
+  .hl-block__meta-item img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hl-block__room-icon {
+    height: 18px;
+  }
+
+  /* Button grösser auf Mobile */
+  .hl-action-btn {
+    height: 60px;
+    font-size: 20px;
+    padding: 0 32px;
+  }
+
+  /* Pfeile unterhalb des Fotos, an den unteren Ecken */
+  .hl-arrow {
+    top: auto;
+    transform: none;
+    bottom: var(--space-6);
+  }
+
+  .hl-arrow--prev {
+    left: var(--space-4);
+  }
+
+  .hl-arrow--next {
+    right: var(--space-4);
+    left: auto;
   }
 }
 
@@ -493,8 +564,14 @@ const highlights = sessionsRaw
 
 .home-info {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .home-info {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .home-info__item {
@@ -502,17 +579,24 @@ const highlights = sessionsRaw
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-7);
+  gap: var(--space-4);
 }
 
 .home-info__icon-wrap {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 90px;
+  height: 90px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .home-info__icon-wrap {
+    width: 140px;
+    height: 140px;
+  }
 }
 
 .home-info__shape {
@@ -534,16 +618,29 @@ const highlights = sessionsRaw
 }
 
 .home-info__tag-icon {
-  width: 140px;
-  height: 140px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .home-info__tag-icon {
+    width: 140px;
+    height: 140px;
+  }
 }
 
 .home-info__item strong {
   display: block;
   font-weight: var(--weight-bold);
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   margin-bottom: var(--space-1);
+}
+
+@media (min-width: 640px) {
+  .home-info__item strong {
+    font-size: var(--text-xl);
+  }
 }
 
 .home-info__item > div {
@@ -553,9 +650,21 @@ const highlights = sessionsRaw
 }
 
 .home-info__item p {
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
   max-width: none;
+}
+
+@media (min-width: 640px) {
+  .home-info__item p {
+    font-size: var(--text-base);
+  }
+}
+
+@media (min-width: 640px) {
+  .home-info__item p {
+    font-size: var(--text-base);
+  }
 }
 </style>
 
@@ -570,7 +679,7 @@ const highlights = sessionsRaw
   if (grid) {
     const cards = Array.from(grid.children) as HTMLElement[];
     cards.forEach(c => c.style.display = "none");
-    const shuffled = cards.sort(() => Math.random() - 0.5).slice(0, 5);
+    const shuffled = cards.sort(() => Math.random() - 0.5).slice(0, 4);
     shuffled.forEach(c => c.style.display = "");
   }
 

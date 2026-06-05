@@ -120,6 +120,20 @@ const timetableData = days.map(day => {
       <p class="section__lead"><strong>Drei Tage, zwei Räume, viele Perspektiven.</strong> Pro Zeitslot laufen in Raum Sandra und Raum Yvonne gleichzeitig Vorträge — du wählst, was dich bewegt.</p>
     </header>
 
+    <!-- Raum-Vorstellung -->
+    <div class="room-intro">
+      <div class="room-intro__item">
+        <img src="/images/Raum_Sandra.svg" alt="Raum Sandra" class="room-intro__icon" />
+        <p class="room-intro__story room-intro__story--mobile">Sandra war die erste «nicht-menschliche Person» der Rechtsgeschichte — anerkannt 2014 in Argentinien.</p>
+        <p class="room-intro__story room-intro__story--desktop">Wir würdigen Sandra — eine Orang-Utan-Dame aus dem Zoo Buenos Aires, der 2014 als erster nicht-menschlicher Lebewesen grundlegende Persönlichkeitsrechte zuerkannt wurden. Ihr Fall veränderte die juristische Debatte über den Status von Tieren für immer.</p>
+      </div>
+      <div class="room-intro__item">
+        <img src="/images/Raum_Yvonne.svg" alt="Raum Yvonne" class="room-intro__icon" />
+        <p class="room-intro__story room-intro__story--mobile">Yvonne entkam 2011 dem Schlachthof und lebte drei Monate frei im Wald — ein Symbol für Lebenswillen.</p>
+        <p class="room-intro__story room-intro__story--desktop">Wir würdigen Yvonne — eine Kuh aus Bayern, die 2011 dem Schlachthof entkam und drei Monate lang frei im Wald lebte. Ihre Geschichte bewegte Menschen weltweit und wurde zum Symbol für den unbedingten Willen zur Freiheit.</p>
+      </div>
+    </div>
+
   </div>
 
   <!-- Sessions als Timetable (Zeitslots × Räume) -->
@@ -139,7 +153,6 @@ const timetableData = days.map(day => {
                 <div class="timetable__room-info">
                   {room.icon && <img src={room.icon} alt={room.name} class="timetable__room-icon" />}
                 </div>
-                {day === 1 && room.story && <p class="timetable__room-story">{room.story}</p>}
               </div>
             ))}
           </div>
@@ -196,7 +209,28 @@ const timetableData = days.map(day => {
   </div>
 </PageLayout>
 
+<!-- Merkliste-Button (fix) -->
+<a href="/programm/merkliste" class="merkliste-fab" id="merkliste-fab" aria-label="Merkliste öffnen">
+  <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+  <span class="merkliste-fab__label">Merkliste</span>
+  <span class="merkliste-fab__count" id="merkliste-count" hidden>0</span>
+</a>
+
 <script src="../../scripts/bookmarks.js"></script>
+<script>
+  function updateMerklist() {
+    const count = JSON.parse(localStorage.getItem("trk2026_bookmarks") ?? "[]").length;
+    const badge = document.getElementById("merkliste-count");
+    const fab   = document.getElementById("merkliste-fab");
+    if (!badge || !fab) return;
+    badge.textContent = String(count);
+    badge.hidden = count === 0;
+    fab.classList.toggle("merkliste-fab--has-items", count > 0);
+  }
+  updateMerklist();
+  window.addEventListener("bookmarks-changed", updateMerklist);
+  window.addEventListener("storage", updateMerklist);
+</script>
 
 <style>
 /* Raum-Geschichten */
@@ -258,6 +292,59 @@ const timetableData = days.map(day => {
   margin: 0;
 }
 
+/* Raum-Vorstellung */
+.room-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .room-intro {
+    flex-direction: row;
+    gap: var(--space-8);
+  }
+}
+
+.room-intro__story--desktop {
+  display: none;
+}
+
+.room-intro__story--mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .room-intro__story--desktop {
+    display: block;
+  }
+  .room-intro__story--mobile {
+    display: none;
+  }
+}
+
+.room-intro__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.room-intro__icon {
+  height: 56px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.room-intro__story {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  max-width: none;
+}
+
 /* Tag-Gruppen */
 .program-day {
   margin-bottom: var(--space-10);
@@ -279,26 +366,79 @@ const timetableData = days.map(day => {
   color: var(--color-text-muted);
 }
 
-/* Timetable */
+/* Timetable — Mobile first */
 .timetable {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  /* kein overflow-x auf mobile */
 }
 
-.timetable__header,
+/* Raum-Header: auf Mobile ausblenden */
+.timetable__header {
+  display: none;
+}
+
+/* Zeitslot-Zeile: auf Mobile gestapelt */
 .timetable__row {
-  display: grid;
-  grid-template-columns: 72px repeat(var(--room-count), 1fr);
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3);
   margin-bottom: var(--space-3);
-  align-items: stretch;
-  min-width: 480px;
 }
 
-.timetable__header {
-  margin-bottom: var(--space-1);
+.timetable__time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  padding-top: 0;
+  text-align: left;
 }
 
+.timetable__cell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.timetable__cell > :global(.session-card) {
+  flex: 1;
+}
+
+.timetable__empty {
+  display: none; /* Leerzellen auf Mobile verstecken */
+}
+
+/* Pausen — Mobile */
+.timetable__break-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.timetable__break-time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  text-align: left;
+  flex-shrink: 0;
+  width: 48px;
+}
+
+.timetable__break {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e3e3dd;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.timetable__break-icon {
+  height: 40px;
+  width: auto;
+}
+
+/* Raum-Karten */
 .timetable__room-card {
   display: flex;
   flex-direction: column;
@@ -306,22 +446,6 @@ const timetableData = days.map(day => {
   gap: var(--space-3);
   padding-bottom: var(--space-4);
   margin-bottom: var(--space-4);
-}
-
-.timetable__room-photo {
-  width: 72px;
-  height: 72px;
-  object-fit: cover;
-  object-position: center 20%;
-  flex-shrink: 0;
-  -webkit-mask-image: url('/images/yellow-05.png');
-  mask-image: url('/images/yellow-05.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
 }
 
 .timetable__room-info {
@@ -355,63 +479,58 @@ const timetableData = days.map(day => {
   /* Platzhalter für die Zeitspalte im Header */
 }
 
-.timetable__time {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-muted);
-  padding-top: var(--space-3);
-  text-align: right;
-  padding-right: var(--space-2);
-}
+/* Desktop: Grid-Layout */
+@media (min-width: 640px) {
+  .timetable {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
-.timetable__cell {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
+  .timetable__header {
+    display: grid;
+    grid-template-columns: 72px repeat(var(--room-count), 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-1);
+    align-items: stretch;
+    min-width: 480px;
+  }
 
-.timetable__cell > :global(.session-card) {
-  flex: 1;
-}
+  .timetable__row {
+    display: grid;
+    flex-direction: unset;
+    grid-template-columns: 72px repeat(var(--room-count), 1fr);
+    gap: var(--space-3);
+    align-items: stretch;
+    min-width: 480px;
+  }
 
-.timetable__empty {
-  height: 100%;
-  min-height: 60px;
-  border: 1px dashed rgba(38,40,42,0.12);
-  border-radius: var(--radius-lg);
-}
+  .timetable__time {
+    padding-top: var(--space-3);
+    text-align: right;
+    padding-right: var(--space-2);
+  }
 
-/* Pausen */
-.timetable__break-row {
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-  min-width: 480px;
-  align-items: center;
-}
+  .timetable__empty {
+    display: block;
+    height: 100%;
+    min-height: 60px;
+    border: 1px dashed rgba(38,40,42,0.12);
+    border-radius: var(--radius-lg);
+  }
 
-.timetable__break-time {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-muted);
-  text-align: right;
-  padding-right: var(--space-2);
-  flex-shrink: 0;
-}
+  .timetable__break-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: var(--space-3);
+    min-width: 480px;
+    align-items: center;
+  }
 
-.timetable__break {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e3e3dd;
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
-}
-
-.timetable__break-icon {
-  height: 40px;
-  width: auto;
+  .timetable__break-time {
+    text-align: right;
+    padding-right: var(--space-2);
+    width: auto;
+  }
 }
 
 /* Leer */
@@ -424,5 +543,68 @@ const timetableData = days.map(day => {
 /* Ausgeblendet durch Filter */
 .program-day[data-hidden] {
   display: none;
+}
+
+/* Merkliste FAB */
+.merkliste-fab {
+  position: fixed;
+  bottom: max(var(--space-6), env(safe-area-inset-bottom, var(--space-6)));
+  right: max(var(--space-6), env(safe-area-inset-right, var(--space-6)));
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.6em 1.6em;
+  background-image: url('/images/btn-v2-black.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #fafaff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.merkliste-fab .btn-icon {
+  background-color: #fafaff;
+}
+
+.merkliste-fab:hover {
+  background-image: url('/images/btn-v2-yellow.svg');
+  color: #26282a;
+}
+
+.merkliste-fab:hover .btn-icon {
+  background-color: #26282a;
+}
+
+.merkliste-fab--has-items {
+  background-image: url('/images/btn-v2-yellow.svg');
+  color: #26282a;
+}
+
+.merkliste-fab--has-items .btn-icon {
+  background-color: #26282a;
+}
+
+.merkliste-fab__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #26282a;
+  color: #fafaff;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+}
+
+.merkliste-fab--has-items .merkliste-fab__count {
+  background: #26282a;
+  color: #fafaff;
 }
 </style>

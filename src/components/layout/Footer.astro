@@ -32,7 +32,7 @@ const year = new Date().getFullYear();
   <div class="container site-footer__inner">
     <!-- Spalte: Brand -->
     <div class="site-footer__brand">
-      <img src="/images/TRK_26_Logo_negativ.png" alt="Tierrechtskongress 2026" class="site-footer__trk-logo" />
+      <img src="/images/TRK_26_Logo_negativ.svg" alt="Tierrechtskongress 2026" class="site-footer__trk-logo" />
     </div>
 
     <!-- Spalte: Ticket -->
@@ -82,18 +82,53 @@ const year = new Date().getFullYear();
 
 .site-footer__inner {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-4) var(--space-5);
   padding-top: var(--space-8);
   padding-bottom: var(--space-6);
+}
+
+.site-footer__ticket-col {
+  grid-column: 1 / -1;
+  display: none !important;
+}
+
+@media (min-width: 640px) {
+  .site-footer__ticket-col {
+    display: flex !important;
+  }
+}
+
+.site-footer__brand {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.site-footer__meta {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
 }
 
 @media (min-width: 640px) {
   .site-footer__inner {
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
     gap: var(--space-8);
     align-items: center;
     justify-items: center;
+  }
+
+  .site-footer__ticket-col {
+    grid-column: unset;
+    grid-row: unset;
+  }
+
+  .site-footer__brand,
+  .site-footer__meta {
+    grid-column: unset;
+    grid-row: unset;
   }
 }
 
@@ -109,13 +144,22 @@ const year = new Date().getFullYear();
 }
 
 .site-footer__trk-logo {
-  height: 220px;
+  height: 170px;
   width: auto;
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .site-footer__trk-logo {
+    height: 220px;
+  }
 }
 
 .site-footer__meta-tif-logo {
   height: 40px;
   width: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .site-footer__ticket-col {

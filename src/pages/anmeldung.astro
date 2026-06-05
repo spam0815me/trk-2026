@@ -112,9 +112,21 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 
 .ticket-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
   margin-bottom: var(--space-10);
+}
+
+@media (min-width: 480px) {
+  .ticket-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 640px) {
+  .ticket-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .ticket-card {
@@ -146,18 +158,30 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 }
 
 .ticket-card__body {
-  padding: var(--space-4) var(--space-5) var(--space-5);
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   flex: 1;
 }
 
+@media (min-width: 640px) {
+  .ticket-card__body {
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+}
+
 .ticket-card__title {
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   color: var(--color-text);
   margin: 0;
+}
+
+@media (min-width: 640px) {
+  .ticket-card__title {
+    font-size: var(--text-base);
+  }
 }
 
 .ticket-card__dates {
@@ -184,9 +208,15 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   border-bottom: 1px solid rgba(38,40,42,0.08);
   padding-bottom: var(--space-1);
+}
+
+@media (min-width: 640px) {
+  .ticket-card__prices li {
+    font-size: var(--text-sm);
+  }
 }
 
 .ticket-card__prices li:last-child {

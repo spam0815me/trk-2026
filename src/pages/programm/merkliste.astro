@@ -22,12 +22,43 @@ const speakers = await getCollection("speakers");
 const roomMap    = Object.fromEntries(rooms.map(r => [r.data.id, r]));
 const speakerMap = Object.fromEntries(speakers.map(s => [s.data.id, s]));
 
-const sessionViews = sessions.map(s => ({
-  view: toSessionView(s, locale),
-  roomName: getField<string>("name", locale, roomMap[s.data.roomId]?.data as unknown as Record<string, unknown> ?? {}),
-  speakerNames: s.data.speakerIds.map(id => speakerMap[id]?.data.name ?? ""),
-  speakerPhotos: s.data.speakerIds.map(id => speakerMap[id]?.data.photo ?? ""),
-  speakerSlugs: s.data.speakerIds.map(id => speakerMap[id]?.data.slug ?? ""),
+const sessionViews = sessions
+  .map(s => ({
+    view: toSessionView(s, locale),
+    roomName: getField<string>("name", locale, roomMap[s.data.roomId]?.data as unknown as Record<string, unknown> ?? {}),
+    speakerNames: s.data.speakerIds.map(id => speakerMap[id]?.data.name ?? ""),
+    speakerPhotos: s.data.speakerIds.map(id => speakerMap[id]?.data.photo ?? ""),
+    speakerSlugs: s.data.speakerIds.map(id => speakerMap[id]?.data.slug ?? ""),
+  }))
+  .sort((a, b) => {
+    if (a.view.day !== b.view.day) return a.view.day - b.view.day;
+    return a.view.startTime.localeCompare(b.view.startTime);
+  });
+
+// Nach Tag und Raum gruppieren
+const dayLabels: Record<number, string> = { 1: "Freitag", 2: "Samstag", 3: "Sonntag" };
+
+const roomIds = ["saal-a", "saal-b"];
+const roomIcons: Record<string, string> = {
+  "saal-a": "/images/Icon_Sandra.svg",
+  "saal-b": "/images/Icon_Yvonne.svg",
+};
+
+function formatDayFull(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("de-CH", { day: "numeric", month: "long", year: "numeric" });
+}
+
+const days = [...new Set(sessionViews.map(sv => sv.view.day))];
+const grouped = days.map(day => ({
+  day,
+  label: dayLabels[day] ?? `Tag ${day}`,
+  date: sessionViews.find(sv => sv.view.day === day)?.view.date ?? "",
+  rooms: roomIds.map(roomId => ({
+    roomId,
+    icon: roomIcons[roomId],
+    sessions: sessionViews.filter(sv => sv.view.day === day && sv.view.roomId === roomId),
+  })),
 }));
 ---
 
@@ -41,7 +72,6 @@ const sessionViews = sessions.map(s => ({
     { label: t("program.title"), href: "/programm/" },
     { label: t("bookmarks.title") },
   ]}
-  fullWidth
 >
   <div class="container">
     <header class="bm-header">
@@ -53,39 +83,60 @@ const sessionViews = sessions.map(s => ({
         <a href="/programm/" class="btn btn--secondary btn--sm">{t("bookmarks.goToProgram")}</a>
       </div>
     </header>
-  </div>
 
-  <div class="container program-list">
-    {sessionViews.map(({ view, roomName, speakerNames, speakerPhotos, speakerSlugs }) => (
-      <div class="bookmark-item" data-session-id={view.id} hidden>
-        <SessionCard
-          id={view.id}
-          slug={view.slug}
-          title={view.title}
-          description={view.description}
-          type={view.type}
-          language={view.language}
-          startTime={view.startTime}
-          endTime={view.endTime}
-          durationMinutes={view.durationMinutes}
-          day={view.day}
-          date={view.date}
-          roomName={roomName}
-          roomId={view.roomId}
-          speakerNames={speakerNames}
-          speakerPhotos={speakerPhotos}
-          speakerSlugs={speakerSlugs}
-          locale={locale}
-          registrationRequired={view.registrationRequired}
-          recording={view.recording}
-          status={view.status}
-        />
+    <div class="bm-list" id="bm-list">
+      {grouped.map(({ day, label, date, rooms }) => (
+        <section class="bm-day" data-day={day} hidden>
+          <h2 class="bm-day__heading">
+            {label}
+            <span class="bm-day__date">{formatDayFull(date)}</span>
+          </h2>
+          <div class="bm-day__rooms">
+            {rooms.map(({ roomId, icon, sessions: roomSessions }) => (
+              <div class="bm-room" data-room={roomId}>
+                <div class="bm-room__header">
+                  {icon && <img src={icon} alt={roomId} class="bm-room__icon" />}
+                </div>
+                <div class="bm-room__sessions">
+                  {roomSessions.map(({ view, roomName, speakerNames, speakerPhotos, speakerSlugs }) => (
+                    <div class="bookmark-item" data-session-id={view.id} hidden>
+                      <div class="bm-time">{view.startTime} – {view.endTime}</div>
+                      <SessionCard
+                        id={view.id}
+                        slug={view.slug}
+                        title={view.title}
+                        description={view.description}
+                        type={view.type}
+                        language={view.language}
+                        startTime={view.startTime}
+                        endTime={view.endTime}
+                        durationMinutes={view.durationMinutes}
+                        day={view.day}
+                        date={view.date}
+                        roomName={roomName}
+                        roomId={view.roomId}
+                        speakerNames={speakerNames}
+                        speakerPhotos={speakerPhotos}
+                        speakerSlugs={speakerSlugs}
+                        locale={locale}
+                        registrationRequired={view.registrationRequired}
+                        recording={view.recording}
+                        status={view.status}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div id="empty-state" class="bookmarks-empty" hidden>
+        <p><strong>{t("bookmarks.empty")}</strong></p>
+        <p>{t("bookmarks.emptyHint")}</p>
+        <a href="/programm/" class="btn btn--primary" style="margin-top: var(--space-4);">{t("bookmarks.goToProgram")}</a>
       </div>
-    ))}
-    <div id="empty-state" class="bookmarks-empty" hidden>
-      <p><strong>{t("bookmarks.empty")}</strong></p>
-      <p>{t("bookmarks.emptyHint")}</p>
-      <a href="/programm/" class="btn btn--primary" style="margin-top: var(--space-4);">{t("bookmarks.goToProgram")}</a>
     </div>
   </div>
 </PageLayout>
@@ -100,18 +151,32 @@ const sessionViews = sessions.map(s => ({
   }
 
   function render() {
-    const ids   = getBookmarks();
-    const items = document.querySelectorAll(".bookmark-item[data-session-id]");
-    let count   = 0;
-    items.forEach(item => {
-      const visible = ids.includes(item.dataset.sessionId ?? "");
-      item.hidden = !visible;
-      if (visible) count++;
+    const ids = getBookmarks();
+    let totalCount = 0;
+
+    document.querySelectorAll(".bm-day").forEach(dayEl => {
+      let dayCount = 0;
+
+      // Raumspalten prüfen
+      dayEl.querySelectorAll<HTMLElement>(".bm-room").forEach(roomEl => {
+        const items = roomEl.querySelectorAll<HTMLElement>(".bookmark-item[data-session-id]");
+        let roomCount = 0;
+        items.forEach(item => {
+          const visible = ids.includes(item.dataset.sessionId ?? "");
+          item.hidden = !visible;
+          if (visible) { roomCount++; dayCount++; totalCount++; }
+        });
+        roomEl.hidden = roomCount === 0;
+      });
+
+      (dayEl as HTMLElement).hidden = dayCount === 0;
     });
+
     const countEl = document.getElementById("count-num");
-    if (countEl) countEl.textContent = String(count);
+    if (countEl) countEl.textContent = String(totalCount);
+
     const empty = document.getElementById("empty-state");
-    if (empty) empty.hidden = count > 0;
+    if (empty) empty.hidden = totalCount > 0;
   }
 
   render();
@@ -122,28 +187,98 @@ const sessionViews = sessions.map(s => ({
 <style>
 .bm-header {
   padding-top: var(--space-8);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
 }
+
 .bm-meta {
   display: flex;
   align-items: center;
   gap: var(--space-4);
   margin-top: var(--space-2);
 }
+
 .program-count {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   max-width: none;
   margin: 0;
 }
-.program-list {
-  display: grid;
-  gap: var(--space-4);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
+
+.bm-list {
   margin-bottom: var(--space-12);
 }
+
+.bm-day {
+  margin-bottom: var(--space-10);
+}
+
+.bm-day__heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.bm-day__date {
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  color: var(--color-text-muted);
+}
+
+.bm-day__rooms {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .bm-day__rooms {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.bm-room__header {
+  margin-bottom: var(--space-3);
+}
+
+.bm-room__icon {
+  height: 36px;
+  width: auto;
+}
+
+.bm-room__sessions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bookmark-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.bookmark-item[hidden] {
+  display: none !important;
+}
+
+.bm-day[hidden],
+.bm-room[hidden] {
+  display: none !important;
+}
+
+.bm-time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  padding-left: var(--space-1);
+}
+
 .bookmarks-empty {
-  grid-column: 1 / -1;
   padding: var(--space-12);
   text-align: center;
   color: var(--color-text-muted);

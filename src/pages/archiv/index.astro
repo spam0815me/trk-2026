@@ -54,9 +54,136 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
           YouTube
         </a>
       </div>
+
+      <!-- Fotogalerie 2023 -->
+      <div class="archive-gallery-section">
+        <h3 class="archive-gallery__heading">
+          Impressionen Tierrechtskongress 2023
+          <img src="/images/x-separator.svg" alt="×" class="archive-gallery__sep" aria-hidden="true" />
+          Photobastei Zürich
+        </h3>
+        <div class="archive-gallery" id="gallery-2023">
+          {[
+            "tierrechtskongress-2023_52908734277_l.jpg",
+            "tierrechtskongress-2023_52908734317_l.jpg",
+            "tierrechtskongress-2023_52908734387_l.jpg",
+            "tierrechtskongress-2023_52908734472_l.jpg",
+            "tierrechtskongress-2023_52908734487_l.jpg",
+            "tierrechtskongress-2023_52908734502_l.jpg",
+            "tierrechtskongress-2023_52908734522_l.jpg",
+            "tierrechtskongress-2023_52908734527_l.jpg",
+            "tierrechtskongress-2023_52908734557_l.jpg",
+            "tierrechtskongress-2023_52908734602_l.jpg",
+            "tierrechtskongress-2023_52909311056_l.jpg",
+            "tierrechtskongress-2023_52909311196_l.jpg",
+            "tierrechtskongress-2023_52909311201_l.jpg",
+            "tierrechtskongress-2023_52909311251_l.jpg",
+            "tierrechtskongress-2023_52909311256_l.jpg",
+            "tierrechtskongress-2023_52909311286_l.jpg",
+            "tierrechtskongress-2023_52909463489_l.jpg",
+            "tierrechtskongress-2023_52909463519_l.jpg",
+            "tierrechtskongress-2023_52909463584_l.jpg",
+            "tierrechtskongress-2023_52909463664_l.jpg",
+            "tierrechtskongress-2023_52909698280_l.jpg",
+            "tierrechtskongress-2023_52909698285_l.jpg",
+            "tierrechtskongress-2023_52909698360_l.jpg",
+            "tierrechtskongress-2023_52909698365_l.jpg",
+            "tierrechtskongress-2023_52909698425_l.jpg",
+            "tierrechtskongress-2023_52909698595_l.jpg",
+            "tierrechtskongress-2023_52909698605_l.jpg",
+            "tierrechtskongress-2023_52909698640_l.jpg",
+            "tierrechtskongress-2023_52909764063_l.jpg",
+            "tierrechtskongress-2023_52909764133_l.jpg",
+            "tierrechtskongress-2023_52909764148_l.jpg",
+            "tierrechtskongress-2023_52909764223_l.jpg",
+          ].map((filename, i) => (
+            <button
+              class="gallery-item"
+              data-src={`/images/gallery-2023/${filename}`}
+              data-index={i}
+              aria-label={`Foto ${i + 1} von 32 – Tierrechtskongress 2023`}
+              type="button"
+            >
+              <img
+                src={`/images/gallery-2023/${filename}`}
+                alt=""
+                loading="lazy"
+                class="gallery-item__img"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </PageLayout>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto-Vollansicht" hidden>
+  <button class="lightbox__close" id="lb-close" aria-label="Schliessen" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <button class="lightbox__nav lightbox__nav--prev" id="lb-prev" aria-label="Vorheriges Foto" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="lightbox__img-wrap">
+    <img src="" alt="" class="lightbox__img" id="lb-img" />
+  </div>
+  <button class="lightbox__nav lightbox__nav--next" id="lb-next" aria-label="Nächstes Foto" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <p class="lightbox__counter" id="lb-counter" aria-live="polite"></p>
+</div>
+
+<script>
+  const gallery = document.getElementById("gallery-2023");
+  const lightbox = document.getElementById("lightbox") as HTMLElement;
+  const lbImg = document.getElementById("lb-img") as HTMLImageElement;
+  const lbCounter = document.getElementById("lb-counter") as HTMLElement;
+  const lbClose = document.getElementById("lb-close");
+  const lbPrev = document.getElementById("lb-prev");
+  const lbNext = document.getElementById("lb-next");
+
+  const items = gallery ? Array.from(gallery.querySelectorAll<HTMLElement>(".gallery-item")) : [];
+  let current = 0;
+
+  function open(index: number) {
+    current = index;
+    show();
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+    lbClose?.focus();
+  }
+
+  function close() {
+    lightbox.hidden = true;
+    document.body.style.overflow = "";
+    (items[current] as HTMLElement)?.focus();
+  }
+
+  function show() {
+    const src = items[current]?.dataset.src ?? "";
+    lbImg.src = src;
+    lbCounter.textContent = `${current + 1} / ${items.length}`;
+  }
+
+  function prev() { current = (current - 1 + items.length) % items.length; show(); }
+  function next() { current = (current + 1) % items.length; show(); }
+
+  items.forEach((btn, i) => btn.addEventListener("click", () => open(i)));
+  lbClose?.addEventListener("click", close);
+  lbPrev?.addEventListener("click", prev);
+  lbNext?.addEventListener("click", next);
+
+  lightbox?.addEventListener("click", e => { if (e.target === lightbox) close(); });
+
+  document.addEventListener("keydown", e => {
+    if (lightbox.hidden) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+  });
+</script>
 
 <style>
 .archive-edition {
@@ -147,5 +274,168 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* Galerie */
+.archive-gallery-section {
+  margin-top: var(--space-10);
+}
+
+.archive-gallery__heading {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-5);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.archive-gallery__sep {
+  height: 1em;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.archive-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+@media (min-width: 640px) {
+  .archive-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.gallery-item {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+}
+
+.gallery-item__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-item__img,
+.gallery-item:focus .gallery-item__img {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+.gallery-item:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__img-wrap {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fafaff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lightbox__close:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fafaff;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 1;
+}
+
+.lightbox__nav:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox__nav--prev {
+  left: var(--space-4);
+}
+
+.lightbox__nav--next {
+  right: var(--space-4);
+}
+
+.lightbox__counter {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: var(--text-sm);
+  margin: 0;
+  max-width: none;
+}
+
+@media (max-width: 480px) {
+  .lightbox__nav--prev { left: var(--space-2); }
+  .lightbox__nav--next { right: var(--space-2); }
+  .lightbox__nav { width: 40px; height: 40px; }
 }
 </style>

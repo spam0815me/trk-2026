@@ -58,11 +58,12 @@ const roomIcons: Record<string, string> = {
 };
 const roomIcon = roomId ? roomIcons[roomId] : undefined;
 
-// Beschreibung auf max. 2 Sätze kürzen
-const sentenceMatches = description.match(/^.{20,}?[.!?](?:\s|$)/g) ?? [];
-const descPreview = sentenceMatches.length >= 2
-  ? sentenceMatches.slice(0, 2).join("").trim()
-  : description;
+// Beschreibung: 1 Satz, bei sehr kurzem ersten Satz 2 Sätze
+const sentences = (description.match(/[^.!?]+[.!?]+/g) ?? []).map(s => s.trim()).filter(s => s.length >= 15);
+const firstSentence = sentences[0] ?? description;
+const descPreview = (sentences.length >= 2 && firstSentence.length < 100)
+  ? (firstSentence + " " + sentences[1]).trim()
+  : firstSentence;
 ---
 
 <article
@@ -228,14 +229,10 @@ const descPreview = sentenceMatches.length >= 2
 
 /* Body */
 .session-card__title {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--weight-semibold);
   line-height: var(--leading-snug);
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .session-card__title-link {

@@ -21,7 +21,7 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
 
     <!-- Linke Spalte: Kuh -->
     <div class="hero__visual">
-      <img src="/images/trk-logo.png" alt="" class="hero__kuh" id="hero-kuh" aria-hidden="true" />
+      <img src="/images/trk-logo.svg" alt="" class="hero__kuh" id="hero-kuh" aria-hidden="true" />
     </div>
 
     <!-- Rechte Spalte: Text + TIF-Logo -->
@@ -37,7 +37,8 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
       {(ctaPrimary || ctaSecondary) && (
         <div class="hero__actions">
           {ctaPrimary && (
-            <a href={ctaPrimary.href} class="btn btn--lg btn--organic">
+            <a href={ctaPrimary.href} class="hero__ticket-btn">
+              <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 36px; height: 36px; background-color: #26282a;" aria-hidden="true"></span>
               {ctaPrimary.label}
             </a>
           )}
@@ -50,7 +51,7 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
       )}
 
       <a href="https://www.tierimfokus.ch" target="_blank" rel="noopener noreferrer" class="hero__organizer">
-        <img src="/images/tif-logo-dark.png" alt="Tier im Fokus (TIF)" class="hero__organizer-logo" />
+        <img src="/images/tif-logo-dark.png" alt="Tier im Fokus (TIF)" class="hero__organizer-logo hero__organizer-logo--hidden-mobile" />
       </a>
     </div>
 
@@ -109,9 +110,40 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
 @media (max-width: 768px) {
   .hero__inner {
     grid-template-columns: 1fr;
-    padding-inline: var(--space-6);
+    padding-inline: var(--space-4);
+    gap: var(--space-2);
+    align-items: start;
   }
-  .hero__visual { display: none; }
+
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__kuh {
+    width: 90%;
+    max-width: 380px;
+    margin-top: var(--space-10);
+  }
+
+  .hero__content {
+    align-items: center;
+    text-align: center;
+    padding-block: 0 var(--space-10);
+    gap: var(--space-3);
+    width: 100%;
+    margin-top: calc(-1 * var(--space-6));
+  }
+
+  .hero__actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__lead {
+    font-size: var(--text-lg);
+  }
+
 }
 
 /* Linke Spalte */
@@ -154,7 +186,7 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
 
 .hero__event-info {
   font-family: 'Cubano', sans-serif;
-  font-size: var(--text-2xl);
+  font-size: clamp(var(--text-lg), 4vw, var(--text-2xl));
   color: #26282a;
   margin: 0;
   display: flex;
@@ -183,6 +215,77 @@ const { lead, ctaPrimary, ctaSecondary } = Astro.props;
   flex-wrap: wrap;
   gap: var(--space-4);
   align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .hero__actions {
+    justify-content: flex-start;
+  }
+}
+
+.hero__ticket-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.7em 2em;
+  background-image: url('/images/btn-v2-yellow.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-decoration: none;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .hero__ticket-btn {
+    margin: 0;
+  }
+}
+
+.hero__ticket-btn:hover {
+  background-image: url('/images/btn-v2-beige.svg');
+}
+
+.hero__organizer-logo--hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero__organizer-logo--hidden-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__event-info {
+    font-size: var(--text-xl);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    text-align: center;
+  }
+
+  .hero__event-sep {
+    display: none;
+  }
+
+  .hero__content {
+    gap: var(--space-2);
+  }
+
+  .hero__ticket-btn {
+    font-size: var(--text-2xl);
+    padding: 0.8em 2.5em;
+    white-space: nowrap;
+  }
 }
 
 </style>

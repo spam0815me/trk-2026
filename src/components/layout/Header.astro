@@ -4,7 +4,6 @@
  */
 import type { Locale } from "../../lib/i18n";
 import { useTranslations, localizeUrl } from "../../lib/i18n";
-import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 interface Props {
   locale: Locale;
@@ -50,9 +49,8 @@ const homeHref = locale === "en" ? "/en/" : "/";
       </ul>
     </nav>
 
-    <!-- Aktionen: Sprachumschalter + CTA -->
+    <!-- Aktionen: CTA -->
     <div class="site-header__actions">
-      <LanguageSwitcher locale={locale} alternateUrl={alternateUrl} />
       <a href={registerHref} class="btn btn--primary site-header__cta">
         <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 32px; height: 32px;" aria-hidden="true"></span>
         {t("nav.registration")}
@@ -96,9 +94,6 @@ const homeHref = locale === "en" ? "/en/" : "/";
           </a>
         </li>
       </ul>
-      <div class="mobile-menu__lang">
-        <LanguageSwitcher locale={locale} alternateUrl={alternateUrl} />
-      </div>
     </nav>
   </div>
 </header>
@@ -298,9 +293,4 @@ const homeHref = locale === "en" ? "/en/" : "/";
   justify-content: center;
 }
 
-.mobile-menu__lang {
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--brand-platinum);
-}
 </style>
