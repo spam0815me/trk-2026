@@ -120,19 +120,6 @@ const timetableData = days.map(day => {
       <p class="section__lead"><strong>Drei Tage, zwei Räume, viele Perspektiven.</strong> Pro Zeitslot laufen in Raum Sandra und Raum Yvonne gleichzeitig Vorträge — du wählst, was dich bewegt.</p>
     </header>
 
-    <!-- Raum-Vorstellung -->
-    <div class="room-intro">
-      <div class="room-intro__item">
-        <img src="/images/Raum_Sandra.svg" alt="Raum Sandra" class="room-intro__icon" />
-        <p class="room-intro__story room-intro__story--mobile">Sandra war die erste «nicht-menschliche Person» der Rechtsgeschichte — anerkannt 2014 in Argentinien.</p>
-        <p class="room-intro__story room-intro__story--desktop">Wir würdigen Sandra — eine Orang-Utan-Dame aus dem Zoo Buenos Aires, der 2014 als erster nicht-menschlicher Lebewesen grundlegende Persönlichkeitsrechte zuerkannt wurden. Ihr Fall veränderte die juristische Debatte über den Status von Tieren für immer.</p>
-      </div>
-      <div class="room-intro__item">
-        <img src="/images/Raum_Yvonne.svg" alt="Raum Yvonne" class="room-intro__icon" />
-        <p class="room-intro__story room-intro__story--mobile">Yvonne entkam 2011 dem Schlachthof und lebte drei Monate frei im Wald — ein Symbol für Lebenswillen.</p>
-        <p class="room-intro__story room-intro__story--desktop">Wir würdigen Yvonne — eine Kuh aus Bayern, die 2011 dem Schlachthof entkam und drei Monate lang frei im Wald lebte. Ihre Geschichte bewegte Menschen weltweit und wurde zum Symbol für den unbedingten Willen zur Freiheit.</p>
-      </div>
-    </div>
 
   </div>
 
@@ -153,6 +140,12 @@ const timetableData = days.map(day => {
                 <div class="timetable__room-info">
                   {room.icon && <img src={room.icon} alt={room.name} class="timetable__room-icon" />}
                 </div>
+                {day === 1 && (
+                  <div class="timetable__room-intro">
+                    <strong class="timetable__room-name">{room.name}</strong>
+                    {room.story && <p class="timetable__room-story">{room.story}</p>}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -292,52 +285,20 @@ const timetableData = days.map(day => {
   margin: 0;
 }
 
-/* Raum-Vorstellung */
-.room-intro {
+.timetable__room-intro {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  margin-bottom: var(--space-8);
+  gap: var(--space-1);
+  margin-top: var(--space-2);
 }
 
-@media (min-width: 768px) {
-  .room-intro {
-    flex-direction: row;
-    gap: var(--space-8);
-  }
+.timetable__room-name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
 }
 
-.room-intro__story--desktop {
-  display: none;
-}
-
-.room-intro__story--mobile {
-  display: block;
-}
-
-@media (min-width: 768px) {
-  .room-intro__story--desktop {
-    display: block;
-  }
-  .room-intro__story--mobile {
-    display: none;
-  }
-}
-
-.room-intro__item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
-.room-intro__icon {
-  height: 56px;
-  width: auto;
-  flex-shrink: 0;
-}
-
-.room-intro__story {
+.timetable__room-story {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   line-height: var(--leading-relaxed);

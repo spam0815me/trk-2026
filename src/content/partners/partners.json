@@ -68,5 +68,25 @@
     "description_de": "Film als Werkzeug für gesellschaftlichen Wandel.",
     "description_en": "Film as a tool for social change.",
     "sortOrder": 7
+  },
+  {
+    "id": "tier-und-wir",
+    "name": "Tier und Wir",
+    "logo": "/images/partners/tier-und-wir.jpg",
+    "url": "https://www.tierundwir.ch/",
+    "category": "partner",
+    "description_de": "",
+    "description_en": "",
+    "sortOrder": 8
+  },
+  {
+    "id": "hof-narr",
+    "name": "Hof Narr",
+    "logo": "/images/partners/hof-narr.webp",
+    "url": "https://hofnarr.ch",
+    "category": "partner",
+    "description_de": "",
+    "description_en": "",
+    "sortOrder": 9
   }
 ]

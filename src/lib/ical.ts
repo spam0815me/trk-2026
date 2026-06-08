@@ -22,7 +22,7 @@ function formatICalDateTime(date: string, time: string): string {
   // Entfernt Bindestriche und Doppelpunkte, hängt 00 für Sekunden an
   const d = date.replace(/-/g, "");
   const t = time.replace(":", "") + "00";
-  return `${d}T${t}00`;
+  return `${d}T${t}`;
 }
 
 /** Escaped Text für iCal (Kommas, Newlines, Backslashes) */

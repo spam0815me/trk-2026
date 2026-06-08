@@ -36,7 +36,8 @@
       "Bash(python3 -c \"from PIL import Image; print\\('PIL ok'\\)\")",
       "Bash(python3:*)",
       "Bash(ls /Users/jay/Desktop/00_TIF/00_Website/TRK-2026-Claude/public/images/ticket*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git add:*)"
     ]
   }
 }

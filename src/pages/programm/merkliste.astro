@@ -80,6 +80,10 @@ const grouped = days.map(day => ({
         <p class="program-count" aria-live="polite" aria-atomic="true">
           <span id="count-num">0</span> Sessions gemerkt
         </p>
+        <button id="ical-export-btn" class="btn btn--primary btn--sm" type="button" hidden>
+          <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+          Exportieren
+        </button>
         <a href="/programm/" class="btn btn--secondary btn--sm">{t("bookmarks.goToProgram")}</a>
       </div>
     </header>
@@ -141,7 +145,49 @@ const grouped = days.map(day => ({
   </div>
 </PageLayout>
 
+<script is:inline define:vars={{ trkSessions: sessionViews.map(sv => ({
+    uid: sv.view.id,
+    title: sv.view.title,
+    description: sv.view.description,
+    startDate: sv.view.date,
+    startTime: sv.view.startTime,
+    endTime: sv.view.endTime,
+    location: sv.roomName,
+    url: `https://tierrechtskongress.de/programm/${sv.view.slug}/`,
+  })) }}>
+  window.__TRK_SESSIONS__ = trkSessions;
+</script>
+
 <script src="../../scripts/bookmarks.js"></script>
+<script>
+  import { generateICalCalendar, downloadIcal } from "../../lib/ical.ts";
+
+  const STORAGE_KEY = "trk2026_bookmarks";
+
+  function getBookmarks(): string[] {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); }
+    catch { return []; }
+  }
+
+  function updateExportBtn() {
+    const ids = getBookmarks();
+    const btn = document.getElementById("ical-export-btn") as HTMLButtonElement | null;
+    if (btn) btn.hidden = ids.length === 0;
+  }
+
+  document.getElementById("ical-export-btn")?.addEventListener("click", () => {
+    const ids = getBookmarks();
+    const all: any[] = (window as any).__TRK_SESSIONS__ ?? [];
+    const events = all.filter(s => ids.includes(s.uid));
+    if (events.length === 0) return;
+    const content = generateICalCalendar(events);
+    downloadIcal(content, "trk-2026-merkliste");
+  });
+
+  updateExportBtn();
+  window.addEventListener("bookmarks-changed", updateExportBtn);
+  window.addEventListener("storage", e => { if (e.key === STORAGE_KEY) updateExportBtn(); });
+</script>
 <script>
   const STORAGE_KEY = "trk2026_bookmarks";
 
