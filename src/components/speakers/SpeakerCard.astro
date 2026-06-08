@@ -23,9 +23,6 @@ const {
 const t = useTranslations(locale);
 const href = locale === "en" ? `/en/speakers/${slug}` : `/referentinnen/${slug}`;
 
-// Ersten Satz extrahieren — mind. 30 Zeichen, damit Abkürzungen (Dr., Prof.) übersprungen werden
-const firstSentenceMatch = bio.match(/^.{30,}?[.!?]/);
-const bioPreview = firstSentenceMatch ? firstSentenceMatch[0] : bio;
 const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
 ---
 
@@ -35,8 +32,8 @@ const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
       src={photoSrc}
       alt=""
       class="speaker-card__photo"
-      width="200"
-      height="200"
+      width="240"
+      height="240"
       loading="lazy"
       style={`object-position: ${photoPosition}`}
     />
@@ -50,7 +47,7 @@ const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
     <p class="speaker-card__role">
       {role}{organization ? `, ${organization}` : ""}
     </p>
-    <p class="speaker-card__bio">{bioPreview}</p>
+    <p class="speaker-card__bio">{bio}</p>
     <a href={href} class="btn btn--primary btn--sm speaker-card__link">
       <span class="btn-icon" style="--icon-url: url('/images/eye.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
       {locale === "de" ? "zum Profil" : "View profile"}
@@ -80,8 +77,8 @@ const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
 }
 
 .speaker-card__photo {
-  width: 140px;
-  height: 140px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   filter: grayscale(100%);
   transition: transform var(--transition-slow), filter var(--transition-slow);
@@ -141,10 +138,6 @@ const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
 .speaker-card__bio {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .speaker-card__sessions {

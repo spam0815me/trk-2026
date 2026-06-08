@@ -10,7 +10,10 @@ const t = useTranslations(locale);
 const speakersRaw = await getCollection("speakers");
 const speakers = speakersRaw
   .filter(s => s.data.year === 2026)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+  .sort((a, b) => {
+    const lastName = (name: string) => name.trim().split(" ").slice(-1)[0].toLowerCase();
+    return lastName(a.data.name).localeCompare(lastName(b.data.name), "de");
+  });
 
 const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
 ---
