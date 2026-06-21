@@ -13,7 +13,9 @@ import { generateICalCalendar, downloadIcal } from "../lib/ical.ts";
 
 const STORAGE_KEY = "trk2026_bookmarks";
 // Mehrere Events lassen sich bei Google nur per Import (nicht per 1-Klick-Link) hinzufügen.
-const GOOGLE_IMPORT_URL = "https://calendar.google.com/calendar/r/settings/import";
+// /u/0/ adressiert das erste eingeloggte Konto zuverlässig (ohne landet man bei
+// Multi-Account-Setups leicht im falschen oder leeren Kontext).
+const GOOGLE_IMPORT_URL = "https://calendar.google.com/calendar/u/0/r/settings/import";
 
 function getBookmarks() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); }
@@ -46,10 +48,14 @@ document.getElementById("cal-apple")?.addEventListener("click", () => {
 });
 
 document.getElementById("cal-google")?.addEventListener("click", () => {
-  // Erst die Datei laden, dann Googles Import-Seite öffnen.
-  if (downloadMerkliste()) {
-    window.open(GOOGLE_IMPORT_URL, "_blank", "noopener");
-  }
+  const events = selectedEvents();
+  if (events.length === 0) return;
+  // Tab ZUERST öffnen, solange die Klick-Geste frisch ist: Der programmatische
+  // Download danach würde sie sonst "verbrauchen", worauf der Popup-Blocker das
+  // window.open kippt und der Google-Tab gar nicht aufgeht.
+  window.open(GOOGLE_IMPORT_URL, "_blank", "noopener");
+  // Dann die Datei laden, die auf der Import-Seite hochgeladen wird.
+  downloadIcal(generateICalCalendar(events), "trk-2026-merkliste");
 });
 
 updateVisibility();

@@ -183,7 +183,7 @@
     "addToCalendar": "Zum Kalender hinzufügen:",
     "calApple": "Apple / iCal",
     "calGoogle": "Google Calendar",
-    "calHint": "Apple Kalender & Outlook öffnen die Datei direkt. Für Google Calendar die geladene Datei importieren."
+    "calHint": "Apple Kalender & Outlook öffnen die Datei direkt. Bei Google Calendar öffnet sich die Import-Seite – dort die geladene Datei «trk-2026-merkliste.ics» auswählen und importieren."
   },
   "archive": {
     "title": "Archiv",
