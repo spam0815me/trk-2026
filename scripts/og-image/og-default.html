@@ -6,19 +6,23 @@
   Render-Vorlage für das Social-Sharing-Bild (Open Graph / Twitter Card).
   Ausgabe: public/images/og-default.jpg  (1200 × 630)
 
-  Neu rendern: scripts/og-image/og-default.html im Browser bei 1200×630 öffnen
-  und .og-card als Bild exportieren (oder via Playwright-Screenshot des Elements),
-  danach mit sips auf 1200×630 / JPG bringen. Siehe scripts/og-image/README.md.
+  Neu rendern: scripts/og-image/og-default.html bei Viewport 1200×630 öffnen
+  und .og-card als Bild exportieren (oder via Playwright-Screenshot des Viewports),
+  danach mit sips auf JPG bringen. Siehe scripts/og-image/README.md.
 
-  Assets stammen 1:1 aus public/images/ (gleicher Look wie der Hero der Startseite).
+  Aktuelles Motiv: Logo (dunkle Kuh + heller Schriftzug, enthält bereits
+  «Tierrechtskongress 2026 / Tier im Fokus») gross und zentriert auf dem
+  Beton-Hintergrund — gleicher Look wie der Hero der Startseite.
+
+  Wichtig: Verwendet wird trk-logo-trim.png (zugeschnittenes Logo). Das Original
+  public/images/trk-logo.png hat ungleiche transparente Ränder (oben 271px, unten 19px),
+  wodurch das Motiv nicht echt mittig sässe. Das Trim entsteht aus dem Original via
+  Pillow im.crop(im.getbbox()) — siehe README. Original NICHT ersetzen (Hero nutzt es).
 -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
-
   :root {
     --brand-black: #26282a;
     --brand-gold:  #e5b969;
-    --brand-cream: #FAFAFF;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,91 +37,25 @@
     background-image: url('../../public/images/trk-header-bg.png');
     background-size: cover;
     background-position: center;
-    font-family: 'Poppins', system-ui, sans-serif;
-  }
-
-  /* Dezenter Gold-Akzent oben rechts, hinter dem Foto */
-  .og-card__blob {
-    position: absolute;
-    top: -180px;
-    right: -120px;
-    width: 620px;
-    height: 620px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(229,185,105,0.55) 0%, rgba(229,185,105,0) 70%);
-    z-index: 0;
-  }
-
-  /* Logo links (dunkle Kuh + Schriftzug) */
-  .og-card__logo {
-    position: absolute;
-    left: 56px;
-    top: 44px;
-    height: 442px;
-    width: auto;
-    z-index: 2;
-  }
-
-  /* Foto rechts (Sprechblasen-Crop, Bergkühe) */
-  .og-card__photo {
-    position: absolute;
-    right: 64px;
-    top: 60px;
-    height: 410px;
-    width: auto;
-    z-index: 2;
-    filter: drop-shadow(0 14px 30px rgba(38,40,42,0.18));
-  }
-
-  /* Gold-Band unten mit Datum + Ort */
-  .og-card__band {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 96px;
-    background: var(--brand-gold);
-    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 26px;
   }
 
-  .og-card__band span {
-    font-weight: 800;
-    font-size: 34px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--brand-black);
-    line-height: 1;
-  }
-
-  /* Marken-X als Maske eingefärbt (Original-SVG ist gold = unsichtbar auf Gold-Band) */
-  .og-card__sep {
-    width: 34px;
-    height: 37px;
+  /* Getrimmtes Logo gross & echt zentriert (Motiv = Bounding-Box).
+     Höhe limitiert das 1200×630-Format; 600px lässt ~15px Safe-Margin oben/unten. */
+  .og-card__logo {
+    height: 600px;
+    width: auto;
     display: block;
-    background-color: var(--brand-black);
-    -webkit-mask: url('../../public/images/x-separator.svg') center / contain no-repeat;
-    mask: url('../../public/images/x-separator.svg') center / contain no-repeat;
   }
 </style>
 </head>
 <body>
   <div class="og-card">
-    <div class="og-card__blob"></div>
     <img class="og-card__logo"
-         src="../../public/images/trk-logo.png"
+         src="trk-logo-trim.png"
          alt="Tierrechtskongress 2026 — Tier im Fokus" />
-    <img class="og-card__photo"
-         src="../../public/images/hero-kuh.png"
-         alt="" />
-    <div class="og-card__band">
-      <span>23.–25. Oktober 2026</span>
-      <i class="og-card__sep" aria-hidden="true"></i>
-      <span>Photobastei Zürich</span>
-    </div>
   </div>
 </body>
 </html>
