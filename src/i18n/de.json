@@ -177,7 +177,13 @@
     "exportIcal": "Merkliste als Kalender exportieren (.ics)",
     "conflict": "Zeitkonflikt: Diese Sessions überschneiden sich.",
     "remove": "Entfernen",
-    "goToProgram": "Zum Programm"
+    "goToProgram": "Zum Programm",
+    "fabLabel": "Merkliste",
+    "fabOpen": "Merkliste öffnen",
+    "addToCalendar": "Zum Kalender hinzufügen:",
+    "calApple": "Apple / iCal",
+    "calGoogle": "Google Calendar",
+    "calHint": "Apple Kalender & Outlook öffnen die Datei direkt. Für Google Calendar die geladene Datei importieren."
   },
   "archive": {
     "title": "Archiv",

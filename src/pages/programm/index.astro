@@ -202,28 +202,7 @@ const timetableData = days.map(day => {
   </div>
 </PageLayout>
 
-<!-- Merkliste-Button (fix) -->
-<a href="/programm/merkliste" class="merkliste-fab" id="merkliste-fab" aria-label="Merkliste öffnen">
-  <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
-  <span class="merkliste-fab__label">Merkliste</span>
-  <span class="merkliste-fab__count" id="merkliste-count" hidden>0</span>
-</a>
-
 <script src="../../scripts/bookmarks.js"></script>
-<script>
-  function updateMerklist() {
-    const count = JSON.parse(localStorage.getItem("trk2026_bookmarks") ?? "[]").length;
-    const badge = document.getElementById("merkliste-count");
-    const fab   = document.getElementById("merkliste-fab");
-    if (!badge || !fab) return;
-    badge.textContent = String(count);
-    badge.hidden = count === 0;
-    fab.classList.toggle("merkliste-fab--has-items", count > 0);
-  }
-  updateMerklist();
-  window.addEventListener("bookmarks-changed", updateMerklist);
-  window.addEventListener("storage", updateMerklist);
-</script>
 
 <style>
 /* Raum-Geschichten */
@@ -504,68 +483,5 @@ const timetableData = days.map(day => {
 /* Ausgeblendet durch Filter */
 .program-day[data-hidden] {
   display: none;
-}
-
-/* Merkliste FAB */
-.merkliste-fab {
-  position: fixed;
-  bottom: max(var(--space-6), env(safe-area-inset-bottom, var(--space-6)));
-  right: max(var(--space-6), env(safe-area-inset-right, var(--space-6)));
-  z-index: 100;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0.6em 1.6em;
-  background-image: url('/images/btn-v2-black.svg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  font-family: var(--brand-font-bold);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  color: #fafaff;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-.merkliste-fab .btn-icon {
-  background-color: #fafaff;
-}
-
-.merkliste-fab:hover {
-  background-image: url('/images/btn-v2-yellow.svg');
-  color: #26282a;
-}
-
-.merkliste-fab:hover .btn-icon {
-  background-color: #26282a;
-}
-
-.merkliste-fab--has-items {
-  background-image: url('/images/btn-v2-yellow.svg');
-  color: #26282a;
-}
-
-.merkliste-fab--has-items .btn-icon {
-  background-color: #26282a;
-}
-
-.merkliste-fab__count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #26282a;
-  color: #fafaff;
-  border-radius: 999px;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
-  width: 20px;
-  height: 20px;
-  line-height: 1;
-}
-
-.merkliste-fab--has-items .merkliste-fab__count {
-  background: #26282a;
-  color: #fafaff;
 }
 </style>

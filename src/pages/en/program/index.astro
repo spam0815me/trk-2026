@@ -151,10 +151,6 @@ const sessionViews = sessions.map(s => ({
     <p class="program-count" id="program-count" aria-live="polite" aria-atomic="true">
       <span id="count-num">{sessions.length}</span> sessions
     </p>
-    <a href="/en/program/bookmarks/" class="bookmark-link" id="bookmark-nav-link">
-      <img src="/images/x-separator.svg" alt="" class="bookmark-link__icon" aria-hidden="true" />
-      Bookmarks (<span id="bookmark-nav-count">0</span>)
-    </a>
   </div>
 
   <!-- Sessions grouped by day -->
@@ -243,9 +239,6 @@ const sessionViews = sessions.map(s => ({
 .filter-btn:hover, .filter-btn--active { background: #26282a; color: #fafaff; }
 .filter-reset-btn { padding: var(--space-2) var(--space-3); border: none; background: transparent; color: var(--color-text-muted); font-size: var(--text-sm); cursor: pointer; text-decoration: underline; }
 .program-count { font-size: var(--text-sm); color: var(--color-text-muted); max-width: none; margin-bottom: var(--space-4); }
-.bookmark-link { display: inline-flex; align-items: center; gap: var(--space-2); font-family: 'Cubano', sans-serif; font-size: var(--text-xl); color: #26282a; text-decoration: none; transition: color var(--transition-fast); }
-.bookmark-link:hover { color: var(--brand-green); }
-.bookmark-link__icon { width: 1.2em; height: 1.2em; }
 .program-day { margin-bottom: var(--space-10); }
 .program-day__heading { display: flex; align-items: center; gap: var(--space-4); font-size: var(--text-2xl); margin-bottom: var(--space-5); padding-bottom: var(--space-3); border-bottom: 2px solid var(--color-primary); }
 .program-day__sessions { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }

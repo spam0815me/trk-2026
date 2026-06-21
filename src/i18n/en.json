@@ -177,7 +177,13 @@
     "exportIcal": "Export bookmarks as calendar (.ics)",
     "conflict": "Time conflict: these sessions overlap.",
     "remove": "Remove",
-    "goToProgram": "Go to program"
+    "goToProgram": "Go to program",
+    "fabLabel": "Bookmarks",
+    "fabOpen": "Open bookmarks",
+    "addToCalendar": "Add to calendar:",
+    "calApple": "Apple / iCal",
+    "calGoogle": "Google Calendar",
+    "calHint": "Apple Calendar & Outlook open the file directly. For Google Calendar, import the downloaded file."
   },
   "archive": {
     "title": "Archive",

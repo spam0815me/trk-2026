@@ -7,6 +7,7 @@ import type { Locale } from "../lib/i18n";
 import SEOHead from "../components/ui/SEOHead.astro";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
+import MerklisteFab from "../components/layout/MerklisteFab.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -73,5 +74,7 @@ const alternateUrl = alternates?.[alternateLocale] ?? (locale === "de" ? `/en/` 
     </main>
 
     <Footer locale={locale} />
+
+    <MerklisteFab locale={locale} currentPath={currentPath} />
   </body>
 </html>

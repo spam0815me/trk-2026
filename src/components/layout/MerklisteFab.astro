@@ -1,0 +1,107 @@
+---
+/**
+ * MerklisteFab — globaler schwebender Merkliste-Button (unten rechts).
+ * Erscheint auf allen Seiten, aber nur wenn die Merkliste nicht leer ist
+ * (localStorage-basiert). Auf der Merkliste-Seite selbst ausgeblendet.
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  locale: Locale;
+  currentPath?: string;
+}
+
+const { locale, currentPath = Astro.url.pathname } = Astro.props;
+const t = useTranslations(locale);
+
+const href = locale === "en" ? "/en/program/bookmarks/" : "/programm/merkliste/";
+
+// Auf der Merkliste-Seite selbst nicht anzeigen (man ist schon dort)
+const merklistePaths = [
+  "/programm/merkliste", "/programm/merkliste/",
+  "/en/program/bookmarks", "/en/program/bookmarks/",
+];
+const onMerklistePage = merklistePaths.includes(currentPath);
+---
+
+{!onMerklistePage && (
+  <a href={href} class="merkliste-fab" id="merkliste-fab" aria-label={t("bookmarks.fabOpen")} hidden>
+    <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+    <span class="merkliste-fab__label">{t("bookmarks.fabLabel")}</span>
+    <span class="merkliste-fab__count" id="merkliste-count">0</span>
+  </a>
+)}
+
+<script>
+  const STORAGE_KEY = "trk2026_bookmarks";
+
+  function updateMerklisteFab() {
+    const fab = document.getElementById("merkliste-fab");
+    if (!fab) return;
+    let count = 0;
+    try { count = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]").length; } catch { /* ignore */ }
+    const badge = document.getElementById("merkliste-count");
+    if (badge) badge.textContent = String(count);
+    // FAB nur zeigen, wenn etwas gemerkt ist
+    (fab as HTMLElement).hidden = count === 0;
+  }
+
+  updateMerklisteFab();
+  window.addEventListener("bookmarks-changed", updateMerklisteFab);
+  window.addEventListener("storage", (e) => {
+    if (e.key === STORAGE_KEY) updateMerklisteFab();
+  });
+</script>
+
+<style>
+/* Globaler Merkliste-FAB — nur sichtbar, wenn die Liste nicht leer ist,
+   daher direkt im „aktiven" (gelben) Look. */
+.merkliste-fab {
+  position: fixed;
+  bottom: max(var(--space-6), env(safe-area-inset-bottom, var(--space-6)));
+  right: max(var(--space-6), env(safe-area-inset-right, var(--space-6)));
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.6em 1.6em;
+  background-image: url('/images/btn-v2-yellow.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-decoration: none;
+  transition: transform 0.15s ease-out;
+}
+
+/* hidden-Attribut muss display:inline-flex schlagen */
+.merkliste-fab[hidden] {
+  display: none;
+}
+
+.merkliste-fab:hover {
+  transform: translateY(-2px);
+}
+
+.merkliste-fab .btn-icon {
+  background-color: #26282a;
+}
+
+.merkliste-fab__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #26282a;
+  color: #fafaff;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+}
+</style>

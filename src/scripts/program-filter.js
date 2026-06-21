@@ -95,19 +95,3 @@ resetBtn?.addEventListener("click", () => {
 });
 
 applyFilters();
-
-// Merklisten-Zähler
-const STORAGE_KEY = "trk2026_bookmarks";
-function updateBookmarkNavCount() {
-  const navCount = document.getElementById("bookmark-nav-count");
-  if (!navCount) return;
-  try {
-    const ids = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
-    navCount.textContent = String(ids.length);
-    const link = document.getElementById("bookmark-nav-link");
-    if (link) link.style.fontWeight = ids.length > 0 ? "600" : "";
-  } catch { /* ignore */ }
-}
-updateBookmarkNavCount();
-window.addEventListener("bookmarks-changed", updateBookmarkNavCount);
-window.addEventListener("storage", e => { if (e.key === STORAGE_KEY) updateBookmarkNavCount(); });
