@@ -85,16 +85,10 @@ const grouped = days.map(day => ({
     </header>
 
     <div class="calendar-actions" id="calendar-actions" hidden>
-      <span class="calendar-actions__label">{t("bookmarks.addToCalendar")}</span>
-      <button id="cal-apple" class="btn btn--primary btn--sm" type="button">
+      <button id="cal-download" class="btn btn--primary btn--sm" type="button">
         <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
-        {t("bookmarks.calApple")}
+        {t("bookmarks.addToCalendar")}
       </button>
-      <button id="cal-google" class="btn btn--primary btn--sm" type="button">
-        <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
-        {t("bookmarks.calGoogle")}
-      </button>
-      <p class="calendar-actions__hint">{t("bookmarks.calHint")}</p>
     </div>
 
     <div class="bm-list" id="bm-list">
@@ -234,19 +228,6 @@ const grouped = days.map(day => ({
 
 .calendar-actions[hidden] {
   display: none;
-}
-
-.calendar-actions__label {
-  font-family: var(--brand-font-bold);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-sm);
-}
-
-.calendar-actions__hint {
-  flex-basis: 100%;
-  margin: 0;
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
 }
 
 .program-count {

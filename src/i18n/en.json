@@ -180,10 +180,7 @@
     "goToProgram": "Go to program",
     "fabLabel": "Bookmarks",
     "fabOpen": "Open bookmarks",
-    "addToCalendar": "Add to calendar:",
-    "calApple": "Apple / iCal",
-    "calGoogle": "Google Calendar",
-    "calHint": "Apple Calendar & Outlook open the file directly. For Google Calendar an import page opens – select the downloaded file «trk-2026-merkliste.ics» there and import it."
+    "addToCalendar": "Add to calendar"
   },
   "archive": {
     "title": "Archive",
