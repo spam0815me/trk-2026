@@ -3,8 +3,13 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: Produktions-URL hier eintragen
-  site: "https://tierrechtskongress.ch",
+  // Kanonische Site-URL für absolute Links (og:image, canonical, Sitemap …).
+  // Netlify setzt process.env.URL automatisch auf die PRIMÄRE Domain der Site:
+  //   - solange keine Custom-Domain gesetzt ist → https://tierrechtskongress-2026.netlify.app
+  //   - sobald tierrechtskongress.ch als primäre Domain in Netlify aktiv ist → diese
+  // So zeigen die Meta-Tags immer auf die tatsächlich ausgelieferte Domain – ohne Code-Change.
+  // Fallback (lokaler Build / kein Netlify): die Zieldomain.
+  site: process.env.URL ?? "https://tierrechtskongress.ch",
 
   // Statische Ausgabe (SSG) — Standard für Astro
   output: "static",
