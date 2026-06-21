@@ -80,13 +80,22 @@ const grouped = days.map(day => ({
         <p class="program-count" aria-live="polite" aria-atomic="true">
           <span id="count-num">0</span> Sessions gemerkt
         </p>
-        <button id="ical-export-btn" class="btn btn--primary btn--sm" type="button" hidden>
-          <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
-          Exportieren
-        </button>
         <a href="/programm/" class="btn btn--secondary btn--sm">{t("bookmarks.goToProgram")}</a>
       </div>
     </header>
+
+    <div class="calendar-actions" id="calendar-actions" hidden>
+      <span class="calendar-actions__label">{t("bookmarks.addToCalendar")}</span>
+      <button id="cal-apple" class="btn btn--primary btn--sm" type="button">
+        <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+        {t("bookmarks.calApple")}
+      </button>
+      <button id="cal-google" class="btn btn--primary btn--sm" type="button">
+        <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+        {t("bookmarks.calGoogle")}
+      </button>
+      <p class="calendar-actions__hint">{t("bookmarks.calHint")}</p>
+    </div>
 
     <div class="bm-list" id="bm-list">
       {grouped.map(({ day, label, date, rooms }) => (
@@ -159,35 +168,7 @@ const grouped = days.map(day => ({
 </script>
 
 <script src="../../scripts/bookmarks.js"></script>
-<script>
-  import { generateICalCalendar, downloadIcal } from "../../lib/ical.ts";
-
-  const STORAGE_KEY = "trk2026_bookmarks";
-
-  function getBookmarks(): string[] {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]"); }
-    catch { return []; }
-  }
-
-  function updateExportBtn() {
-    const ids = getBookmarks();
-    const btn = document.getElementById("ical-export-btn") as HTMLButtonElement | null;
-    if (btn) btn.hidden = ids.length === 0;
-  }
-
-  document.getElementById("ical-export-btn")?.addEventListener("click", () => {
-    const ids = getBookmarks();
-    const all: any[] = (window as any).__TRK_SESSIONS__ ?? [];
-    const events = all.filter(s => ids.includes(s.uid));
-    if (events.length === 0) return;
-    const content = generateICalCalendar(events);
-    downloadIcal(content, "trk-2026-merkliste");
-  });
-
-  updateExportBtn();
-  window.addEventListener("bookmarks-changed", updateExportBtn);
-  window.addEventListener("storage", e => { if (e.key === STORAGE_KEY) updateExportBtn(); });
-</script>
+<script src="../../scripts/calendar-export.js"></script>
 <script>
   const STORAGE_KEY = "trk2026_bookmarks";
 
@@ -241,6 +222,31 @@ const grouped = days.map(day => ({
   align-items: center;
   gap: var(--space-4);
   margin-top: var(--space-2);
+}
+
+.calendar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.calendar-actions[hidden] {
+  display: none;
+}
+
+.calendar-actions__label {
+  font-family: var(--brand-font-bold);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+}
+
+.calendar-actions__hint {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
 }
 
 .program-count {

@@ -56,6 +56,19 @@ const sessionViews = sessions.map(s => ({
     <a href="/en/program/" class="btn btn--secondary btn--sm">{t("bookmarks.goToProgram")}</a>
   </div>
 
+  <div class="container calendar-actions" id="calendar-actions" hidden>
+    <span class="calendar-actions__label">{t("bookmarks.addToCalendar")}</span>
+    <button id="cal-apple" class="btn btn--primary btn--sm" type="button">
+      <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+      {t("bookmarks.calApple")}
+    </button>
+    <button id="cal-google" class="btn btn--primary btn--sm" type="button">
+      <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 18px; height: 18px;" aria-hidden="true"></span>
+      {t("bookmarks.calGoogle")}
+    </button>
+    <p class="calendar-actions__hint">{t("bookmarks.calHint")}</p>
+  </div>
+
   <div class="container program-list" id="bookmark-list">
     {sessionViews.map(({ view, roomName, speakerNames, speakerPhotos, speakerSlugs }) => (
       <div class="bookmark-item" data-session-id={view.id} hidden>
@@ -94,7 +107,21 @@ const sessionViews = sessions.map(s => ({
   </div>
 </PageLayout>
 
+<script is:inline define:vars={{ trkSessions: sessionViews.map(sv => ({
+    uid: sv.view.id,
+    title: sv.view.title,
+    description: sv.view.description,
+    startDate: sv.view.date,
+    startTime: sv.view.startTime,
+    endTime: sv.view.endTime,
+    location: sv.roomName,
+    url: `https://tierrechtskongress.ch/en/program/${sv.view.slug}/`,
+  })) }}>
+  window.__TRK_SESSIONS__ = trkSessions;
+</script>
+
 <script src="../../../scripts/bookmarks.js"></script>
+<script src="../../../scripts/calendar-export.js"></script>
 <script>
   const STORAGE_KEY = "trk2026_bookmarks";
 
@@ -136,6 +163,27 @@ const sessionViews = sessions.map(s => ({
   align-items: center;
   gap: var(--space-4);
   margin-bottom: var(--space-6);
+}
+.calendar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+.calendar-actions[hidden] {
+  display: none;
+}
+.calendar-actions__label {
+  font-family: var(--brand-font-bold);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+}
+.calendar-actions__hint {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
 }
 .program-count {
   font-size: var(--text-sm);
