@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 
 const locale = "en";
 const t = useTranslations(locale);
-const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 
 const speakersRaw = await getCollection("speakers");
 const speakers = speakersRaw

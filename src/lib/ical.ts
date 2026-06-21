@@ -83,7 +83,7 @@ export function generateICalEvent(event: ICalEvent): string {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
     "BEGIN:VEVENT",
-    foldLine(`UID:${event.uid}@tierrechtskongress.de`),
+    foldLine(`UID:${event.uid}@tierrechtskongress.ch`),
     foldLine(`DTSTAMP:${now}`),
     foldLine(`DTSTART;TZID=Europe/Berlin:${dtStart}`),
     foldLine(`DTEND;TZID=Europe/Berlin:${dtEnd}`),
@@ -141,7 +141,7 @@ export function generateICalCalendar(events: ICalEvent[], calName = "Meine Merkl
     const dtEnd   = formatICalDateTime(event.startDate, event.endTime);
     const lines = [
       "BEGIN:VEVENT",
-      foldLine(`UID:${event.uid}@tierrechtskongress.de`),
+      foldLine(`UID:${event.uid}@tierrechtskongress.ch`),
       foldLine(`DTSTAMP:${now}`),
       foldLine(`DTSTART;TZID=Europe/Berlin:${dtStart}`),
       foldLine(`DTEND;TZID=Europe/Berlin:${dtEnd}`),

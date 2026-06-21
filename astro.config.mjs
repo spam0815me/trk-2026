@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   // TODO: Produktions-URL hier eintragen
-  site: "https://tierrechtskongress.de",
+  site: "https://tierrechtskongress.ch",
 
   // Statische Ausgabe (SSG) — Standard für Astro
   output: "static",

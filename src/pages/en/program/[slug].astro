@@ -35,7 +35,7 @@ const speakerDisplayData = sessionSpeakers.map(sp => ({
   bio:  getField<string>("bio",  locale, sp.data as unknown as Record<string, unknown>),
 }));
 
-const site         = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const site         = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 const canonicalUrl = `${site}en/program/${session.data.slug}/`;
 
 const typeLabel = t(`program.types.${session.data.type}` as Parameters<typeof t>[0]);

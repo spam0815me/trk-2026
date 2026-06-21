@@ -5,7 +5,7 @@ import { getCollection } from "astro:content";
 
 const locale = "en";
 const t = useTranslations(locale);
-const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 
 const archiveRaw = await getCollection("archive");
 const editions   = archiveRaw.sort((a, b) => b.data.year - a.data.year);

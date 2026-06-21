@@ -8,7 +8,7 @@ import { getCurrentSessions, toSessionView } from "../../lib/sessions";
 const locale = "de";
 const t = useTranslations(locale);
 
-const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 const canonicalUrl = `${site}programm/merkliste/`;
 const alternates = {
   de: canonicalUrl,
@@ -153,7 +153,7 @@ const grouped = days.map(day => ({
     startTime: sv.view.startTime,
     endTime: sv.view.endTime,
     location: sv.roomName,
-    url: `https://tierrechtskongress.de/programm/${sv.view.slug}/`,
+    url: `https://tierrechtskongress.ch/programm/${sv.view.slug}/`,
   })) }}>
   window.__TRK_SESSIONS__ = trkSessions;
 </script>

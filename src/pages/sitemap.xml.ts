@@ -5,7 +5,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async ({ site }) => {
-  const base = site?.toString() ?? "https://tierrechtskongress.de";
+  const base = site?.toString() ?? "https://tierrechtskongress.ch";
 
   const sessions = await getCollection("sessions");
   const speakers = await getCollection("speakers");

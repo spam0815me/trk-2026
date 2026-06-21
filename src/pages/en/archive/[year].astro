@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 const { edition } = Astro.props;
 const locale = "en";
 const t = useTranslations(locale);
-const site = Astro.site?.toString() ?? "https://tierrechtskongress.de";
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 ---
 
 <PageLayout
