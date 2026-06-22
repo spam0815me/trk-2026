@@ -9,6 +9,7 @@ import SpeakerCard from "../components/speakers/SpeakerCard.astro";
 import PartnerGrid from "../components/partners/PartnerGrid.astro";
 import { useTranslations, getField } from "../lib/i18n";
 import { getCollection } from "astro:content";
+import { congressEventJsonLd, organizationJsonLd } from "../lib/seo-jsonld";
 
 const locale = "de";
 const t = useTranslations(locale);
@@ -19,6 +20,12 @@ const alternates = {
   de: canonicalUrl,
   en: `${site}en/`,
 };
+
+const ogImageAbs = new URL("/images/og-default.jpg", site).toString();
+const jsonLd = [
+  congressEventJsonLd({ locale, url: canonicalUrl, image: ogImageAbs, description: t("site.shareDescription") }),
+  organizationJsonLd(),
+];
 
 // Daten laden
 const speakersRaw = await getCollection("speakers");
@@ -68,6 +75,7 @@ const highlights = sessionsRaw
   locale={locale}
   canonicalUrl={canonicalUrl}
   alternates={alternates}
+  jsonLd={jsonLd}
 >
   <!-- Hero -->
   <Hero

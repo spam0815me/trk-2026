@@ -6,6 +6,7 @@ import SpeakerCard from "../../components/speakers/SpeakerCard.astro";
 import PartnerGrid from "../../components/partners/PartnerGrid.astro";
 import { useTranslations, getField } from "../../lib/i18n";
 import { getCollection } from "astro:content";
+import { congressEventJsonLd, organizationJsonLd } from "../../lib/seo-jsonld";
 
 const locale = "en";
 const t = useTranslations(locale);
@@ -13,6 +14,12 @@ const t = useTranslations(locale);
 const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 const canonicalUrl = `${site}en/`;
 const alternates = { de: `${site}`, en: canonicalUrl };
+
+const ogImageAbs = new URL("/images/og-default.jpg", site).toString();
+const jsonLd = [
+  congressEventJsonLd({ locale, url: canonicalUrl, image: ogImageAbs, description: t("site.shareDescription") }),
+  organizationJsonLd(),
+];
 
 const speakersRaw = await getCollection("speakers");
 const speakers = speakersRaw
@@ -30,6 +37,7 @@ const partners = partnersRaw.flatMap(entry => entry.data).sort((a, b) => a.sortO
   locale={locale}
   canonicalUrl={canonicalUrl}
   alternates={alternates}
+  jsonLd={jsonLd}
 >
   <Hero
     lead={t("home.heroLead")}

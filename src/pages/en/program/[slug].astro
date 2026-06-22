@@ -3,6 +3,7 @@ import PageLayout from "../../../layouts/PageLayout.astro";
 import { useTranslations, getField } from "../../../lib/i18n";
 import { getCollection } from "astro:content";
 import { toSessionView, formatDate } from "../../../lib/sessions";
+import { sessionEventJsonLd } from "../../../lib/seo-jsonld";
 
 export async function getStaticPaths() {
   const sessions = await getCollection("sessions");
@@ -38,6 +39,19 @@ const speakerDisplayData = sessionSpeakers.map(sp => ({
 const site         = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 const canonicalUrl = `${site}en/program/${session.data.slug}/`;
 
+const jsonLd = sessionEventJsonLd({
+  locale,
+  name: sessionView.title,
+  description: sessionView.description,
+  date: session.data.date,
+  startTime: session.data.startTime,
+  endTime: session.data.endTime,
+  roomName,
+  performers: sessionSpeakers.map(s => s.data.name),
+  url: canonicalUrl,
+  superEventUrl: `${site}en/`,
+});
+
 const typeLabel = t(`program.types.${session.data.type}` as Parameters<typeof t>[0]);
 const langLabel = session.data.language === "de"
   ? t("program.languages.de")
@@ -72,6 +86,7 @@ const icalData = {
     de: `${site}programm/${session.data.slug}/`,
     en: canonicalUrl,
   }}
+  jsonLd={jsonLd}
   breadcrumbs={[
     { label: t("program.title"), href: "/en/program" },
     { label: sessionView.title },

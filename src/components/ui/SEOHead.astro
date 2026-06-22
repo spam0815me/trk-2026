@@ -18,6 +18,8 @@ interface Props {
   ogTitle?: string;
   /** Überschreibt die Social-Sharing-Beschreibung (OG/Twitter). Default: Kongress-Sharing-Text. */
   ogDescription?: string;
+  /** Strukturierte Daten (schema.org JSON-LD), einzelnes Objekt oder Array. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -30,8 +32,10 @@ const {
   noindex = false,
   ogTitle,
   ogDescription,
+  jsonLd,
 } = Astro.props;
 
+const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const t = useTranslations(locale);
 const siteName = locale === "de" ? "Tierrechtskongress" : "Animal Rights Congress";
 const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
@@ -83,6 +87,11 @@ const shareDescription = ogDescription ?? t("site.shareDescription");
 <meta name="twitter:title" content={shareTitle} />
 <meta name="twitter:description" content={shareDescription} />
 <meta name="twitter:image" content={ogImageAbs} />
+
+<!-- Strukturierte Daten (schema.org) -->
+{jsonLdBlocks.map(block => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}
 
 <!-- Favicons -->
 <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />

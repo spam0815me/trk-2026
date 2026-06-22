@@ -6,6 +6,7 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import { useTranslations, getField } from "../../lib/i18n";
 import { getCollection } from "astro:content";
 import { toSessionView, formatDate, calcDuration } from "../../lib/sessions";
+import { sessionEventJsonLd } from "../../lib/seo-jsonld";
 
 export async function getStaticPaths() {
   const sessions = await getCollection("sessions");
@@ -45,6 +46,19 @@ const alternates   = {
   en: `${site}en/program/${session.data.slug}/`,
 };
 
+const jsonLd = sessionEventJsonLd({
+  locale,
+  name: sessionView.title,
+  description: sessionView.description,
+  date: session.data.date,
+  startTime: session.data.startTime,
+  endTime: session.data.endTime,
+  roomName,
+  performers: sessionSpeakers.map(s => s.data.name),
+  url: canonicalUrl,
+  superEventUrl: site,
+});
+
 const roomIcons: Record<string, string> = {
   "saal-a": "/images/Raum_Sandra.svg",
   "saal-b": "/images/Raum_Yvonne.svg",
@@ -83,6 +97,7 @@ const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&tex
   locale={locale}
   canonicalUrl={canonicalUrl}
   alternates={alternates}
+  jsonLd={jsonLd}
   breadcrumbs={[
     { label: t("program.title"), href: "/programm" },
     { label: sessionView.title },

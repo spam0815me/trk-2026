@@ -19,6 +19,7 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   currentPath?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   ogImage,
   noindex,
   currentPath = Astro.url.pathname,
+  jsonLd,
 } = Astro.props;
 
 // Alternate URL für Sprachumschalter
@@ -55,6 +57,7 @@ const alternateUrl = alternates?.[alternateLocale] ?? (locale === "de" ? `/en/` 
       alternates={alternates}
       ogImage={ogImage}
       noindex={noindex}
+      jsonLd={jsonLd}
     />
   </head>
   <body>
