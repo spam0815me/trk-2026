@@ -80,17 +80,41 @@ const breaksByDay: Record<number, { time: string; label: string; icon: string }[
   ],
 };
 
+// Uhrzeit um Minuten verschieben ("15:00", -60 -> "14:00")
+function shiftTime(hhmm: string, deltaMin: number) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const total = h * 60 + m + deltaMin;
+  const hh = Math.floor(total / 60);
+  const mm = total % 60;
+  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+}
+
 const timetableData = days.map(day => {
   const daySessions = sessionViews.filter(sv => sv.view.day === day);
   const sessionTimes = [...new Set(daySessions.map(sv => sv.view.startTime))];
-  const breakTimes = (breaksByDay[day] ?? []).map(b => b.time);
+
+  // Türöffnung (1 h vorher) + Begrüssung (30 min vorher) relativ zur ersten Session des Tages.
+  // Türöffnung entfällt, wenn vor der ersten Session bereits Rahmenprogramm liegt
+  // (z.B. Sonntag: gemeinsames "Zmorge" vor den Vorträgen).
+  const firstStart = [...sessionTimes].sort()[0];
+  const existingBreaks = breaksByDay[day] ?? [];
+  const hasEarlierProgram = firstStart ? existingBreaks.some(b => b.time < firstStart) : false;
+  const openings = firstStart
+    ? [
+        ...(hasEarlierProgram ? [] : [{ time: shiftTime(firstStart, -60), label: "Türöffnung", icon: "" }]),
+        { time: shiftTime(firstStart, -30), label: "Begrüssung", icon: "" },
+      ]
+    : [];
+  const dayBreaks = [...openings, ...existingBreaks];
+
+  const breakTimes = dayBreaks.map(b => b.time);
   const allTimes = [...new Set([...sessionTimes, ...breakTimes])].sort();
 
   return {
     day,
     date: daySessions[0]?.view.date ?? "",
     timeSlots: allTimes.map(time => {
-      const breakEntry = (breaksByDay[day] ?? []).find(b => b.time === time);
+      const breakEntry = dayBreaks.find(b => b.time === time);
       return {
         time,
         isBreak: !!breakEntry,
@@ -156,7 +180,9 @@ const timetableData = days.map(day => {
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
                 <div class="timetable__break">
-                  {breakIcon && <img src={breakIcon} alt={breakLabel} class="timetable__break-icon" />}
+                  {breakIcon
+                    ? <img src={breakIcon} alt={breakLabel} class="timetable__break-icon" />
+                    : <span class="timetable__break-label">{breakLabel}</span>}
                 </div>
               </div>
             ) : (
@@ -376,6 +402,15 @@ const timetableData = days.map(day => {
 .timetable__break-icon {
   height: 40px;
   width: auto;
+}
+
+.timetable__break-label {
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 /* Raum-Karten */
