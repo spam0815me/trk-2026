@@ -217,7 +217,11 @@ const icalData = {
 .session-detail__meta-item dt { color: #26282a; text-transform: uppercase; }
 .session-detail__meta-item dd { color: #e5b969; margin: 0; }
 .session-detail__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; }
-.session-detail__actions .btn { flex: 0 0 13rem; width: 13rem; display: inline-flex; align-items: center; justify-content: center; }
+.session-detail__actions .btn { flex: 0 0 auto; min-width: 13rem; width: auto; display: inline-flex; align-items: center; justify-content: center; }
+.session-detail__actions .btn--primary { background-image: url('/images/btn-v2-black-stretch.svg'); }
+.session-detail__actions .btn--primary:hover { background-image: url('/images/btn-v2-yellow-stretch.svg'); }
+.session-detail__actions .btn--ghost { background-image: url('/images/btn-v2-beige-stretch.svg'); }
+.session-detail__actions .btn--ghost:hover { background-image: url('/images/btn-v2-black-stretch.svg'); }
 .session-detail__body { margin-bottom: var(--space-8); }
 .session-detail__note { background: var(--color-warning-bg); border-left: 3px solid var(--color-warning); padding: var(--space-4); border-radius: var(--radius-md); font-size: var(--text-sm); }
 .session-detail__access { background: var(--color-bg-subtle); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-8); }

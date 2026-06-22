@@ -353,11 +353,28 @@ const icalData = {
 }
 
 .session-detail__actions .btn {
-  flex: 0 0 13rem;
-  width: 13rem;
+  flex: 0 0 auto;
+  min-width: 13rem;
+  width: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Gestreckte Button-Form: füllt auch breite Buttons (langer Text) randlos,
+   die meet-Variante würde sonst nur mittig sitzen und Text seitlich überstehen lassen.
+   Beide Varianten abgedeckt (DE nutzt --primary, EN --ghost). */
+.session-detail__actions .btn--primary {
+  background-image: url('/images/btn-v2-black-stretch.svg');
+}
+.session-detail__actions .btn--primary:hover {
+  background-image: url('/images/btn-v2-yellow-stretch.svg');
+}
+.session-detail__actions .btn--ghost {
+  background-image: url('/images/btn-v2-beige-stretch.svg');
+}
+.session-detail__actions .btn--ghost:hover {
+  background-image: url('/images/btn-v2-black-stretch.svg');
 }
 
 .session-detail__body {
