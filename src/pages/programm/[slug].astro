@@ -83,12 +83,6 @@ const icalData = {
   endTime: session.data.endTime,
   url: canonicalUrl,
 };
-
-// Google-Kalender-URL
-function toGCalDate(date: string, time: string) {
-  return date.replace(/-/g, "") + "T" + time.replace(":", "") + "00";
-}
-const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(sessionView.title)}&dates=${toGCalDate(session.data.date, session.data.startTime)}/${toGCalDate(session.data.date, session.data.endTime)}&location=${encodeURIComponent(roomName)}&details=${encodeURIComponent(sessionView.description + "\n\n" + canonicalUrl)}`;
 ---
 
 <PageLayout
@@ -182,18 +176,8 @@ const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&tex
           type="button"
         >
           <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 20px; height: 20px;" aria-hidden="true"></span>
-          {t("session.exportIcal")}
+          {t("bookmarks.addToCalendar")}
         </button>
-
-        <a
-          href={gcalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn--primary btn--sm"
-        >
-          <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 20px; height: 20px;" aria-hidden="true"></span>
-          Google Kalender
-        </a>
       </div>
     </header>
 
