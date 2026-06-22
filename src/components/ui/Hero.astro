@@ -3,16 +3,20 @@ interface Props {
   title?: string;
   subtitle?: string;
   lead?: string;
+  /** Visuell verstecktes Seiten-h1 (Dokumentstruktur/Screenreader). */
+  heading?: string;
   ctaPrimary?: { href: string; label: string };
   ctaSecondary?: { href: string; label: string };
   size?: "default" | "large";
   pushDown?: boolean;
 }
 
-const { lead, ctaPrimary, ctaSecondary } = Astro.props;
+const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
 ---
 
 <section class="hero" aria-label="Hero">
+
+  {heading && <h1 class="sr-only">{heading}</h1>}
 
   <!-- Parallax-Hintergrund -->
   <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
