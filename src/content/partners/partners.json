@@ -21,13 +21,23 @@
   },
   {
     "id": "transfarmation",
-    "name": "Hof Narr & TransFARMation",
+    "name": "TransFARMation",
     "logo": "/images/partners/transfarmation.png",
     "url": "https://transfarmation.ch",
     "category": "main",
     "description_de": "Pioniere für eine tierleidfreie Landwirtschaft.",
     "description_en": "Pioneers for farming without animal suffering.",
     "sortOrder": 3
+  },
+  {
+    "id": "hof-narr",
+    "name": "Hof Narr",
+    "logo": "/images/partners/hof-narr.webp",
+    "url": "https://www.hof-narr.ch/",
+    "category": "main",
+    "description_de": "",
+    "description_en": "",
+    "sortOrder": 4
   },
   {
     "id": "animal-rights-switzerland",
@@ -37,7 +47,7 @@
     "category": "partner",
     "description_de": "Setzt sich für die Rechte aller Tiere in der Schweiz ein.",
     "description_en": "Advocates for the rights of all animals in Switzerland.",
-    "sortOrder": 4
+    "sortOrder": 5
   },
   {
     "id": "stadttauben-schweiz",
@@ -47,7 +57,7 @@
     "category": "partner",
     "description_de": "Engagiert für ein tierwürdiges Zusammenleben mit Stadttauben.",
     "description_en": "Committed to humane coexistence with urban pigeons.",
-    "sortOrder": 5
+    "sortOrder": 6
   },
   {
     "id": "dbt",
@@ -57,7 +67,7 @@
     "category": "partner",
     "description_de": "Dachverband der Berner Tierschutzorganisationen.",
     "description_en": "Umbrella organisation of Bernese animal protection organisations.",
-    "sortOrder": 6
+    "sortOrder": 7
   },
   {
     "id": "films-for-future",
@@ -67,23 +77,13 @@
     "category": "partner",
     "description_de": "Film als Werkzeug für gesellschaftlichen Wandel.",
     "description_en": "Film as a tool for social change.",
-    "sortOrder": 7
+    "sortOrder": 8
   },
   {
     "id": "tier-und-wir",
     "name": "Tier und Wir",
     "logo": "/images/partners/tier-und-wir.jpg",
     "url": "https://www.tierundwir.ch/",
-    "category": "partner",
-    "description_de": "",
-    "description_en": "",
-    "sortOrder": 8
-  },
-  {
-    "id": "hof-narr",
-    "name": "Hof Narr",
-    "logo": "/images/partners/hof-narr.webp",
-    "url": "https://hofnarr.ch",
     "category": "partner",
     "description_de": "",
     "description_en": "",
