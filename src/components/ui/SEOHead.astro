@@ -3,7 +3,7 @@
  * SEOHead — Meta-Tags, OG, hreflang, Canonical
  */
 import type { Locale } from "../../lib/i18n";
-import { LOCALES, DEFAULT_LOCALE } from "../../lib/i18n";
+import { LOCALES, DEFAULT_LOCALE, useTranslations } from "../../lib/i18n";
 
 interface Props {
   title: string;
@@ -14,6 +14,10 @@ interface Props {
   alternates?: Partial<Record<Locale, string>>;
   ogImage?: string;
   noindex?: boolean;
+  /** Überschreibt den Social-Sharing-Titel (OG/Twitter). Default: Kongress-Sharing-Titel. */
+  ogTitle?: string;
+  /** Überschreibt die Social-Sharing-Beschreibung (OG/Twitter). Default: Kongress-Sharing-Text. */
+  ogDescription?: string;
 }
 
 const {
@@ -24,11 +28,19 @@ const {
   alternates = {},
   ogImage = "/images/og-default.jpg",
   noindex = false,
+  ogTitle,
+  ogDescription,
 } = Astro.props;
 
+const t = useTranslations(locale);
 const siteName = locale === "de" ? "Tierrechtskongress" : "Animal Rights Congress";
 const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 const ogImageAbs = new URL(ogImage, Astro.site ?? canonicalUrl).toString();
+
+// Social-Sharing-Karte: standardmässig kongressweites Branding,
+// pro Seite via ogTitle/ogDescription überschreibbar.
+const shareTitle = ogTitle ?? t("site.shareTitle");
+const shareDescription = ogDescription ?? t("site.shareDescription");
 ---
 
 <!-- Basis -->
@@ -60,16 +72,16 @@ const ogImageAbs = new URL(ogImage, Astro.site ?? canonicalUrl).toString();
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:title" content={fullTitle} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={shareTitle} />
+<meta property="og:description" content={shareDescription} />
 <meta property="og:image" content={ogImageAbs} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content={locale === "de" ? "de_DE" : "en_GB"} />
 
 <!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={fullTitle} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:title" content={shareTitle} />
+<meta name="twitter:description" content={shareDescription} />
 <meta name="twitter:image" content={ogImageAbs} />
 
 <!-- Favicons -->

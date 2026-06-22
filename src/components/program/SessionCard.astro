@@ -58,12 +58,8 @@ const roomIcons: Record<string, string> = {
 };
 const roomIcon = roomId ? roomIcons[roomId] : undefined;
 
-// Beschreibung: 1 Satz, bei sehr kurzem ersten Satz 2 Sätze
-const sentences = (description.match(/[^.!?]+[.!?]+/g) ?? []).map(s => s.trim()).filter(s => s.length >= 15);
-const firstSentence = sentences[0] ?? description;
-const descPreview = (sentences.length >= 2 && firstSentence.length < 100)
-  ? (firstSentence + " " + sentences[1]).trim()
-  : firstSentence;
+// Beschreibung in der Card vollständig anzeigen
+const descPreview = description;
 ---
 
 <article
