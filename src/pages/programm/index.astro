@@ -62,21 +62,21 @@ const activeRoomData = activeRooms.map(r => ({
   icon:  roomIcons[r.data.id],
 }));
 
-// Pausen & Rahmenprogramm pro Tag
-const breaksByDay: Record<number, { time: string; label: string; icon: string }[]> = {
+// Pausen & Rahmenprogramm pro Tag (catering: Ess-Pause mit Verpflegung von Spicy Roots)
+const breaksByDay: Record<number, { time: string; label: string; icon: string; catering?: boolean }[]> = {
   1: [
-    { time: "19:00", label: "zNacht", icon: "/images/Znacht.svg" },
+    { time: "19:00", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
     { time: "20:30", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
   ],
   2: [
-    { time: "12:30", label: "Mittagspause", icon: "/images/Mittag.svg" },
+    { time: "12:30", label: "Mittagspause", icon: "/images/Mittag.svg", catering: true },
     { time: "16:00", label: "Kaffeepause", icon: "/images/Pause.svg" },
-    { time: "18:30", label: "zNacht", icon: "/images/Znacht.svg" },
+    { time: "18:30", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
     { time: "20:00", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
   ],
   3: [
-    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg" },
-    { time: "13:00", label: "Mittagspause", icon: "/images/Mittag.svg" },
+    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg", catering: true },
+    { time: "13:00", label: "Mittagspause", icon: "/images/Mittag.svg", catering: true },
   ],
 };
 
@@ -120,6 +120,7 @@ const timetableData = days.map(day => {
         isBreak: !!breakEntry,
         breakLabel: breakEntry?.label ?? "",
         breakIcon: breakEntry?.icon ?? "",
+        breakCatering: breakEntry?.catering ?? false,
         cells: activeRooms.map(room =>
           daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
         ),
@@ -175,7 +176,7 @@ const timetableData = days.map(day => {
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, cells }) => (
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, cells }) => (
             isBreak ? (
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
@@ -183,6 +184,16 @@ const timetableData = days.map(day => {
                   {breakIcon
                     ? <img src={breakIcon} alt={breakLabel} class="timetable__break-icon" />
                     : <span class="timetable__break-label">{breakLabel}</span>}
+                  {breakCatering && (
+                    <a
+                      href="https://spicyroots.ch/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="timetable__break-catering"
+                    >
+                      Catering von Spicy Roots
+                    </a>
+                  )}
                 </div>
               </div>
             ) : (
@@ -392,8 +403,10 @@ const timetableData = days.map(day => {
 .timetable__break {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   background: #e3e3dd;
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
@@ -402,6 +415,18 @@ const timetableData = days.map(day => {
 .timetable__break-icon {
   height: 40px;
   width: auto;
+}
+
+.timetable__break-catering {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: #26282a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.timetable__break-catering:hover {
+  color: var(--color-primary);
 }
 
 .timetable__break-label {
