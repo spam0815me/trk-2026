@@ -1,0 +1,24 @@
+{
+  "id": "kosmetik-ohne-tierleid",
+  "slug": "kosmetik-ohne-tierleid",
+  "year": 2026,
+  "title_de": "Kosmetik ohne Tierleid – Orientierung im Label-Dschungel",
+  "title_en": "Cosmetics Without Animal Suffering – Finding Your Way Through the Label Jungle",
+  "description_de": "Vegane Kosmetik, Naturkosmetik – und wie man sie erkennt. Ein Überblick über die relevanten Labels.",
+  "description_en": "Vegan cosmetics, natural cosmetics – and how to recognise them. An overview of the relevant labels.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-25",
+  "startTime": "12:00",
+  "endTime": "13:00",
+  "day": 3,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "monika-burkhard"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 30,
+  "durationMinutes": 60
+}

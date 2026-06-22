@@ -1,0 +1,17 @@
+{
+  "id": "monika-burkhard",
+  "slug": "monika-burkhard",
+  "year": 2026,
+  "name": "Monika Burkhard",
+  "pronouns": "sie/ihr",
+  "role_de": "Naturkosmetikerin & Gründerin",
+  "role_en": "Natural Cosmetics Specialist & Founder",
+  "organization": "VEEL GOOD / Vegane Oase",
+  "bio_de": "Monika Burkhard ist gelernte Pharma-Assistentin, Umweltberaterin und Naturkosmetikerin sowie Gründerin von VEEL GOOD und Mitgründerin der Veganen Oase. Die vegane Lebensweise ist ihre Herzensangelegenheit – mit ihrer Arbeit in der Naturkosmetik verbindet sie ihr Engagement für Tiere, Mensch und Umwelt mit ihrem beruflichen Alltag.",
+  "bio_en": "Monika Burkhard is a trained pharmaceutical assistant, environmental consultant and natural cosmetics specialist, founder of VEEL GOOD and co-founder of Vegane Oase. The vegan way of life is close to her heart – through her work in natural cosmetics she combines her commitment to animals, people and the environment with her professional everyday life.",
+  "photo": "/images/speakers/Monika_Burkhard.jpg",
+  "sessionIds": [
+    "kosmetik-ohne-tierleid"
+  ],
+  "sortOrder": 30
+}
