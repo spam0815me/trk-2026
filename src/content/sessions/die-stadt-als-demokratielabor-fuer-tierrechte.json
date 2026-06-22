@@ -1,0 +1,24 @@
+{
+  "id": "die-stadt-als-demokratielabor-fuer-tierrechte",
+  "slug": "die-stadt-als-demokratielabor-fuer-tierrechte",
+  "year": 2026,
+  "title_de": "Die Stadt als Demokratielabor für Tierrechte",
+  "title_en": "The City as a Democracy Lab for Animal Rights",
+  "description_de": "Tierrechte im Stadtparlament? Klingt nach kleinen Brötchen. Dabei ist die Stadt der Ort, wo grosse Ideen entstehen. Ein Streifzug vom Bärenpark bis zum Bundeshaus.",
+  "description_en": "Animal rights in the city parliament? Sounds like thinking small. Yet the city is precisely where big ideas take shape — a journey from the Bear Park to the Federal Palace.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "15:00",
+  "endTime": "16:00",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "tobias-sennhauser"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 6,
+  "durationMinutes": 60
+}

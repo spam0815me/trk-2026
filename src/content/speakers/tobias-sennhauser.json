@@ -1,0 +1,17 @@
+{
+  "id": "tobias-sennhauser",
+  "slug": "tobias-sennhauser",
+  "year": 2026,
+  "name": "Tobias Sennhauser",
+  "pronouns": "er/ihm",
+  "role_de": "Stadtrat & Campaigner",
+  "role_en": "City Councillor & Campaigner",
+  "organization": "Tier im Fokus (TIF)",
+  "bio_de": "Tobias macht Recherchen zur Schweizer Nutztierhaltung und ist mitverantwortlich für die Kampagnen von Tier im Fokus (TIF). Von 2014 bis 2024 war er Präsident von TIF. Seit 2025 sitzt er im Berner Stadtparlament.",
+  "bio_en": "Tobias investigates animal farming in Switzerland and is co-responsible for the campaigns of Tier im Fokus (TIF). From 2014 to 2024 he was president of TIF. Since 2025 he has held a seat in Bern's city parliament.",
+  "photo": "/images/speakers/Tobias_Sennhauser.jpg",
+  "sessionIds": [
+    "die-stadt-als-demokratielabor-fuer-tierrechte"
+  ],
+  "sortOrder": 29
+}
