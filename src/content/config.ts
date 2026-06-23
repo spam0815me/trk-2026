@@ -85,6 +85,10 @@ const speakers = defineCollection({
         mastodon: z.string().optional(),
         linkedin: z.string().optional(),
         instagram: z.string().optional(),
+        facebook: z.string().optional(),
+        youtube: z.string().optional(),
+        tiktok: z.string().optional(),
+        bluesky: z.string().optional(),
       })
       .optional(),
 

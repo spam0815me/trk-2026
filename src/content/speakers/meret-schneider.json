@@ -10,6 +10,10 @@
   "bio_de": "Meret Schneider ist Nationalrätin der Grünen, arbeitet als Projektleiterin beim Kampagnenforum und engagiert sich seit Jahren politisch für alle empfindungsfähigen Lebewesen. Sie hat Umweltwissenschaften, Publizistik & Kommunikation und Linguistik studiert.",
   "bio_en": "Meret Schneider is a Green Party member of the Swiss National Council and works as a project manager at the Campaign Forum. She has long been politically engaged for all sentient beings and studied environmental sciences, journalism and linguistics.",
   "photo": "/images/speakers/Meret_Schneider.jpg",
+  "social": {
+    "instagram": "https://www.instagram.com/meret.schneider/",
+    "twitter": "https://x.com/Schneimere"
+  },
   "sessionIds": [
     "politik-fuer-tiere"
   ],

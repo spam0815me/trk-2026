@@ -10,6 +10,11 @@
   "bio_de": "Tobias Giesinger ist Mitgründer von The Marker. Nachdem er einige Jahre beim Verein Gegen Tierfabriken in Österreich als Campaigner tätig war, arbeitet er nun investigativ-journalistisch zu den Themen Tierschutz, Umweltschutz und Menschenrechte.",
   "bio_en": "Tobias Giesinger is co-founder of The Marker. After working as a campaigner for the association Gegen Tierfabriken in Austria, he now works as an investigative journalist on animal protection, environmental protection, and human rights.",
   "photo": "/images/speakers/Tobias_Giesinger.jpg",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/tobiasgiesinger",
+    "facebook": "https://www.facebook.com/GiesingerTobias/",
+    "twitter": "https://x.com/GiesingerTobias"
+  },
   "sessionIds": [
     "lost-in-transit"
   ],

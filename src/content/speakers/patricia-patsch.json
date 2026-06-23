@@ -11,6 +11,9 @@
   "bio_en": "Patricia Patsch is active with Tierschutz Aktiv Grenzenlos in international animal welfare work, with a focus on Hungary and Morocco.",
   "photo": "/images/speakers/Patricia_Patsch.jpg",
   "website": "https://www.tierschutzaktivgrenzenlos.com",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/dr-patricia-patsch-42112593"
+  },
   "sessionIds": [
     "auslandstierschutz"
   ],

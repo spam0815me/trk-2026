@@ -10,6 +10,12 @@
   "bio_de": "Beat Mumenthaler ist Naturfotograf, Porträtfotograf und Biodiversitätsbotschafter aus der Schweiz. Seine international preisgekrönte Fotografie und seine Nachhaltigkeitsprojekte wurzeln in der Überzeugung, dass Schönheit Haltung ist – und dass das Richtige zu tun bedeutet, für Enkel zu arbeiten.",
   "bio_en": "Beat Mumenthaler is a nature photographer, portrait photographer and biodiversity ambassador from Switzerland. His internationally award-winning photography and sustainability projects are rooted in the belief that beauty is an attitude — and that doing the right thing means working for future generations.",
   "photo": "/images/speakers/Beat_Mumenthaler.jpg",
+  "website": "https://www.beatmumenthaler.com/",
+  "social": {
+    "instagram": "https://www.instagram.com/beatmumenthaler/",
+    "linkedin": "https://www.linkedin.com/in/beatmumenthaler/",
+    "facebook": "https://www.facebook.com/beatmumenthaler/"
+  },
   "sessionIds": [
     "saftkugler-und-woelfe"
   ],

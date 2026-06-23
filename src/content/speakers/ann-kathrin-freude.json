@@ -10,6 +10,11 @@
   "bio_de": "Ann-Kathrin Freude ist Mitgründerin von The Marker. Nachdem sie einige Jahre beim Verein Gegen Tierfabriken in Österreich als Campaignerin tätig war, arbeitet sie nun investigativ-journalistisch zu den Themen Tierschutz, Umweltschutz und Menschenrechte.",
   "bio_en": "Ann-Kathrin Freude is co-founder of The Marker. After working as a campaigner for the association Gegen Tierfabriken in Austria, she now works as an investigative journalist on animal protection, environmental protection, and human rights.",
   "photo": "/images/speakers/Ann-Kathrin_Freude.jpg",
+  "social": {
+    "instagram": "https://www.instagram.com/ann.joy.life/",
+    "linkedin": "https://at.linkedin.com/in/ann-kathrin-freude-3b81a4321",
+    "twitter": "https://x.com/AnnKFreude"
+  },
   "sessionIds": [
     "lost-in-transit"
   ],

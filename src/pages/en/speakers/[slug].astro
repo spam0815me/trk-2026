@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../../../layouts/PageLayout.astro";
 import SessionCard from "../../../components/program/SessionCard.astro";
+import SocialLinks from "../../../components/ui/SocialLinks.astro";
 import { useTranslations, getField } from "../../../lib/i18n";
 import { getCollection } from "astro:content";
 import { toSessionView } from "../../../lib/sessions";
@@ -58,11 +59,7 @@ const canonicalUrl = `${site}en/speakers/${speaker.data.slug}/`;
           {speaker.data.name}
         </h1>
         <p class="speaker-detail__role">{role}{speaker.data.organization ? `, ${speaker.data.organization}` : ""}</p>
-        {speaker.data.website && (
-          <a href={speaker.data.website} class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
-            {t("speakers.website")} ↗
-          </a>
-        )}
+        <SocialLinks website={speaker.data.website} social={speaker.data.social} name={speaker.data.name} />
       </div>
     </div>
 

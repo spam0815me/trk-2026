@@ -10,6 +10,9 @@
   "bio_de": "Lubomir Yotov ist Leiter des V-Labels und stellvertretender Geschäftsführer bei Swissveg. Seit seinem Einstieg im Jahr 2023 treibt er die Weiterentwicklung der Kennzeichnung voran, zum Beispiel mit den 2025 gegründeten Labels C-Label und F-Label.",
   "bio_en": "Lubomir Yotov is Head of the V-Label and Deputy CEO at Swissveg. Since joining in 2023, he has driven the further development of labelling, including the C-Label and F-Label founded in 2025.",
   "photo": "/images/speakers/Lubomir_Yotov.jpg",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/lubomir-yotov/"
+  },
   "sessionIds": [
     "fleisch-ohne-leid"
   ],

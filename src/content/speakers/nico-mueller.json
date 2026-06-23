@@ -10,6 +10,9 @@
   "bio_de": "Dr. Nico Müller ist Philosoph an der Universität Basel und Projektleiter im Nationalen Forschungsprogramm 79 «Advancing 3R». Zudem ist er Präsident des Vereins Animal Rights Switzerland.",
   "bio_en": "Dr. Nico Müller is a philosopher at the University of Basel and a project leader within the National Research Programme 79 \"Advancing 3R\". He is also President of Animal Rights Switzerland.",
   "photo": "/images/speakers/Nico_Mueller.jpg",
+  "social": {
+    "linkedin": "https://ch.linkedin.com/in/nico-m%C3%BCller-29b922102"
+  },
   "sessionIds": [
     "ende-von-tierversuchen-planen"
   ],

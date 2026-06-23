@@ -1,0 +1,120 @@
+---
+/**
+ * SocialLinks — Icon-Reihe mit Website + Social-Media-Profilen einer Person.
+ * Stil angelehnt an den Footer (icon-only Links, currentColor-SVGs).
+ * Rendert nur Plattformen, für die eine URL vorhanden ist.
+ */
+interface Social {
+  website?: string;
+  instagram?: string;
+  facebook?: string;
+  youtube?: string;
+  tiktok?: string;
+  linkedin?: string;
+  twitter?: string;
+  mastodon?: string;
+  bluesky?: string;
+}
+
+interface Props {
+  website?: string;
+  social?: Social;
+  name: string;
+}
+
+const { website, social = {}, name } = Astro.props;
+
+const ICONS: Record<string, string> = {
+  website: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  facebook: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+  youtube: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>`,
+  tiktok: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`,
+  linkedin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+  twitter: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>`,
+  mastodon: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.96 5.86c-.33-2.45-2.47-4.38-5-4.75C16.53.95 14.95.66 11.3.66h-.03c-3.65 0-4.43.29-4.86.45-2.46.36-4.71 2.1-5.26 4.58C.89 6.9.88 8.27.92 9.5c.06 1.76.07 3.52.23 5.27.11 1.16.31 2.31.59 3.44.53 2.09 2.6 3.83 4.64 4.54 2.18.76 4.53.89 6.78.37.25-.06.49-.12.73-.2.55-.17 1.19-.37 1.66-.71a.07.07 0 0 0 .03-.06v-1.7a.06.06 0 0 0-.07-.06c-1.45.34-2.94.51-4.43.51-2.56 0-3.25-1.21-3.45-1.72a5.3 5.3 0 0 1-.3-1.37c0-.05.04-.09.09-.08 1.43.34 2.9.52 4.37.52.35 0 .7 0 1.06-.01 1.48-.04 3.04-.12 4.49-.4l.11-.02c2.29-.44 4.47-1.82 4.69-5.31.01-.14.03-1.43.03-1.57.01-.48.16-3.39-.02-5.18zM18.6 14.13h-2.23v-5.5c0-1.16-.49-1.75-1.47-1.75-1.08 0-1.63.7-1.63 2.09v3.03h-2.22V8.97c0-1.39-.55-2.09-1.63-2.09-.98 0-1.47.59-1.47 1.75v5.5H4.25V8.46c0-1.16.3-2.08.89-2.76.61-.68 1.41-1.03 2.41-1.03 1.16 0 2.03.44 2.61 1.33l.56.93.56-.93c.58-.89 1.45-1.33 2.61-1.33 1 0 1.8.35 2.41 1.03.59.68.89 1.6.89 2.76v5.67z"/></svg>`,
+  bluesky: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8C10.91 8.69 7.95 4.75 5.2 2.8 2.57.94 1.56 1.26.9 1.56.14 1.91 0 3.08 0 3.77c0 .69.38 5.65.62 6.48.82 2.74 3.72 3.66 6.39 3.36.13-.02.27-.04.41-.06-.14.02-.28.04-.41.06-3.91.58-7.39 2-2.83 7.07 5.01 5.19 6.87-1.11 7.82-4.31.95 3.2 2.05 9.27 7.73 4.31 4.27-4.31 1.17-6.5-2.74-7.07-.14-.02-.28-.04-.41-.06.14.02.28.04.41.06 2.67.3 5.57-.62 6.39-3.36.24-.83.62-5.79.62-6.48 0-.69-.14-1.86-.9-2.2-.66-.3-1.67-.62-4.3 1.24C16.04 4.75 13.08 8.69 12 10.8z"/></svg>`,
+};
+
+const LABELS: Record<string, string> = {
+  website: "Website",
+  instagram: "Instagram",
+  facebook: "Facebook",
+  youtube: "YouTube",
+  tiktok: "TikTok",
+  linkedin: "LinkedIn",
+  twitter: "X",
+  mastodon: "Mastodon",
+  bluesky: "Bluesky",
+};
+
+const ORDER = ["website", "instagram", "facebook", "youtube", "tiktok", "linkedin", "twitter", "mastodon", "bluesky"];
+
+const s = social as Record<string, string | undefined>;
+
+const links = ORDER
+  .map(key => {
+    const url = key === "website" ? website : s[key];
+    return url ? { key, url, label: LABELS[key], svg: ICONS[key] } : null;
+  })
+  .filter((l): l is { key: string; url: string; label: string; svg: string } => l !== null);
+---
+
+{links.length > 0 && (
+  <div class="speaker-social">
+    {links.map(link => (
+      <a
+        href={link.url}
+        class="speaker-social__link"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${link.label} – ${name}`}
+      >
+        <span class="speaker-social__icon" set:html={link.svg} aria-hidden="true"></span>
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+.speaker-social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.speaker-social__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.speaker-social__link:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.speaker-social__link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.speaker-social__icon {
+  display: inline-flex;
+}
+
+.speaker-social__icon :global(svg) {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+</style>

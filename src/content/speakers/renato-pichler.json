@@ -11,6 +11,9 @@
   "bio_en": "Renato Pichler is the pioneer of the vegan movement in Switzerland. As founder of Swissveg (1993) and the V-Label (1996), he has significantly shaped the movement — not only nationally, but also internationally.",
   "photo": "/images/speakers/Renato_Pichler.jpg",
   "photoPosition": "center 35%",
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/renato-pichler/"
+  },
   "sessionIds": [
     "v-label"
   ],

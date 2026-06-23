@@ -11,6 +11,9 @@
   "bio_en": "Ralf is a versatile interdisciplinary artist, performer, songwriter, poet, educator and process facilitator. Originally from Chemnitz, he has lived in Bern for eight years and promotes knowledge of native animals through school and creative performance projects.",
   "photo": "/images/speakers/Ralf_Assmann.jpg",
   "website": "https://www.ralfassmann.ch",
+  "social": {
+    "facebook": "https://www.facebook.com/ralffassmann/"
+  },
   "sessionIds": [
     "kreativer-protest"
   ],
