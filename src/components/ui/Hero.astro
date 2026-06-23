@@ -111,45 +111,6 @@ const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
   z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .hero__inner {
-    grid-template-columns: 1fr;
-    padding-inline: var(--space-4);
-    gap: var(--space-2);
-    align-items: start;
-  }
-
-  .hero__visual {
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero__kuh {
-    width: 90%;
-    max-width: 380px;
-    margin-top: var(--space-10);
-  }
-
-  .hero__content {
-    align-items: center;
-    text-align: center;
-    padding-block: 0 var(--space-10);
-    gap: var(--space-3);
-    width: 100%;
-    margin-top: calc(-1 * var(--space-6));
-  }
-
-  .hero__actions {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero__lead {
-    font-size: var(--text-lg);
-  }
-
-}
-
 /* Linke Spalte */
 .hero__visual {
   display: flex;
@@ -183,7 +144,10 @@ const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
 .hero__lead {
   font-size: var(--text-xl);
   color: #26282a;
-  max-width: 44ch;
+  /* 44ch als Lesespalte auf Desktop, aber nie breiter als der Container –
+     sonst ragt der zentrierte Block auf Mobile aus dem Viewport und wird
+     durch overflow:hidden des Heros seitlich abgeschnitten. */
+  max-width: min(44ch, 100%);
   line-height: var(--leading-relaxed);
   margin: 0;
 }
@@ -267,6 +231,48 @@ const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
   }
 }
 
+/* ─── Mobile-Layout (desktop-first: nach allen Basis-Regeln) ───────────────── */
+@media (max-width: 768px) {
+  .hero__inner {
+    /* minmax(0, …) statt 1fr: verhindert, dass breite Kinder (z. B. der
+       nowrap-Ticket-Button) die Spalte über den Viewport hinaus aufblähen
+       und so den zentrierten Text seitlich abschneiden. */
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: var(--space-4);
+    gap: var(--space-2);
+    align-items: start;
+  }
+
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__kuh {
+    width: 90%;
+    max-width: 380px;
+    margin-top: var(--space-10);
+  }
+
+  .hero__content {
+    align-items: center;
+    text-align: center;
+    padding-block: 0 var(--space-10);
+    gap: var(--space-3);
+    width: 100%;
+    margin-top: calc(-1 * var(--space-6));
+  }
+
+  .hero__actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__lead {
+    font-size: var(--text-lg);
+  }
+}
+
 @media (max-width: 768px) {
   .hero__event-info {
     font-size: var(--text-xl);
@@ -286,8 +292,9 @@ const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
   }
 
   .hero__ticket-btn {
-    font-size: var(--text-2xl);
-    padding: 0.8em 2.5em;
+    font-size: var(--text-xl);
+    padding: 0.8em 1.5em;
+    max-width: 100%;
     white-space: nowrap;
   }
 }
