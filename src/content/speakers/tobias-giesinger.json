@@ -12,8 +12,7 @@
   "photo": "/images/speakers/Tobias_Giesinger.jpg",
   "social": {
     "linkedin": "https://www.linkedin.com/in/tobiasgiesinger",
-    "facebook": "https://www.facebook.com/GiesingerTobias/",
-    "twitter": "https://x.com/GiesingerTobias"
+    "facebook": "https://www.facebook.com/GiesingerTobias/"
   },
   "sessionIds": [
     "lost-in-transit"
