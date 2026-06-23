@@ -62,8 +62,9 @@ const activeRoomData = activeRooms.map(r => ({
   icon:  roomIcons[r.data.id],
 }));
 
-// Pausen & Rahmenprogramm pro Tag (catering: Ess-Pause mit Verpflegung von Spicy Roots)
-const breaksByDay: Record<number, { time: string; label: string; icon: string; catering?: boolean }[]> = {
+// Pausen & Rahmenprogramm pro Tag (catering: Verpflegung von Spicy Roots; potluck: Mitbring-Buffet)
+type DayBreak = { time: string; label: string; icon: string; catering?: boolean; potluck?: boolean };
+const breaksByDay: Record<number, DayBreak[]> = {
   1: [
     { time: "19:00", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
     { time: "20:30", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
@@ -75,7 +76,7 @@ const breaksByDay: Record<number, { time: string; label: string; icon: string; c
     { time: "20:00", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
   ],
   3: [
-    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg", catering: true },
+    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg", potluck: true },
     { time: "13:00", label: "Mittagspause", icon: "/images/Mittag.svg", catering: true },
   ],
 };
@@ -99,7 +100,7 @@ const timetableData = days.map(day => {
   const firstStart = [...sessionTimes].sort()[0];
   const existingBreaks = breaksByDay[day] ?? [];
   const hasEarlierProgram = firstStart ? existingBreaks.some(b => b.time < firstStart) : false;
-  const openings = firstStart
+  const openings: DayBreak[] = firstStart
     ? [
         ...(hasEarlierProgram ? [] : [{ time: shiftTime(firstStart, -60), label: "Türöffnung", icon: "" }]),
         { time: shiftTime(firstStart, -30), label: "Begrüssung", icon: "" },
@@ -121,6 +122,7 @@ const timetableData = days.map(day => {
         breakLabel: breakEntry?.label ?? "",
         breakIcon: breakEntry?.icon ?? "",
         breakCatering: breakEntry?.catering ?? false,
+        breakPotluck: breakEntry?.potluck ?? false,
         cells: activeRooms.map(room =>
           daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
         ),
@@ -195,7 +197,7 @@ const timetableData = days.map(day => {
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, cells }) => (
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakPotluck, cells }) => (
             isBreak ? (
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
@@ -212,6 +214,11 @@ const timetableData = days.map(day => {
                     >
                       Catering von Spicy Roots
                     </a>
+                  )}
+                  {breakPotluck && (
+                    <span class="timetable__break-note">
+                      Potluck-Style – alle bringen etwas mit
+                    </span>
                   )}
                 </div>
               </div>
@@ -543,6 +550,12 @@ const timetableData = days.map(day => {
 
 .timetable__break-catering:hover {
   color: var(--color-primary);
+}
+
+.timetable__break-note {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: #26282a;
 }
 
 .timetable__break-label {
