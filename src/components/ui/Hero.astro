@@ -70,8 +70,11 @@ const { lead, heading, ctaPrimary, ctaSecondary } = Astro.props;
     const y = window.scrollY;
     // Hintergrund langsamer scrollen (0.3× Scrollgeschwindigkeit)
     if (bg)  bg.style.transform  = `translateY(${y * 0.3}px)`;
-    // Kuh etwas schneller (0.15×) — subtiler Tiefeneffekt
-    if (kuh) kuh.style.transform = `translateY(${y * 0.15}px)`;
+    // Kuh etwas schneller (0.15×) — subtiler Tiefeneffekt.
+    // Nur auf Desktop: dort steht die Kuh in der linken Spalte NEBEN dem Text.
+    // Auf Mobile (gestapelt, Kuh über dem Text) würde die Parallax-Verschiebung
+    // die Kuh beim Runterscrollen in den Lead-Text hineinragen lassen.
+    if (kuh) kuh.style.transform = window.innerWidth > 768 ? `translateY(${y * 0.15}px)` : "";
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
