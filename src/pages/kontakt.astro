@@ -30,7 +30,6 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          action="/bestaetigung"
           novalidate
           id="contact-form"
         >
@@ -98,6 +97,15 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
             <span class="cf-loading" hidden aria-live="polite">Wird gesendet…</span>
           </button>
         </form>
+
+        <!-- Erfolgsmeldung (ersetzt das Formular nach erfolgreichem Versand) -->
+        <div id="cf-success" class="contact-form__success" hidden role="status" aria-live="polite">
+          <div class="contact-form__success-icon" aria-hidden="true">✓</div>
+          <div>
+            <p class="contact-form__success-title"><strong>Danke für deine Nachricht!</strong></p>
+            <p>Wir haben deine Anfrage erhalten und melden uns so bald wie möglich bei dir.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Kontaktinfos -->
@@ -124,25 +132,57 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 <script>
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
   const errors = document.getElementById("cf-errors") as HTMLDivElement;
+  const errorText = errors?.querySelector("p") as HTMLParagraphElement;
+  const success = document.getElementById("cf-success") as HTMLDivElement;
   const submit = document.getElementById("cf-submit") as HTMLButtonElement;
+  const label = submit?.querySelector(".cf-label") as HTMLSpanElement;
+  const loading = submit?.querySelector(".cf-loading") as HTMLSpanElement;
 
-  form?.addEventListener("submit", (e) => {
+  function setLoading(state: boolean) {
+    submit.disabled = state;
+    label.hidden = state;
+    loading.hidden = !state;
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
     const name    = (form.querySelector("#cf-name") as HTMLInputElement).value.trim();
     const email   = (form.querySelector("#cf-email") as HTMLInputElement).value.trim();
     const message = (form.querySelector("#cf-message") as HTMLTextAreaElement).value.trim();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     if (!name || !email || !message || !emailOk) {
-      e.preventDefault();
+      errorText.textContent = "Bitte fülle alle Pflichtfelder aus.";
       errors.hidden = false;
       errors.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
     errors.hidden = true;
-    submit.disabled = true;
-    (submit.querySelector(".cf-label") as HTMLSpanElement).hidden = true;
-    (submit.querySelector(".cf-loading") as HTMLSpanElement).hidden = false;
+    setLoading(true);
+
+    try {
+      // Netlify-Forms-AJAX-Submit: urlencoder POST mit form-name im Body.
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      // Formular ausblenden, Dankesmeldung an gleicher Stelle zeigen.
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch {
+      errorText.textContent =
+        "Das Senden hat leider nicht geklappt. Bitte versuche es später erneut oder schreib uns direkt an info@tierimfokus.ch.";
+      errors.hidden = false;
+      errors.scrollIntoView({ behavior: "smooth", block: "center" });
+      setLoading(false);
+    }
   });
 </script>
 
@@ -237,6 +277,41 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
 .contact-form__errors p {
   margin: 0;
   max-width: none;
+}
+
+/* Erfolgsmeldung */
+.contact-form__success {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+
+.contact-form__success-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--color-success);
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.contact-form__success-title {
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.contact-form__success p {
+  margin: 0;
+  max-width: none;
+  color: var(--color-text-muted);
 }
 
 /* Infos */
