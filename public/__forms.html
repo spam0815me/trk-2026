@@ -1,0 +1,40 @@
+<!doctype html>
+<!--
+  Netlify Form-Detection-Stub.
+
+  Astro-Static-Sites werden von Netlifys automatischer Form-Detection oft
+  NICHT erkannt, obwohl das sichtbare Formular korrekt `data-netlify="true"`
+  trägt. Folge: Der POST wird nicht abgefangen und landet als 404 auf der
+  action-URL (z. B. /bestaetigung).
+
+  Diese rein statische Datei wird 1:1 nach dist/ kopiert und vom Netlify-
+  Build-Scanner garantiert erfasst. Sie registriert das Formular samt aller
+  Feldnamen. Das echte, sichtbare Formular lebt unverändert in
+  src/pages/kontakt.astro.
+
+  WICHTIG: Bei jeder Feld-Änderung am Kontaktformular die Felder hier
+  spiegeln (gleiche name-Attribute), sonst werden Submissions unvollständig
+  gespeichert.
+-->
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify Forms</title>
+  </head>
+  <body>
+    <form
+      name="kontakt"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="kontakt" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
