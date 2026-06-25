@@ -1,0 +1,24 @@
+{
+  "id": "studentische-initiativen-systemischer-wandel",
+  "slug": "studentische-initiativen-systemischer-wandel",
+  "year": 2026,
+  "title_de": "Studentische Initiativen als Katalysator für systemischen Wandel",
+  "title_en": "Student Initiatives as a Catalyst for Systemic Change",
+  "description_de": "Wie institutioneller Wandel ganze Systeme verändern kann und warum wir diese Chance stärker nutzen sollten. Universitäten servieren täglich tausende Mahlzeiten. Wir machen sie vegan. Was können andere Institutionen daraus lernen?",
+  "description_en": "How institutional change can transform entire systems and why we should make better use of this opportunity. Universities serve thousands of meals every day. We make them vegan. What can other institutions learn from that?",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "14:00",
+  "endTime": "15:00",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "chantal-senn"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 27,
+  "durationMinutes": 60
+}
