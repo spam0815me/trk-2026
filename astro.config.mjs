@@ -17,10 +17,10 @@ export default defineConfig({
   // Basis-URL (anpassen bei Subdirectory-Deployment)
   // base: '/',
 
-  // Internationalisierung
+  // Internationalisierung — Frontend ist DE-only (EN-Baum entfernt)
   i18n: {
     defaultLocale: "de",
-    locales: ["de", "en"],
+    locales: ["de"],
     routing: {
       prefixDefaultLocale: false, // /de/ wird zu / (Deutsch ist default ohne Prefix)
     },

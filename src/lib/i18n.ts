@@ -13,7 +13,9 @@ import en from "../i18n/en.json";
 export type Locale = "de" | "en";
 // Für eine dritte Sprache: export type Locale = "de" | "en" | "fr";
 
-export const LOCALES: Locale[] = ["de", "en"];
+// Frontend ist DE-only — der /en-Baum wurde entfernt. "en" bleibt im Locale-Typ
+// (Content-Felder _en sind Schema-Pflicht), wird aber nicht mehr gerendert/verlinkt.
+export const LOCALES: Locale[] = ["de"];
 export const DEFAULT_LOCALE: Locale = "de";
 
 // Übersetzungs-Map

@@ -1,3 +1,14 @@
 # Alte, verwaiste Merkliste-Stubs → kanonische Merkliste-Seiten
 /merkliste       /programm/merkliste/       301
-/en/bookmarks    /en/program/bookmarks/     301
+
+# Entfernter EN-Baum → DE-Pendants (verhindert 404 bei alten Google-Treffern)
+/en/program/*    /programm/:splat           301
+/en/speakers/*   /referentinnen/:splat      301
+/en/archive/*    /archiv/:splat             301
+/en/venue        /ort/                      301
+/en/registration /anmeldung/                301
+/en/contact      /kontakt/                  301
+/en/accessibility /barrierefreiheit/        301
+/en/privacy      /datenschutz/              301
+/en/confirmation /bestaetigung/             301
+/en/*            /                          301
