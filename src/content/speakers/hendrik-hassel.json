@@ -1,0 +1,20 @@
+{
+  "id": "hendrik-hassel",
+  "slug": "hendrik-hassel",
+  "year": 2026,
+  "name": "Hendrik Hassel",
+  "pronouns": "er/ihm",
+  "role_de": "Fotograf, Schlachthofprozess",
+  "role_en": "Photographer, Slaughterhouse Trial",
+  "bio_de": "Hendriks Karriere als Aktivist begann 2009 mit einem Drei-Personen-Protest gegen ein Pelzgeschäft. Seitdem ist er in verschiedenen Rollen in der Tierrechtsbewegung aktiv. Egal ob filmen, schreiben oder fotografieren – Recherchen waren immer ein Teil davon.",
+  "bio_en": "Hendrik's career as an activist began in 2009 with a three-person protest against a fur shop. Since then he has been active in various roles within the animal rights movement. Whether filming, writing or photographing – investigations were always part of it.",
+  "photo": "/images/speakers/Hendrik_Hassel.jpg",
+  "website": "https://schlachthofprozess.org/",
+  "social": {
+    "instagram": "https://www.instagram.com/hendrik.hassel/"
+  },
+  "sessionIds": [
+    "schlachthof-recherche"
+  ],
+  "sortOrder": 32
+}

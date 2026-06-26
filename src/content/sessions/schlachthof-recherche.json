@@ -4,8 +4,8 @@
   "year": 2026,
   "title_de": "Rechtsbruch für das öffentliche Interesse – Mit versteckten Kameras gegen die Blackbox der Tierindustrie",
   "title_en": "Breaking the Law for the Public Interest – Hidden Cameras Against the Black Box of the Animal Industry",
-  "description_de": "Die Tierindustrie meidet Transparenz. Um das Leid in Schlachthäusern sichtbar zu machen, hat Anna Schubert mit versteckten Kameras die CO₂-Betäubung von Schweinen dokumentiert. Dafür wurde sie verhaftet und verklagt. Ihr Vortrag beleuchtet das Spannungsfeld zwischen öffentlichem Interesse und Rechtsbruch.",
-  "description_en": "The animal industry avoids transparency. To expose suffering in slaughterhouses, Anna Schubert documented CO₂ stunning of pigs with hidden cameras — and was arrested and sued as a result. Her talk examines the tension between public interest and breaking the law.",
+  "description_de": "Die Tierindustrie meidet Transparenz. Um das Leid in Schlachthäusern sichtbar zu machen, haben Anna Schubert und Hendrik Hassel mit versteckten Kameras die CO₂-Betäubung von Schweinen dokumentiert. Dafür wurden sie verhaftet und verklagt. Ihr Vortrag beleuchtet das Spannungsfeld zwischen öffentlichem Interesse und Rechtsbruch.",
+  "description_en": "The animal industry avoids transparency. To expose suffering in slaughterhouses, Anna Schubert and Hendrik Hassel documented CO₂ stunning of pigs with hidden cameras, and were arrested and sued as a result. Their talk examines the tension between public interest and breaking the law.",
   "type": "talk",
   "language": "de",
   "status": "confirmed",
@@ -15,7 +15,8 @@
   "day": 1,
   "roomId": "saal-a",
   "speakerIds": [
-    "anna-schubert"
+    "anna-schubert",
+    "hendrik-hassel"
   ],
   "level": "all",
   "recording": true,
