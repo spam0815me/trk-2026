@@ -32,25 +32,19 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer" role="contentinfo">
-  <!-- Newsletter-Abo (TIF-Mailchimp-Audience, Tag trk26) -->
-  <div class="site-footer__newsletter">
-    <div class="container">
-      <NewsletterForm locale={locale} />
-    </div>
-  </div>
-
   <div class="container site-footer__inner">
     <!-- Spalte: Brand -->
     <div class="site-footer__brand">
       <img src="/images/TRK_26_Logo_negativ.svg" alt="Tierrechtskongress 2026" class="site-footer__trk-logo" />
     </div>
 
-    <!-- Spalte: Ticket -->
+    <!-- Spalte: Ticket + Newsletter-Abo (TIF-Mailchimp-Audience, Tag trk26) -->
     <div class="site-footer__ticket-col">
       <a href={ticketHref} class="site-footer__ticket-btn">
         <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 36px; height: 36px; background-color: #26282a;" aria-hidden="true"></span>
         {t("nav.registration")}
       </a>
+      <NewsletterForm locale={locale} />
     </div>
 
     <!-- Spalte: TIF + Credit -->
@@ -104,12 +98,6 @@ const year = new Date().getFullYear();
   margin-top: auto;
 }
 
-/* Newsletter-Block oben im Footer, volle Breite, abgetrennt */
-.site-footer__newsletter {
-  border-bottom: 1px solid var(--color-neutral-800);
-  padding-block: var(--space-8);
-}
-
 .site-footer__inner {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -121,12 +109,15 @@ const year = new Date().getFullYear();
 
 .site-footer__ticket-col {
   grid-column: 1 / -1;
-  display: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
 }
 
 @media (min-width: 640px) {
   .site-footer__ticket-col {
-    display: flex !important;
+    align-items: center;
   }
 }
 
@@ -192,11 +183,6 @@ const year = new Date().getFullYear();
   object-fit: contain;
 }
 
-.site-footer__ticket-col {
-  display: flex;
-  align-items: flex-start;
-}
-
 .site-footer__ticket-btn {
   display: inline-flex;
   align-items: center;
@@ -222,6 +208,13 @@ const year = new Date().getFullYear();
 
 .site-footer__ticket-btn:hover .btn-icon {
   background-color: #26282a;
+}
+
+/* Ticket-Button erst ab Tablet sichtbar; Newsletter-Abo bleibt immer da */
+@media (max-width: 639px) {
+  .site-footer__ticket-btn {
+    display: none;
+  }
 }
 
 /* Nav — 3 Zeilen à ~3 Links */

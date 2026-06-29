@@ -1,13 +1,11 @@
 ---
 /**
- * NewsletterForm
+ * NewsletterForm — kompaktes Double-Opt-In-Abo für den TIF-Newsletter.
  *
- * Schlankes Double-Opt-In-Abo für den TIF-Newsletter (Mailchimp-Audience).
- * Neue Kontakte werden serverseitig mit dem Tag "trk26" markiert
- * (Netlify Function: /.netlify/functions/newsletter-subscribe).
- *
- * Vanilla JS, kein Redirect — Status wird inline (aria-live) gemeldet.
- * Honeypot-Feld (_hp) gegen Bots.
+ * Sitzt platzsparend in der Footer-Spalte unter dem Ticket-Button.
+ * Nur E-Mail + Button; neue Kontakte werden serverseitig mit Tag "trk26"
+ * markiert (Netlify Function: /.netlify/functions/newsletter-subscribe).
+ * Vanilla JS, kein Redirect, Status inline (aria-live), Honeypot gegen Bots.
  */
 import type { Locale } from "../../lib/i18n";
 import { useTranslations } from "../../lib/i18n";
@@ -22,70 +20,47 @@ const t = useTranslations(locale);
 const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 ---
 
-<section class="nl-form" aria-labelledby="nl-form-title">
-  <div class="nl-form__intro">
-    <h2 id="nl-form-title" class="nl-form__title">{t("footer.newsletter.title")}</h2>
-    <p class="nl-form__text">{t("footer.newsletter.text")}</p>
-  </div>
+<form
+  id="newsletter-form"
+  class="nl-form"
+  novalidate
+  data-locale={locale}
+  aria-labelledby="nl-form-title"
+>
+  <p id="nl-form-title" class="nl-form__title">{t("footer.newsletter.title")}</p>
 
-  <form
-    id="newsletter-form"
-    class="nl-form__form"
-    novalidate
-    data-locale={locale}
-  >
-    <div class="nl-form__fields">
-      <div class="nl-form__field">
-        <label class="nl-form__label" for="nl-firstName">{t("footer.newsletter.firstName")}</label>
-        <input
-          type="text"
-          id="nl-firstName"
-          name="firstName"
-          class="nl-form__input"
-          autocomplete="given-name"
-          placeholder={t("footer.newsletter.firstNamePlaceholder")}
-        />
-      </div>
-      <div class="nl-form__field">
-        <label class="nl-form__label" for="nl-email">{t("footer.newsletter.email")}</label>
-        <input
-          type="email"
-          id="nl-email"
-          name="email"
-          class="nl-form__input"
-          required
-          aria-required="true"
-          autocomplete="email"
-          placeholder={t("footer.newsletter.emailPlaceholder")}
-        />
-      </div>
+  <div class="nl-form__row">
+    <label class="nl-form__sr-only" for="nl-email">{t("footer.newsletter.email")}</label>
+    <input
+      type="email"
+      id="nl-email"
+      name="email"
+      class="nl-form__input"
+      required
+      aria-required="true"
+      autocomplete="email"
+      placeholder={t("footer.newsletter.emailPlaceholder")}
+    />
 
-      <!-- Honeypot: für Menschen unsichtbar, muss leer bleiben -->
-      <div class="nl-form__honeypot" aria-hidden="true">
-        <label for="nl-hp">Bitte freilassen</label>
-        <input type="text" id="nl-hp" name="_hp" tabindex="-1" autocomplete="off" />
-      </div>
-
-      <button type="submit" class="nl-form__submit" id="nl-submit">
-        <span class="nl-form__submit-label">{t("footer.newsletter.submit")}</span>
-        <span class="nl-form__submit-loading" hidden>{t("footer.newsletter.submitting")}</span>
-      </button>
+    <!-- Honeypot: für Menschen unsichtbar, muss leer bleiben -->
+    <div class="nl-form__honeypot" aria-hidden="true">
+      <label for="nl-hp">Bitte freilassen</label>
+      <input type="text" id="nl-hp" name="_hp" tabindex="-1" autocomplete="off" />
     </div>
 
-    <p class="nl-form__privacy">
-      {t("footer.newsletter.privacyNote")}{" "}
-      <a href={privacyHref} class="nl-form__privacy-link">{t("footer.newsletter.privacyLink")}</a>.
-    </p>
+    <button type="submit" class="nl-form__submit" id="nl-submit">
+      <span class="nl-form__submit-label">{t("footer.newsletter.submit")}</span>
+      <span class="nl-form__submit-loading" hidden>{t("footer.newsletter.submitting")}</span>
+    </button>
+  </div>
 
-    <p
-      id="nl-status"
-      class="nl-form__status"
-      role="status"
-      aria-live="polite"
-      hidden
-    ></p>
-  </form>
-</section>
+  <p class="nl-form__privacy">
+    {t("footer.newsletter.privacyNote")}{" "}
+    <a href={privacyHref} class="nl-form__privacy-link">{t("footer.newsletter.privacyLink")}</a>.
+  </p>
+
+  <p id="nl-status" class="nl-form__status" role="status" aria-live="polite" hidden></p>
+</form>
 
 <script>
   const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
@@ -145,11 +120,7 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
         const res = await fetch("/.netlify/functions/newsletter-subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            firstName: String(data.get("firstName") ?? "").trim(),
-            _hp: String(data.get("_hp") ?? ""),
-          }),
+          body: JSON.stringify({ email, _hp: String(data.get("_hp") ?? "") }),
         });
         const result = await res.json();
 
@@ -171,53 +142,45 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 <style>
   .nl-form {
     display: grid;
-    gap: var(--space-4);
-    align-content: start;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 320px;
   }
 
   .nl-form__title {
     font-family: var(--brand-font-bold, var(--font-heading));
-    font-size: var(--text-lg);
+    font-size: var(--text-sm);
     font-weight: var(--weight-bold);
     color: #fff;
-    margin: 0 0 var(--space-2);
-  }
-
-  .nl-form__text {
-    font-size: var(--text-sm);
-    color: var(--color-neutral-400);
     margin: 0;
-    max-width: 40ch;
-    line-height: var(--leading-relaxed);
   }
 
-  .nl-form__fields {
+  .nl-form__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .nl-form__row {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    align-items: flex-end;
-  }
-
-  .nl-form__field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    flex: 1 1 180px;
-  }
-
-  .nl-form__label {
-    font-size: var(--text-xs);
-    color: var(--color-neutral-400);
+    gap: var(--space-2);
   }
 
   .nl-form__input {
-    padding: 0.6em 0.8em;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.5em 0.7em;
     font-size: var(--text-sm);
     color: var(--color-neutral-100);
     background: var(--color-neutral-900);
     border: 1px solid var(--color-neutral-700);
     border-radius: var(--radius-md);
-    width: 100%;
   }
 
   .nl-form__input::placeholder {
@@ -230,7 +193,7 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
     border-color: var(--color-primary-light);
   }
 
-  /* Honeypot: visuell + für AT entfernt, aber im DOM für Bots */
+  /* Honeypot: visuell + für AT entfernt, im DOM für Bots */
   .nl-form__honeypot {
     position: absolute;
     left: -9999px;
@@ -241,7 +204,7 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 
   .nl-form__submit {
     flex: 0 0 auto;
-    padding: 0.6em 1.6em;
+    padding: 0.5em 1.1em;
     font-family: var(--brand-font-bold, var(--font-heading));
     font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
@@ -283,9 +246,9 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
   }
 
   .nl-form__status {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     margin: 0;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2);
     border-radius: var(--radius-md);
   }
 
