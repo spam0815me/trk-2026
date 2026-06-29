@@ -264,4 +264,16 @@ const logos = [
   color: #26282a;
   font-weight: var(--weight-semibold);
 }
+
+/* Gestreckte Button-Form für längeren Text (z.B. "Zur Bilddatenbank",
+   "Zum YouTube-Kanal") — die organische Standardform würde den Text
+   an den Rändern überstehen lassen. */
+.press-contact .btn--primary,
+.press-card .btn--primary {
+  background-image: url('/images/btn-v2-black-stretch.svg');
+}
+.press-contact .btn--primary:hover,
+.press-card .btn--primary:hover {
+  background-image: url('/images/btn-v2-yellow-stretch.svg');
+}
 </style>

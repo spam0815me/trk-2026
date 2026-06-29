@@ -1,10 +1,13 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 import { useTranslations } from "../../lib/i18n";
+import talks2023 from "../../data/archive-2023-talks.json";
 
 const locale = "de";
 const t = useTranslations(locale);
 const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+
+const playlistUrl = "https://www.youtube.com/playlist?list=PLZ9_9DPeg0yNAM8lS3xBI-Itc-02Ny5TA";
 ---
 
 <PageLayout
@@ -30,29 +33,46 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
         </div>
       </div>
 
-      <div class="archive-playlist-wrap">
-        <p class="archive-playlist__label">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8"/><path d="M12 3v4"/><polygon points="10 11 16 14 10 17 10 11"/></svg>
-          Playlist · alle Vorträge vom TRK 2023
-        </p>
-        <div class="archive-playlist">
-          <iframe
-            src="https://www.youtube.com/embed/videoseries?list=PLZ9_9DPeg0yNAM8lS3xBI-Itc-02Ny5TA"
-            title="Tierrechtskongress 2023 – Playlist"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+      <div class="archive-talks-wrap">
+        <div class="archive-talks__head">
+          <p class="archive-talks__label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8"/><path d="M12 3v4"/><polygon points="10 11 16 14 10 17 10 11"/></svg>
+            {talks2023.length} Vorträge vom TRK 2023
+          </p>
+          <a href={playlistUrl} target="_blank" rel="noopener noreferrer" class="archive-yt-btn">
+            <img src="/images/youtube.svg" alt="" class="archive-yt-icon" aria-hidden="true" />
+            Ganze Playlist
+          </a>
         </div>
-        <a
-          href="https://www.youtube.com/playlist?list=PLZ9_9DPeg0yNAM8lS3xBI-Itc-02Ny5TA"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="archive-yt-btn"
-        >
-          <img src="/images/youtube.svg" alt="" class="archive-yt-icon" aria-hidden="true" />
-          YouTube
-        </a>
+
+        <ul class="archive-talks" role="list">
+          {talks2023.map(talk => (
+            <li class="talk-card">
+              <button
+                class="talk-card__player"
+                type="button"
+                data-video={talk.id}
+                aria-label={`Video abspielen: ${talk.title}${talk.speaker ? ` – ${talk.speaker}` : ""}`}
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/${talk.id}/hqdefault.jpg`}
+                  alt=""
+                  loading="lazy"
+                  width="480"
+                  height="270"
+                  class="talk-card__thumb"
+                />
+                <span class="talk-card__play" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </span>
+              </button>
+              <div class="talk-card__body">
+                <h3 class="talk-card__title">{talk.title}</h3>
+                {talk.speaker && <p class="talk-card__speaker">{talk.speaker}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <!-- Fotogalerie 2023 -->
@@ -183,6 +203,22 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
     if (e.key === "ArrowLeft") prev();
     if (e.key === "ArrowRight") next();
   });
+
+  // Vorträge: Thumbnail erst bei Klick durch eingebettetes Video ersetzen (Facade)
+  document.querySelectorAll<HTMLButtonElement>(".talk-card__player").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.video;
+      if (!id) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = btn.getAttribute("aria-label") ?? "Video";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allowFullscreen = true;
+      iframe.loading = "lazy";
+      iframe.className = "talk-card__iframe";
+      btn.replaceWith(iframe);
+    });
+  });
 </script>
 
 <style>
@@ -220,15 +256,21 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
   max-width: 60ch;
 }
 
-.archive-playlist-wrap {
+.archive-talks-wrap {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  max-width: 640px;
+  gap: var(--space-5);
 }
 
-.archive-playlist__label {
+.archive-talks__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.archive-talks__label {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -236,14 +278,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
   font-weight: var(--weight-semibold);
   color: var(--color-text-muted);
   max-width: none;
-}
-
-.archive-playlist {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  margin: 0;
 }
 
 .archive-yt-btn {
@@ -268,12 +303,100 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
   width: auto;
 }
 
-.archive-playlist iframe {
-  position: absolute;
-  inset: 0;
+/* Vortrags-Grid */
+.archive-talks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-6) var(--space-4);
+}
+
+.talk-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.talk-card__player {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: none;
+  background: #26282a;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.talk-card__thumb {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.talk-card__player:hover .talk-card__thumb,
+.talk-card__player:focus-visible .talk-card__thumb {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+.talk-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: rgba(38, 40, 42, 0.82);
+  color: #e5b969;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.talk-card__player:hover .talk-card__play {
+  background: #26282a;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.talk-card__play svg {
+  margin-left: 3px;
+}
+
+.talk-card__player:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.talk-card__iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border: 0;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.talk-card__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  line-height: 1.3;
+  margin: 0;
+  color: #26282a;
+}
+
+.talk-card__speaker {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: none;
 }
 
 /* Galerie */
