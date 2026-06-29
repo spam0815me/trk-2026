@@ -68,6 +68,10 @@ export default async function handler(req) {
     return json({ ok: false, error: "invalid_email" }, 400);
   }
 
+  if (typeof firstName !== "string" || firstName.trim() === "") {
+    return json({ ok: false, error: "missing_firstname" }, 400);
+  }
+
   const base = `https://${dc}.api.mailchimp.com/3.0`;
   const auth = "Basic " + Buffer.from(`anystring:${apiKey}`).toString("base64");
   const hash = subscriberHash(email);

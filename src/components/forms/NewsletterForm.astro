@@ -29,6 +29,18 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 >
   <p id="nl-form-title" class="nl-form__title">{t("footer.newsletter.title")}</p>
 
+  <label class="nl-form__sr-only" for="nl-firstName">{t("footer.newsletter.firstName")}</label>
+  <input
+    type="text"
+    id="nl-firstName"
+    name="firstName"
+    class="nl-form__input"
+    required
+    aria-required="true"
+    autocomplete="given-name"
+    placeholder={t("footer.newsletter.firstName")}
+  />
+
   <div class="nl-form__row">
     <label class="nl-form__sr-only" for="nl-email">{t("footer.newsletter.email")}</label>
     <input
@@ -66,6 +78,7 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
   const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
   if (form) {
     const locale = (form.dataset.locale as "de" | "en") ?? "de";
+    const firstNameInput = document.getElementById("nl-firstName") as HTMLInputElement;
     const emailInput = document.getElementById("nl-email") as HTMLInputElement;
     const submitBtn = document.getElementById("nl-submit") as HTMLButtonElement;
     const submitLabel = submitBtn.querySelector(".nl-form__submit-label") as HTMLSpanElement;
@@ -74,12 +87,14 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
 
     const msgs = {
       de: {
+        missingFirstName: "Bitte gib deinen Vornamen ein.",
         invalidEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
         success: "Fast geschafft! Bitte bestätige deine Anmeldung über den Link in der E-Mail, die wir dir gerade geschickt haben.",
         already: "Du bist bereits angemeldet – danke!",
         error: "Etwas ist schiefgelaufen. Bitte versuch es später noch einmal.",
       },
       en: {
+        missingFirstName: "Please enter your first name.",
         invalidEmail: "Please enter a valid email address.",
         success: "Almost there! Please confirm your subscription via the link in the email we just sent you.",
         already: "You are already subscribed – thank you!",
@@ -107,8 +122,14 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
       statusEl.hidden = true;
 
       const data = new FormData(form);
+      const firstName = String(data.get("firstName") ?? "").trim();
       const email = String(data.get("email") ?? "").trim();
 
+      if (!firstName) {
+        setStatus(m.missingFirstName, "error");
+        firstNameInput.focus();
+        return;
+      }
       if (!emailRe.test(email)) {
         setStatus(m.invalidEmail, "error");
         emailInput.focus();
@@ -120,7 +141,7 @@ const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
         const res = await fetch("/.netlify/functions/newsletter-subscribe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, _hp: String(data.get("_hp") ?? "") }),
+          body: JSON.stringify({ email, firstName, _hp: String(data.get("_hp") ?? "") }),
         });
         const result = await res.json();
 
