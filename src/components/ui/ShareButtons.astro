@@ -1,0 +1,189 @@
+---
+/**
+ * ShareButtons — Social-Sharing für eine einzelne URL (Session, Speaker, …)
+ * Reine URL-Schemes + Clipboard-Copy, kein externes Script, kein Tracking.
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  /** Absolute URL der zu teilenden Seite */
+  url: string;
+  /** Titel der Seite (für X / WhatsApp / E-Mail) */
+  title: string;
+  locale: Locale;
+}
+
+const { url, title, locale } = Astro.props;
+const t = useTranslations(locale);
+
+const u = encodeURIComponent(url);
+const txt = encodeURIComponent(title);
+
+const links = [
+  {
+    key: "facebook",
+    label: t("share.facebook"),
+    href: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+    icon: `<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>`,
+    fill: false,
+  },
+  {
+    key: "x",
+    label: t("share.x"),
+    href: `https://twitter.com/intent/tweet?url=${u}&text=${txt}`,
+    icon: `<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/>`,
+    fill: true,
+  },
+  {
+    key: "linkedin",
+    label: t("share.linkedin"),
+    href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+    icon: `<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>`,
+    fill: false,
+  },
+  {
+    key: "whatsapp",
+    label: t("share.whatsapp"),
+    href: `https://wa.me/?text=${txt}%20${u}`,
+    icon: `<path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.18c-.24.68-1.42 1.32-1.96 1.36-.5.05-.96.24-3.23-.67-2.73-1.08-4.45-3.88-4.59-4.06-.13-.18-1.09-1.45-1.09-2.76 0-1.31.69-1.96.93-2.22.24-.27.53-.34.71-.34l.51.01c.16 0 .38-.06.6.46.24.55.79 1.9.86 2.04.07.13.12.29.02.47-.09.18-.14.29-.27.45l-.4.46c-.13.13-.27.28-.12.54.16.27.7 1.15 1.5 1.86 1.04.92 1.91 1.21 2.18 1.34.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.25.09 1.57.74 1.84.87.27.13.45.2.51.31.07.11.07.64-.17 1.32z"/>`,
+    fill: true,
+  },
+  {
+    key: "email",
+    label: t("share.email"),
+    href: `mailto:?subject=${txt}&body=${u}`,
+    icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/>`,
+    fill: false,
+  },
+];
+---
+
+<div class="share" role="group" aria-label={t("share.label")}>
+  <span class="share__label">{t("share.label")}</span>
+  <ul class="share__list" role="list">
+    {links.map(l => (
+      <li>
+        <a
+          class="share__btn"
+          href={l.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={l.label}
+          title={l.label}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24"
+            fill={l.fill ? "currentColor" : "none"}
+            stroke={l.fill ? "none" : "currentColor"}
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true" set:html={l.icon} />
+        </a>
+      </li>
+    ))}
+    <li>
+      <button
+        class="share__btn share__copy"
+        type="button"
+        data-share-url={url}
+        data-copied={t("share.copied")}
+        aria-label={t("share.copy")}
+        title={t("share.copy")}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+      </button>
+    </li>
+  </ul>
+  <span class="share__toast" role="status" aria-live="polite" hidden></span>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".share__copy").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const url = btn.dataset.shareUrl ?? "";
+      const msg = btn.dataset.copied ?? "Link kopiert!";
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // Fallback für Browser ohne Clipboard-API
+        const ta = document.createElement("textarea");
+        ta.value = url;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch { /* noop */ }
+        document.body.removeChild(ta);
+      }
+      const toast = btn.closest(".share")?.querySelector<HTMLElement>(".share__toast");
+      if (toast) {
+        toast.textContent = msg;
+        toast.hidden = false;
+        window.setTimeout(() => { toast.hidden = true; }, 2000);
+      }
+    });
+  });
+</script>
+
+<style>
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.share__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: #26282a;
+}
+
+.share__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.share__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: #e3e3dd;
+  color: #26282a;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.share__btn:hover {
+  background: #26282a;
+  color: #e5b969;
+  transform: translateY(-2px);
+}
+
+.share__btn:focus-visible {
+  outline: 2px solid #26282a;
+  outline-offset: 2px;
+}
+
+.share__toast {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+}
+
+.share__toast[hidden] {
+  display: none;
+}
+</style>

@@ -1,0 +1,267 @@
+---
+/**
+ * Medien & Presse — Deutsch
+ * Orientiert an tierimfokus.ch/medien: Medienkontakt, Eckdaten, Material.
+ */
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+import { getCollection } from "astro:content";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+
+const pressEmail = "info@tierimfokus.ch";
+
+// Live-Kennzahlen aus den Content-Collections
+const sessions = (await getCollection("sessions")).filter(
+  s => s.data.year === 2026 && s.data.status !== "cancelled"
+);
+const speakers = (await getCollection("speakers")).filter(s => s.data.year === 2026);
+const rooms    = await getCollection("rooms");
+
+const scopeValue = `${sessions.length} Sessions · ${speakers.length} Referierende · 3 Tage · ${rooms.length} Räume`;
+
+const facts = [
+  { label: t("press.factWhat"),      value: t("press.factWhatValue") },
+  { label: t("press.factWhen"),      value: t("press.factWhenValue") },
+  { label: t("press.factWhere"),     value: t("press.factWhereValue") },
+  { label: t("press.factOrganizer"), value: t("press.factOrganizerValue") },
+  { label: t("press.factScope"),     value: scopeValue },
+];
+
+const logos = [
+  { label: t("press.logoDark"),  svg: "/images/trk-logo.svg",            png: "/images/trk-logo.png" },
+  { label: t("press.logoLight"), svg: "/images/TRK_26_Logo_negativ.svg", png: "/images/TRK_26_Logo_negativ.png" },
+];
+---
+
+<PageLayout
+  title={t("press.title")}
+  description={t("press.lead")}
+  locale={locale}
+  canonicalUrl={`${site}medien/`}
+  alternates={{ de: `${site}medien/`, en: `${site}en/media/` }}
+  breadcrumbs={[{ label: t("press.title") }]}
+>
+  <div class="section">
+    <header class="section__header container--narrow">
+      <h1 class="section__title">{t("press.title")}</h1>
+      <p class="section__lead">{t("press.lead")}</p>
+    </header>
+
+    <div class="container--narrow press-stack">
+
+      <!-- Medienkontakt -->
+      <section class="press-contact" aria-labelledby="press-contact-title">
+        <h2 id="press-contact-title">{t("press.contactTitle")}</h2>
+        <p class="press-contact__name">{t("press.contactName")}</p>
+        <p class="press-contact__role">{t("press.contactRole")}</p>
+        <a class="btn btn--primary btn--sm" href={`mailto:${pressEmail}`}>
+          <span class="btn-icon" style="--icon-url: url('/images/mail.svg'); width: 20px; height: 20px; background-color: #e5b969;" aria-hidden="true"></span>
+          {t("press.contactCta")}
+        </a>
+      </section>
+
+      <!-- Eckdaten / Fact-Sheet -->
+      <section class="press-facts" aria-labelledby="press-facts-title">
+        <h2 id="press-facts-title">{t("press.factsTitle")}</h2>
+        <dl class="press-facts__list">
+          {facts.map(f => (
+            <div class="press-facts__row">
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- Material zum Download -->
+      <section class="press-downloads" aria-labelledby="press-downloads-title">
+        <h2 id="press-downloads-title">{t("press.downloadsTitle")}</h2>
+        <div class="press-cards">
+
+          <!-- Logos -->
+          <article class="press-card">
+            <h3>{t("press.logosTitle")}</h3>
+            <p>{t("press.logosText")}</p>
+            <ul class="press-card__links" role="list">
+              {logos.map(l => (
+                <li>
+                  <span class="press-card__logo-label">{l.label}</span>
+                  <span class="press-card__formats">
+                    <a href={l.svg} download>SVG</a>
+                    <a href={l.png} download>PNG</a>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <!-- Bildmaterial -->
+          <article class="press-card">
+            <h3>{t("press.photosTitle")}</h3>
+            <p>{t("press.photosText")}</p>
+            <a class="btn btn--primary btn--sm" href="https://www.tierimfokus.ch/medien" target="_blank" rel="noopener noreferrer">
+              {t("press.photosCta")}
+            </a>
+          </article>
+
+          <!-- Videos -->
+          <article class="press-card">
+            <h3>{t("press.videosTitle")}</h3>
+            <p>{t("press.videosText")}</p>
+            <a class="btn btn--primary btn--sm" href="https://www.youtube.com/tierimfokus" target="_blank" rel="noopener noreferrer">
+              {t("press.videosCta")}
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Weitere Medienanfragen -->
+      <section class="press-more" aria-labelledby="press-more-title">
+        <h2 id="press-more-title">{t("press.moreTitle")}</h2>
+        <p>
+          {t("press.moreText")}
+          {" "}
+          <a href="https://www.tierimfokus.ch/medien" target="_blank" rel="noopener noreferrer">{t("press.moreCta")}</a>.
+        </p>
+      </section>
+
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+.press-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.press-stack h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-4);
+}
+
+/* Medienkontakt */
+.press-contact__name {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  color: #26282a;
+  margin: 0;
+}
+
+.press-contact__role {
+  color: var(--color-text-muted);
+  margin: var(--space-1) 0 var(--space-4);
+}
+
+/* Fact-Sheet */
+.press-facts__list {
+  margin: 0;
+  border-top: 1px solid rgba(38, 40, 42, 0.12);
+}
+
+.press-facts__row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgba(38, 40, 42, 0.12);
+}
+
+.press-facts__row dt {
+  font-weight: var(--weight-bold);
+  color: #26282a;
+}
+
+.press-facts__row dd {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 560px) {
+  .press-facts__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}
+
+/* Download-Karten */
+.press-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.press-card {
+  background: #e3e3dd;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.press-card h3 {
+  font-size: var(--text-base);
+  margin: 0;
+}
+
+.press-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+  flex: 1;
+}
+
+.press-card__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.press-card__links li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.press-card__logo-label {
+  font-size: var(--text-sm);
+  color: #26282a;
+}
+
+.press-card__formats {
+  display: inline-flex;
+  gap: var(--space-2);
+}
+
+.press-card__formats a {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: #26282a;
+  text-decoration: underline;
+}
+
+.press-card__formats a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Weiteres */
+.press-more p {
+  max-width: none;
+  color: var(--color-text-muted);
+}
+
+.press-more a {
+  color: #26282a;
+  font-weight: var(--weight-semibold);
+}
+</style>

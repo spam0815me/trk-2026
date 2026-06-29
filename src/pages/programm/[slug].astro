@@ -7,6 +7,7 @@ import { useTranslations, getField } from "../../lib/i18n";
 import { getCollection } from "astro:content";
 import { toSessionView, formatDate, calcDuration } from "../../lib/sessions";
 import { sessionEventJsonLd } from "../../lib/seo-jsonld";
+import ShareButtons from "../../components/ui/ShareButtons.astro";
 
 export async function getStaticPaths() {
   const sessions = await getCollection("sessions");
@@ -196,6 +197,11 @@ const icalData = {
       )}
     </div>
 
+    <!-- Teilen -->
+    <div class="session-detail__share">
+      <ShareButtons url={canonicalUrl} title={sessionView.title} locale={locale} />
+    </div>
+
     <!-- Referent:innen -->
     {sessionSpeakers.length > 0 && (
       <section class="session-detail__speakers" aria-labelledby="session-speakers-heading">
@@ -378,6 +384,13 @@ const icalData = {
 }
 
 .session-detail__body {
+  margin-bottom: var(--space-8);
+}
+
+.session-detail__share {
+  padding: var(--space-5) 0;
+  border-top: 1px solid rgba(38, 40, 42, 0.12);
+  border-bottom: 1px solid rgba(38, 40, 42, 0.12);
   margin-bottom: var(--space-8);
 }
 

@@ -21,6 +21,7 @@ export const GET: APIRoute = async ({ site }) => {
     { url: `${base}archiv/`,            priority: "0.6", changefreq: "yearly" },
     { url: `${base}faq/`,               priority: "0.7", changefreq: "monthly" },
     { url: `${base}kontakt/`,           priority: "0.5", changefreq: "yearly" },
+    { url: `${base}medien/`,            priority: "0.6", changefreq: "monthly" },
     { url: `${base}sponsoring/`,        priority: "0.5", changefreq: "monthly" },
     { url: `${base}barrierefreiheit/`,  priority: "0.5", changefreq: "yearly" },
     { url: `${base}datenschutz/`,       priority: "0.3", changefreq: "yearly" },

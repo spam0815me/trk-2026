@@ -17,6 +17,7 @@ const base = locale === "en" ? "/en" : "";
 const imprintHref = `${base}/${locale === "en" ? "contact" : "kontakt"}`;
 
 const legalLinks = [
+  { href: `${base}/${locale === "en" ? "media" : "medien"}`, label: t("nav.media") },
   { href: `${base}/${locale === "en" ? "archive" : "archiv"}`, label: t("nav.archive") },
   { href: `${base}/${locale === "en" ? "privacy" : "datenschutz"}`, label: t("nav.privacy") },
   { href: `${base}/${locale === "en" ? "accessibility" : "barrierefreiheit"}`, label: t("nav.accessibility") },
