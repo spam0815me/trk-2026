@@ -290,6 +290,22 @@
   },
   "footer": {
     "copyright": "Tierrechtskongress",
-    "madeWith": "Erstellt mit"
+    "madeWith": "Erstellt mit",
+    "newsletter": {
+      "title": "Newsletter abonnieren",
+      "text": "Bleib auf dem Laufenden zum Tierrechtskongress und zukünftigen Ausgaben.",
+      "firstName": "Vorname",
+      "firstNamePlaceholder": "Vorname (optional)",
+      "email": "E-Mail-Adresse",
+      "emailPlaceholder": "deine@email.ch",
+      "submit": "Abonnieren",
+      "submitting": "Wird gesendet …",
+      "success": "Fast geschafft! Bitte bestätige deine Anmeldung über den Link in der E-Mail, die wir dir gerade geschickt haben.",
+      "alreadySubscribed": "Du bist bereits angemeldet – danke!",
+      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuch es später noch einmal.",
+      "privacyNote": "Mit der Anmeldung akzeptierst du unsere",
+      "privacyLink": "Datenschutzerklärung"
+    }
   }
 }

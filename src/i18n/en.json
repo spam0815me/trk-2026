@@ -290,6 +290,22 @@
   },
   "footer": {
     "copyright": "Animal Rights Congress",
-    "madeWith": "Made with"
+    "madeWith": "Made with",
+    "newsletter": {
+      "title": "Subscribe to the newsletter",
+      "text": "Stay up to date about the Animal Rights Congress and future editions.",
+      "firstName": "First name",
+      "firstNamePlaceholder": "First name (optional)",
+      "email": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "submit": "Subscribe",
+      "submitting": "Sending …",
+      "success": "Almost there! Please confirm your subscription via the link in the email we just sent you.",
+      "alreadySubscribed": "You are already subscribed – thank you!",
+      "invalidEmail": "Please enter a valid email address.",
+      "error": "Something went wrong. Please try again later.",
+      "privacyNote": "By subscribing you accept our",
+      "privacyLink": "privacy policy"
+    }
   }
 }

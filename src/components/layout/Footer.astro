@@ -4,6 +4,7 @@
  */
 import type { Locale } from "../../lib/i18n";
 import { useTranslations } from "../../lib/i18n";
+import NewsletterForm from "../forms/NewsletterForm.astro";
 
 interface Props {
   locale: Locale;
@@ -31,6 +32,13 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer" role="contentinfo">
+  <!-- Newsletter-Abo (TIF-Mailchimp-Audience, Tag trk26) -->
+  <div class="site-footer__newsletter">
+    <div class="container">
+      <NewsletterForm locale={locale} />
+    </div>
+  </div>
+
   <div class="container site-footer__inner">
     <!-- Spalte: Brand -->
     <div class="site-footer__brand">
@@ -94,6 +102,12 @@ const year = new Date().getFullYear();
   background: var(--brand-black);
   color: var(--color-neutral-300);
   margin-top: auto;
+}
+
+/* Newsletter-Block oben im Footer, volle Breite, abgetrennt */
+.site-footer__newsletter {
+  border-bottom: 1px solid var(--color-neutral-800);
+  padding-block: var(--space-8);
 }
 
 .site-footer__inner {

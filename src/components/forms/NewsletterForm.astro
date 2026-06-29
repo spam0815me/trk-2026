@@ -1,0 +1,303 @@
+---
+/**
+ * NewsletterForm
+ *
+ * Schlankes Double-Opt-In-Abo für den TIF-Newsletter (Mailchimp-Audience).
+ * Neue Kontakte werden serverseitig mit dem Tag "trk26" markiert
+ * (Netlify Function: /.netlify/functions/newsletter-subscribe).
+ *
+ * Vanilla JS, kein Redirect — Status wird inline (aria-live) gemeldet.
+ * Honeypot-Feld (_hp) gegen Bots.
+ */
+import type { Locale } from "../../lib/i18n";
+import { useTranslations } from "../../lib/i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const privacyHref = locale === "en" ? "/en/privacy" : "/datenschutz";
+---
+
+<section class="nl-form" aria-labelledby="nl-form-title">
+  <div class="nl-form__intro">
+    <h2 id="nl-form-title" class="nl-form__title">{t("footer.newsletter.title")}</h2>
+    <p class="nl-form__text">{t("footer.newsletter.text")}</p>
+  </div>
+
+  <form
+    id="newsletter-form"
+    class="nl-form__form"
+    novalidate
+    data-locale={locale}
+  >
+    <div class="nl-form__fields">
+      <div class="nl-form__field">
+        <label class="nl-form__label" for="nl-firstName">{t("footer.newsletter.firstName")}</label>
+        <input
+          type="text"
+          id="nl-firstName"
+          name="firstName"
+          class="nl-form__input"
+          autocomplete="given-name"
+          placeholder={t("footer.newsletter.firstNamePlaceholder")}
+        />
+      </div>
+      <div class="nl-form__field">
+        <label class="nl-form__label" for="nl-email">{t("footer.newsletter.email")}</label>
+        <input
+          type="email"
+          id="nl-email"
+          name="email"
+          class="nl-form__input"
+          required
+          aria-required="true"
+          autocomplete="email"
+          placeholder={t("footer.newsletter.emailPlaceholder")}
+        />
+      </div>
+
+      <!-- Honeypot: für Menschen unsichtbar, muss leer bleiben -->
+      <div class="nl-form__honeypot" aria-hidden="true">
+        <label for="nl-hp">Bitte freilassen</label>
+        <input type="text" id="nl-hp" name="_hp" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit" class="nl-form__submit" id="nl-submit">
+        <span class="nl-form__submit-label">{t("footer.newsletter.submit")}</span>
+        <span class="nl-form__submit-loading" hidden>{t("footer.newsletter.submitting")}</span>
+      </button>
+    </div>
+
+    <p class="nl-form__privacy">
+      {t("footer.newsletter.privacyNote")}{" "}
+      <a href={privacyHref} class="nl-form__privacy-link">{t("footer.newsletter.privacyLink")}</a>.
+    </p>
+
+    <p
+      id="nl-status"
+      class="nl-form__status"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></p>
+  </form>
+</section>
+
+<script>
+  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
+  if (form) {
+    const locale = (form.dataset.locale as "de" | "en") ?? "de";
+    const emailInput = document.getElementById("nl-email") as HTMLInputElement;
+    const submitBtn = document.getElementById("nl-submit") as HTMLButtonElement;
+    const submitLabel = submitBtn.querySelector(".nl-form__submit-label") as HTMLSpanElement;
+    const submitLoading = submitBtn.querySelector(".nl-form__submit-loading") as HTMLSpanElement;
+    const statusEl = document.getElementById("nl-status") as HTMLParagraphElement;
+
+    const msgs = {
+      de: {
+        invalidEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
+        success: "Fast geschafft! Bitte bestätige deine Anmeldung über den Link in der E-Mail, die wir dir gerade geschickt haben.",
+        already: "Du bist bereits angemeldet – danke!",
+        error: "Etwas ist schiefgelaufen. Bitte versuch es später noch einmal.",
+      },
+      en: {
+        invalidEmail: "Please enter a valid email address.",
+        success: "Almost there! Please confirm your subscription via the link in the email we just sent you.",
+        already: "You are already subscribed – thank you!",
+        error: "Something went wrong. Please try again later.",
+      },
+    };
+    const m = msgs[locale];
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setStatus(message: string, kind: "success" | "error") {
+      statusEl.textContent = message;
+      statusEl.hidden = false;
+      statusEl.classList.remove("nl-form__status--success", "nl-form__status--error");
+      statusEl.classList.add(`nl-form__status--${kind}`);
+    }
+
+    function setLoading(loading: boolean) {
+      submitBtn.disabled = loading;
+      submitLabel.hidden = loading;
+      submitLoading.hidden = !loading;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.hidden = true;
+
+      const data = new FormData(form);
+      const email = String(data.get("email") ?? "").trim();
+
+      if (!emailRe.test(email)) {
+        setStatus(m.invalidEmail, "error");
+        emailInput.focus();
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const res = await fetch("/.netlify/functions/newsletter-subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            firstName: String(data.get("firstName") ?? "").trim(),
+            _hp: String(data.get("_hp") ?? ""),
+          }),
+        });
+        const result = await res.json();
+
+        if (res.ok && result.ok) {
+          setStatus(result.status === "subscribed" ? m.already : m.success, "success");
+          form.reset();
+        } else {
+          setStatus(m.error, "error");
+        }
+      } catch {
+        setStatus(m.error, "error");
+      } finally {
+        setLoading(false);
+      }
+    });
+  }
+</script>
+
+<style>
+  .nl-form {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .nl-form__title {
+    font-family: var(--brand-font-bold, var(--font-heading));
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: #fff;
+    margin: 0 0 var(--space-2);
+  }
+
+  .nl-form__text {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-400);
+    margin: 0;
+    max-width: 40ch;
+    line-height: var(--leading-relaxed);
+  }
+
+  .nl-form__fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: flex-end;
+  }
+
+  .nl-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1 1 180px;
+  }
+
+  .nl-form__label {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+  }
+
+  .nl-form__input {
+    padding: 0.6em 0.8em;
+    font-size: var(--text-sm);
+    color: var(--color-neutral-100);
+    background: var(--color-neutral-900);
+    border: 1px solid var(--color-neutral-700);
+    border-radius: var(--radius-md);
+    width: 100%;
+  }
+
+  .nl-form__input::placeholder {
+    color: var(--color-neutral-500);
+  }
+
+  .nl-form__input:focus-visible {
+    outline: 2px solid var(--color-primary-light);
+    outline-offset: 1px;
+    border-color: var(--color-primary-light);
+  }
+
+  /* Honeypot: visuell + für AT entfernt, aber im DOM für Bots */
+  .nl-form__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .nl-form__submit {
+    flex: 0 0 auto;
+    padding: 0.6em 1.6em;
+    font-family: var(--brand-font-bold, var(--font-heading));
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: #26282a;
+    background: #e5b969;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transition-fast, 0.2s);
+  }
+
+  .nl-form__submit:hover:not(:disabled) {
+    background: #f0cb87;
+  }
+
+  .nl-form__submit:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+
+  .nl-form__submit:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .nl-form__privacy {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+    margin: 0;
+  }
+
+  .nl-form__privacy-link {
+    color: var(--color-neutral-400);
+    text-decoration: underline;
+  }
+
+  .nl-form__privacy-link:hover {
+    color: #fff;
+  }
+
+  .nl-form__status {
+    font-size: var(--text-sm);
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .nl-form__status--success {
+    color: #d7f0d9;
+    background: rgba(46, 125, 50, 0.25);
+    border: 1px solid rgba(46, 125, 50, 0.5);
+  }
+
+  .nl-form__status--error {
+    color: #f6d2d2;
+    background: rgba(176, 0, 32, 0.2);
+    border: 1px solid rgba(176, 0, 32, 0.5);
+  }
+</style>
