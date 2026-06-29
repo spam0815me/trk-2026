@@ -25,6 +25,7 @@ export const GET: APIRoute = async ({ site }) => {
     { url: `${base}sponsoring/`,        priority: "0.5", changefreq: "monthly" },
     { url: `${base}barrierefreiheit/`,  priority: "0.5", changefreq: "yearly" },
     { url: `${base}datenschutz/`,       priority: "0.3", changefreq: "yearly" },
+    { url: `${base}impressum/`,         priority: "0.3", changefreq: "yearly" },
   ];
 
   // Dynamic session pages

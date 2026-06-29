@@ -267,6 +267,10 @@
     "title": "Datenschutz",
     "lead": "Informationen zur Verarbeitung deiner Daten."
   },
+  "imprint": {
+    "title": "Impressum",
+    "lead": "Angaben zur Herausgeberin dieser Website."
+  },
   "notFound": {
     "title": "Seite nicht gefunden",
     "text": "Die gesuchte Seite existiert nicht oder wurde verschoben.",

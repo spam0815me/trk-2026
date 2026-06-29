@@ -267,6 +267,10 @@
     "title": "Privacy",
     "lead": "Information on the processing of your data."
   },
+  "imprint": {
+    "title": "Imprint",
+    "lead": "Information about the publisher of this website."
+  },
   "notFound": {
     "title": "Page not found",
     "text": "The requested page does not exist or has been moved.",

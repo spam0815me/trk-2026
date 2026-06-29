@@ -104,6 +104,7 @@ export const pathTranslations: Record<Locale, Record<string, string>> = {
     "/sponsoring": "/sponsoring",
     "/barrierefreiheit": "/barrierefreiheit",
     "/datenschutz": "/datenschutz",
+    "/impressum": "/impressum",
   },
   en: {
     "/": "/",
@@ -120,6 +121,7 @@ export const pathTranslations: Record<Locale, Record<string, string>> = {
     "/sponsoring": "/sponsoring",
     "/barrierefreiheit": "/accessibility",
     "/datenschutz": "/privacy",
+    "/impressum": "/imprint",
   },
 };
 

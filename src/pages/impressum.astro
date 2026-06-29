@@ -1,0 +1,75 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { useTranslations } from "../lib/i18n";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+---
+
+<PageLayout
+  title={t("imprint.title")}
+  description={t("imprint.lead")}
+  locale={locale}
+  canonicalUrl={`${site}impressum/`}
+  alternates={{ de: `${site}impressum/`, en: `${site}en/imprint/` }}
+  breadcrumbs={[{ label: t("imprint.title") }]}
+>
+  <div class="section prose" style="max-width: var(--max-width-md);">
+    <h1>{t("imprint.title")}</h1>
+
+    <h2>Herausgeberin</h2>
+    <p>
+      Tier im Fokus (TIF)<br />
+      Postfach 3159<br />
+      3001 Bern<br />
+      <a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a>
+    </p>
+    <p>
+      Diese Website ist das offizielle Online-Angebot zum Tierrechtskongress 2026,
+      der von Tier im Fokus (TIF) veranstaltet wird. Tier im Fokus (TIF) ist eine
+      Schweizer Tierrechtsorganisation und ist steuerbefreit.
+    </p>
+
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p>
+      Tier im Fokus (TIF), Bern. Anfragen richtest du an
+      <a href="mailto:info@tierimfokus.ch">info@tierimfokus.ch</a>.
+    </p>
+
+    <h2>Konzept &amp; Gestaltung</h2>
+    <p>Layout &amp; Design: Jessica Ladanie.</p>
+
+    <h2>Haftungsausschluss</h2>
+    <p>
+      Die Inhalte dieser Website werden mit grösstmöglicher Sorgfalt erstellt.
+      Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte –
+      insbesondere des Programms und der Angaben zu den Referent:innen – kann
+      jedoch keine Gewähr übernommen werden. Programmänderungen bleiben vorbehalten.
+    </p>
+
+    <h2>Haftung für Links</h2>
+    <p>
+      Diese Website enthält Verweise auf externe Websites Dritter, auf deren
+      Inhalte wir keinen Einfluss haben. Für diese fremden Inhalte ist stets die
+      jeweilige Anbieterin oder der jeweilige Anbieter verantwortlich.
+    </p>
+
+    <h2>Urheberrecht</h2>
+    <p>
+      Die durch Tier im Fokus (TIF) erstellten Inhalte und Werke auf dieser
+      Website unterliegen dem Schweizer Urheberrecht. Logos, Bilder und Texte
+      dürfen ohne vorgängige schriftliche Zustimmung nicht weiterverwendet werden.
+      Material aus dem <a href="/medien/">Medienbereich</a> darf im Rahmen der
+      Berichterstattung über den Tierrechtskongress 2026 verwendet werden.
+    </p>
+
+    <h2>Datenschutz</h2>
+    <p>
+      Informationen zur Bearbeitung von Personendaten findest du in unserer
+      <a href="/datenschutz/">Datenschutzerklärung</a>.
+    </p>
+
+    <p><small>Stand: Juni 2026</small></p>
+  </div>
+</PageLayout>
