@@ -73,6 +73,26 @@ const grouped = days.map(day => ({
     { label: t("bookmarks.title") },
   ]}
 >
+  <!-- Schwebendes Tages-Inhaltsverzeichnis (Scrollspy), wie in /programm.
+       Sichtbarkeit wird per JS mit den gemerkten Tagen synchronisiert. -->
+  <nav class="program-toc" aria-label="Tage" id="bm-toc" hidden>
+    <ul>
+      {grouped.map(({ day, date }) => {
+        const d = new Date(date + "T00:00:00");
+        const weekday = d.toLocaleDateString("de-CH", { weekday: "long" });
+        const dm = d.toLocaleDateString("de-CH", { day: "numeric", month: "long" });
+        return (
+          <li data-toc-li={day} hidden>
+            <a href={`#day-heading-${day}`} class="program-toc__link" data-toc-day={day}>
+              <span class="program-toc__weekday">{weekday}</span>
+              <span class="program-toc__date">{dm}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+
   <div class="container">
     <header class="bm-header">
       <h1 class="section__title">{t("bookmarks.title")}</h1>
@@ -93,8 +113,8 @@ const grouped = days.map(day => ({
 
     <div class="bm-list" id="bm-list">
       {grouped.map(({ day, label, date, rooms }) => (
-        <section class="bm-day" data-day={day} hidden>
-          <h2 class="bm-day__heading">
+        <section class="bm-day" data-day={day} aria-labelledby={`day-heading-${day}`} hidden>
+          <h2 class="bm-day__heading" id={`day-heading-${day}`}>
             {label}
             <span class="bm-day__date">{formatDayFull(date)}</span>
           </h2>
@@ -171,9 +191,22 @@ const grouped = days.map(day => ({
     catch { return []; }
   }
 
+  const tocLinks = [...document.querySelectorAll<HTMLAnchorElement>(".program-toc__link")];
+  const daySections = [...document.querySelectorAll<HTMLElement>(".bm-day")];
+
+  // Aktiven TOC-Link sicherstellen (erster sichtbarer Tag), falls keiner aktiv ist
+  function syncActiveTocLink() {
+    const visible = tocLinks.filter(l => !l.closest("li")?.hasAttribute("hidden"));
+    if (visible.length && !visible.some(l => l.classList.contains("is-active"))) {
+      tocLinks.forEach(l => l.classList.remove("is-active"));
+      visible[0].classList.add("is-active");
+    }
+  }
+
   function render() {
     const ids = getBookmarks();
     let totalCount = 0;
+    const visibleDays = new Set<string>();
 
     document.querySelectorAll(".bm-day").forEach(dayEl => {
       let dayCount = 0;
@@ -191,6 +224,7 @@ const grouped = days.map(day => ({
       });
 
       (dayEl as HTMLElement).hidden = dayCount === 0;
+      if (dayCount > 0) visibleDays.add(dayEl.getAttribute("data-day") ?? "");
     });
 
     const countEl = document.getElementById("count-num");
@@ -198,6 +232,47 @@ const grouped = days.map(day => ({
 
     const empty = document.getElementById("empty-state");
     if (empty) empty.hidden = totalCount > 0;
+
+    // Inhaltsverzeichnis mit sichtbaren Tagen synchronisieren
+    let anyTocVisible = false;
+    document.querySelectorAll<HTMLElement>("[data-toc-li]").forEach(li => {
+      const show = visibleDays.has(li.getAttribute("data-toc-li") ?? "");
+      li.hidden = !show;
+      if (show) anyTocVisible = true;
+    });
+    const toc = document.getElementById("bm-toc");
+    if (toc) toc.hidden = !anyTocVisible;
+    syncActiveTocLink();
+  }
+
+  // TOC: sanftes Scrollen + Scrollspy (wie /programm)
+  tocLinks.forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href")?.slice(1) ?? "";
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      history.replaceState(null, "", "#" + id);
+    });
+  });
+
+  if (daySections.length && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const day = entry.target.getAttribute("data-day");
+            tocLinks.forEach((l) =>
+              l.classList.toggle("is-active", l.getAttribute("data-toc-day") === day)
+            );
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    daySections.forEach((s) => observer.observe(s));
   }
 
   render();
@@ -206,6 +281,65 @@ const grouped = days.map(day => ({
 </script>
 
 <style>
+/* Schwebendes Tages-Inhaltsverzeichnis (Scrollspy) — wie in /programm */
+.program-toc {
+  display: none;
+}
+
+@media (min-width: 1240px) {
+  .program-toc:not([hidden]) {
+    display: block;
+    position: fixed;
+    left: var(--space-5);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+  }
+
+  .program-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    border-left: 2px solid var(--color-border);
+  }
+
+  .program-toc__link {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: var(--space-2) var(--space-4);
+    margin-left: -2px;
+    border-left: 2px solid transparent;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .program-toc__weekday {
+    font-family: var(--brand-font-bold);
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    line-height: 1.15;
+  }
+
+  .program-toc__date {
+    font-size: var(--text-xs);
+    opacity: 0.7;
+  }
+
+  .program-toc__link:hover {
+    color: var(--color-text);
+  }
+
+  .program-toc__link.is-active {
+    color: var(--color-text);
+    border-left-color: var(--color-primary);
+  }
+}
+
 .bm-header {
   padding-top: var(--space-8);
   margin-bottom: var(--space-6);
