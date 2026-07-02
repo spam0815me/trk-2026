@@ -383,6 +383,13 @@ const icalData = {
   background-image: url('/images/btn-v2-black-stretch.svg');
 }
 
+/* Gemerkt-Zustand konsistent schwarz + gold halten, unabhängig von Hover/Fokus
+   (verhindert, dass klebender Hover nach dem Klick die Farbe ändert) */
+.session-detail__actions .bookmark-btn.is-bookmarked,
+.session-detail__actions .bookmark-btn.is-bookmarked:hover {
+  background-image: url('/images/btn-v2-black-stretch.svg');
+}
+
 .session-detail__body {
   margin-bottom: var(--space-8);
 }

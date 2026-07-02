@@ -349,6 +349,12 @@ const descPreview = description;
   color: #fafaff;
 }
 
+/* Gemerkt-Zustand: konsistent schwarz + gold, unabhängig von Hover/Fokus
+   (verhindert, dass der zuletzt geklickte Button durch klebenden Hover anders aussieht) */
+.bookmark-btn.is-bookmarked {
+  background-image: url('/images/btn-v2-black.svg');
+}
+
 .bookmark-btn.is-bookmarked .bookmark-btn__label {
   color: #e5b969;
 }
