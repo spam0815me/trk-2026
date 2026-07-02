@@ -230,6 +230,16 @@ const grouped = days.map(day => ({
   display: none;
 }
 
+/* Kalender-Button randlos einfärben: Stretch-Variante nutzen. Das Standard-
+   meet-SVG (btn-v2-black.svg) sitzt mittig und lässt die Seiten breiter
+   Buttons ungefärbt. */
+.calendar-actions .btn--primary {
+  background-image: url('/images/btn-v2-black-stretch.svg');
+}
+.calendar-actions .btn--primary:hover {
+  background-image: url('/images/btn-v2-yellow-stretch.svg');
+}
+
 .program-count {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
