@@ -1,0 +1,24 @@
+{
+  "id": "a120-konzerne-unter-druck",
+  "slug": "a120-konzerne-unter-druck",
+  "year": 2026,
+  "title_de": "Warum wir Konzerne unter Druck setzen – die Strategie hinter A120",
+  "title_en": "Why we put corporations under pressure – the strategy behind A120",
+  "description_de": "Öffentlicher Druck auf grosse Unternehmen ist einer der wirksamsten Hebel im Tierschutz: Wenige Konzerne kontrollieren den Markt, sodass eine einzige Entscheidung das Leben von Millionen Tieren bestimmt. Am Beispiel unserer Migros-Kampagne für Masthühner zeigen wir, wie wir diese Strategie einsetzen.",
+  "description_en": "Public pressure on large companies is one of the most effective levers in animal protection: a handful of corporations control the market, so a single decision can determine the lives of millions of animals. Using our Migros campaign for broiler chickens as an example, we show how we put this strategy to work.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "11:30",
+  "endTime": "12:30",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "lucien-schlaepfer"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 14,
+  "durationMinutes": 60
+}
