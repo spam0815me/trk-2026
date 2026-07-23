@@ -1,0 +1,24 @@
+{
+  "id": "tierrechte-vision-rechtswirklichkeit",
+  "slug": "tierrechte-vision-rechtswirklichkeit",
+  "year": 2026,
+  "title_de": "Tierrechte – Zwischen Vision und Rechtswirklichkeit",
+  "title_en": "Animal Rights – Between Vision and Legal Reality",
+  "description_de": "„Tierrechte“ sind vor allem ein ethisches Konzept, als juristischer Begriff spielen sie dagegen bislang kaum eine Rolle. Der Vortrag erläutert die Unterschiede zwischen Tierschutz und Tierrechten und zeigt, weshalb echte subjektive Rechte von Tieren bis heute weltweit die Ausnahme geblieben sind. Zugleich richtet er den Blick auf internationale Entwicklungen, die mit innovativen Ansätzen neue Perspektiven für eine rechtliche Anerkennung von Tieren als Rechtssubjekte eröffnen.",
+  "description_en": "“Animal rights” are primarily an ethical concept; as a legal term they have so far played hardly any role. This talk explains the differences between animal welfare and animal rights and shows why genuine subjective rights for animals have remained the exception worldwide to this day. At the same time, it looks at international developments whose innovative approaches open up new perspectives for the legal recognition of animals as subjects of rights.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "09:30",
+  "endTime": "10:30",
+  "day": 2,
+  "roomId": "saal-a",
+  "speakerIds": [
+    "gieri-bolliger"
+  ],
+  "level": "all",
+  "recording": false,
+  "sortOrder": 15,
+  "durationMinutes": 60
+}

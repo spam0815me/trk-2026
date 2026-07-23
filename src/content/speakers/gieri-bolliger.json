@@ -1,0 +1,17 @@
+{
+  "id": "gieri-bolliger",
+  "slug": "gieri-bolliger",
+  "year": 2026,
+  "name": "Gieri Bolliger",
+  "pronouns": "er/ihm",
+  "role_de": "Geschäftsleiter TIR & Rechtsanwalt",
+  "role_en": "Executive Director TIR & Lawyer",
+  "organization": "Stiftung für das Tier im Recht (TIR)",
+  "bio_de": "Gieri Bolliger ist Geschäftsleiter von Tier im Recht (TIR), Rechtsanwalt, LL.M. in Animal Law und Lehrbeauftragter für Tierschutzrecht an der Juristischen Fakultät der Universität Zürich. Er blickt auf 30 Jahre Erfahrung im rechtlichen Tierschutz zurück, ist Autor und Herausgeber diverser Publikationen und hat an zahlreichen Konferenzen im In- und Ausland zu juristischen Aspekten der Mensch-Tier-Beziehung referiert.",
+  "bio_en": "Gieri Bolliger is Executive Director of the Foundation for the Animal in Law (TIR), a lawyer, holds an LL.M. in Animal Law and lectures in animal welfare law at the Faculty of Law of the University of Zurich. With 30 years of experience in legal animal protection, he is the author and editor of numerous publications and has spoken at many conferences in Switzerland and abroad on the legal aspects of the human–animal relationship.",
+  "photo": "/images/speakers/Gieri_Bolliger.jpg",
+  "sessionIds": [
+    "tierrechte-vision-rechtswirklichkeit"
+  ],
+  "sortOrder": 35
+}
