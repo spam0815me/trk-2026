@@ -158,14 +158,17 @@ const year = new Date().getFullYear();
 }
 
 .site-footer__trk-logo {
-  height: 170px;
-  width: auto;
+  width: 100%;
+  height: auto;
+  max-width: 500px;
   margin-top: var(--space-6);
 }
 
 @media (min-width: 640px) {
   .site-footer__trk-logo {
+    width: auto;
     height: 220px;
+    max-width: none;
   }
 }
 
