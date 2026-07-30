@@ -88,5 +88,15 @@
     "description_de": "",
     "description_en": "",
     "sortOrder": 9
+  },
+  {
+    "id": "berner-tierschutz",
+    "name": "Berner Tierschutz",
+    "logo": "/images/partners/berner-tierschutz.png",
+    "url": "https://www.bernertierschutz.ch/",
+    "category": "partner",
+    "description_de": "Kümmert sich um Tierschicksale im Grossraum Bern.",
+    "description_en": "Cares for animals in need in the greater Bern area.",
+    "sortOrder": 10
   }
 ]
