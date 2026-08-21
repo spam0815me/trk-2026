@@ -1,0 +1,401 @@
+---
+/**
+ * EveningDetail — Detailseite für einen Abend des Rahmenprogramms.
+ *
+ * Die Abende sind keine Sessions im Content-System (kein Raum-Bezug, keine
+ * Parallelität), sollen sich aber lesen wie eine Vortrags-Detailseite. Aufbau und
+ * Styling orientieren sich deshalb bewusst an `src/pages/programm/[slug].astro`.
+ *
+ * Ist `endTime` nicht gesetzt (Ende noch offen), zeigt die Seite «ab HH:MM» und
+ * verzichtet auf Kalender-Eintrag und Event-JSON-LD — statt eine Endzeit zu erfinden.
+ */
+import PageLayout from "../../layouts/PageLayout.astro";
+import ShareButtons from "../ui/ShareButtons.astro";
+import { useTranslations } from "../../lib/i18n";
+import { sessionEventJsonLd } from "../../lib/seo-jsonld";
+
+interface Props {
+  /** Name des Abends, z. B. "Speed-Kennenlernen" */
+  title: string;
+  /** Einzeiler unter dem Titel */
+  subtitle: string;
+  /** Meta-Description für SEO und Sharing */
+  description: string;
+  /** Ausgeschrieben, z. B. "Freitag, 23. Oktober" */
+  dayLabel: string;
+  /** ISO-Datum, z. B. "2026-10-23" */
+  date: string;
+  startTime: string;
+  /** Weglassen, solange das Ende offen ist */
+  endTime?: string;
+  canonicalUrl: string;
+  /** Slug für den Dateinamen des Kalender-Eintrags */
+  slug: string;
+  /** Pfad unter /public, z. B. "/images/abendprogramm/freitag.jpg" */
+  image?: string;
+  imageAlt?: string;
+  /** Originalmasse des Bilds — verhindern Layout-Shift beim Laden */
+  imageWidth?: number;
+  imageHeight?: number;
+  /** Bildnachweis, z. B. "Foto: Olivia Schenker" */
+  imageCredit?: string;
+  /** Kurze Schlusszeile unter dem Text (Teilnahme-Hinweis o. Ä.) */
+  note?: string;
+  /** Raumname, z. B. "Raum Sandra". Ohne Angabe steht nur "Photobastei". */
+  roomName?: string;
+  /** Wortmarke des Raums, z. B. "/images/Raum_Sandra.svg" — wie auf den Vortragsseiten */
+  roomIcon?: string;
+}
+
+const {
+  title,
+  subtitle,
+  description,
+  dayLabel,
+  date,
+  startTime,
+  endTime,
+  canonicalUrl,
+  slug,
+  image,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  imageCredit,
+  note,
+  roomName,
+  roomIcon,
+} = Astro.props;
+
+const locale = "de";
+const t = useTranslations(locale);
+
+const timeLabel = endTime ? `${startTime}–${endTime}` : `ab ${startTime}`;
+
+// Dauer nur bei bekanntem Ende (beide Abende liegen innerhalb eines Kalendertags)
+const durationMinutes = endTime
+  ? (() => {
+      const [sh, sm] = startTime.split(":").map(Number);
+      const [eh, em] = endTime.split(":").map(Number);
+      return eh * 60 + em - (sh * 60 + sm);
+    })()
+  : null;
+
+const jsonLd = endTime
+  ? sessionEventJsonLd({
+      locale,
+      name: title,
+      description,
+      date,
+      startTime,
+      endTime,
+      roomName: roomName ?? "",
+      performers: [],
+      url: canonicalUrl,
+      superEventUrl: Astro.site?.toString() ?? "https://tierrechtskongress.ch",
+    })
+  : undefined;
+
+// Hochformat-Motive (z. B. Konzert-Poster) sonst zu dominant neben dem Kopfbereich
+const isPortrait = !!imageWidth && !!imageHeight && imageHeight > imageWidth;
+
+const icalData = endTime
+  ? {
+      uid: `abendprogramm-${slug}`,
+      title,
+      description,
+      location: roomName ? `${roomName}, Photobastei, Zürich` : "Photobastei, Zürich",
+      startDate: date,
+      startTime,
+      endTime,
+      url: canonicalUrl,
+    }
+  : null;
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={{ de: canonicalUrl }}
+  jsonLd={jsonLd}
+  ogImage={image}
+  breadcrumbs={[
+    { label: t("program.title"), href: "/programm" },
+    { label: "Abendprogramm", href: "/programm/abendprogramm" },
+    { label: title },
+  ]}
+>
+  <article class="evening-detail section" aria-labelledby="evening-title">
+    <div class="evening-detail__top" data-portrait={isPortrait ? "true" : undefined}>
+      <header class="evening-detail__header">
+        <div class="evening-detail__badges">
+          <span class="badge badge--evening">Rahmenprogramm</span>
+        </div>
+
+        <h1 class="evening-detail__title" id="evening-title">{title}</h1>
+        <p class="evening-detail__subtitle">{subtitle}</p>
+
+        <dl class="evening-detail__meta">
+          <div class="evening-detail__meta-item">
+            <dt>
+              <img src="/images/Tag.svg" alt="" class="meta-icon" aria-hidden="true" />
+              {t("program.day")}
+            </dt>
+            <dd>{dayLabel}</dd>
+          </div>
+          <div class="evening-detail__meta-item">
+            <dt>
+              <img src="/images/Uhrzeit.svg" alt="" class="meta-icon" aria-hidden="true" />
+              {t("program.time")}
+            </dt>
+            <dd>
+              <time>{timeLabel}</time>
+              {durationMinutes && (
+                <span class="evening-detail__duration">({durationMinutes} {t("session.minutes")})</span>
+              )}
+            </dd>
+          </div>
+          <div class="evening-detail__meta-item">
+            <dt>
+              <img src="/images/Location.svg" alt="" class="meta-icon" aria-hidden="true" />
+              {t("session.room")}
+            </dt>
+            <dd>
+              {roomIcon
+                ? <img src={roomIcon} alt={roomName ?? ""} class="room-name-icon" />
+                : roomName ?? "Photobastei"
+              }
+            </dd>
+          </div>
+        </dl>
+
+        {icalData && (
+          <div class="evening-detail__actions">
+            <button
+              class="ical-btn btn btn--primary btn--sm"
+              data-ical={JSON.stringify(icalData)}
+              data-filename={`trk-2026-${slug}`}
+              type="button"
+            >
+              <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 20px; height: 20px;" aria-hidden="true"></span>
+              {t("bookmarks.addToCalendar")}
+            </button>
+          </div>
+        )}
+      </header>
+
+      {image && (
+        <figure class="evening-detail__figure" data-portrait={isPortrait ? "true" : undefined}>
+          <img
+            src={image}
+            alt={imageAlt ?? ""}
+            width={imageWidth}
+            height={imageHeight}
+            loading="lazy"
+            decoding="async"
+          />
+          {imageCredit && <figcaption class="evening-detail__credit">{imageCredit}</figcaption>}
+        </figure>
+      )}
+    </div>
+
+    <div class="evening-detail__body prose">
+      <slot />
+    </div>
+
+    {note && <p class="evening-detail__note">{note}</p>}
+
+    <div class="evening-detail__share">
+      <ShareButtons url={canonicalUrl} title={title} locale={locale} />
+    </div>
+
+    <nav aria-label="Zurück zum Programm" class="evening-detail__back">
+      <a href="/programm" class="btn btn--primary">
+        <span class="btn-icon" style="--icon-url: url('/images/back.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
+        {t("session.back")}
+      </a>
+    </nav>
+  </article>
+</PageLayout>
+
+<script>
+  import { generateICalEvent, downloadIcal } from "../../lib/ical.ts";
+  import type { ICalEvent } from "../../lib/ical.ts";
+
+  document.querySelectorAll<HTMLButtonElement>(".ical-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      try {
+        const data = JSON.parse(btn.dataset.ical ?? "{}") as ICalEvent;
+        downloadIcal(generateICalEvent(data), btn.dataset.filename ?? "abendprogramm");
+      } catch (e) {
+        console.error("iCal Fehler:", e);
+      }
+    });
+  });
+</script>
+
+<style>
+.evening-detail {
+  max-width: var(--max-width-lg);
+}
+
+/* Kopfbereich: ab Tablet steht das Bild rechts neben Titel und Metadaten,
+   darunter läuft der Fliesstext wieder über die volle Breite. */
+.evening-detail__top {
+  display: grid;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .evening-detail__top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  /* Hochformat schmaler: sonst schiebt das Bild den Kopfbereich zu stark zusammen */
+  .evening-detail__top[data-portrait] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  }
+}
+
+.evening-detail__header {
+  margin-bottom: 0;
+}
+
+.evening-detail__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.evening-detail__title {
+  margin-bottom: var(--space-2);
+}
+
+.evening-detail__subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-5);
+  max-width: none;
+}
+
+.evening-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
+}
+
+.evening-detail__meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.evening-detail__meta-item dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: #26282a;
+  margin-bottom: var(--space-1);
+}
+
+.meta-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.evening-detail__meta-item dd {
+  font-weight: var(--weight-bold);
+  color: #26282a;
+  margin: 0;
+}
+
+.room-name-icon {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.evening-detail__duration {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-normal);
+}
+
+.evening-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.evening-detail__actions .btn {
+  flex: 0 0 auto;
+  min-width: 13rem;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/images/btn-v2-black-stretch.svg');
+}
+
+.evening-detail__actions .btn:hover {
+  background-image: url('/images/btn-v2-yellow-stretch.svg');
+}
+
+.evening-detail__figure {
+  margin: 0;
+  /* Auf Mobile nicht über die ganze Breite laufen lassen */
+  max-width: 520px;
+}
+
+.evening-detail__figure[data-portrait] {
+  max-width: 400px;
+}
+
+.evening-detail__figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+
+.evening-detail__credit {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.evening-detail__body {
+  margin-bottom: var(--space-6);
+}
+
+.evening-detail__note {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+  margin-bottom: var(--space-8);
+}
+
+.evening-detail__share {
+  padding: var(--space-5) 0;
+  border-top: 1px solid rgba(38, 40, 42, 0.12);
+  border-bottom: 1px solid rgba(38, 40, 42, 0.12);
+  margin-bottom: var(--space-8);
+}
+
+.evening-detail__back {
+  padding-top: var(--space-2);
+}
+</style>

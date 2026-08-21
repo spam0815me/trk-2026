@@ -1,0 +1,166 @@
+---
+/**
+ * Abendprogramm — Übersicht über Freitag- und Samstagabend
+ *
+ * Die beiden Abende sind kein Teil des Session-Grids (kein Raum-Bezug, keine
+ * Parallelität), stehen aber im Timetable als Break-Zeile und verlinken hierher.
+ * Details je Abend: `freitag.astro` und `samstag.astro`.
+ */
+import PageLayout from "../../../layouts/PageLayout.astro";
+
+const locale = "de";
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+const canonicalUrl = `${site}programm/abendprogramm/`;
+
+const title = "Abendprogramm";
+const lead = "Der Kongress hört nach dem letzten Vortrag nicht auf. An zwei Abenden geht es weiter – zum Kennenlernen, Reden und Feiern.";
+---
+
+<PageLayout
+  title={title}
+  description={lead}
+  locale={locale}
+  canonicalUrl={canonicalUrl}
+  alternates={{ de: canonicalUrl }}
+  breadcrumbs={[{ label: "Programm", href: "/programm" }, { label: title }]}
+>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">{title}</h1>
+      <p class="section__lead">{lead}</p>
+    </header>
+
+    <div class="evening">
+      <article class="evening__card" id="freitag">
+        <div class="evening__when">
+          <span class="evening__day">Freitag, 23. Oktober</span>
+          <span class="evening__time">20:30 bis 22:05</span>
+        </div>
+        <h2 class="evening__title">
+          <a href="/programm/abendprogramm/freitag">Speed-Kennenlernen</a>
+        </h2>
+        <p class="evening__subtitle">Erst kurze 1:1-Runden, dann Thementische.</p>
+
+        <p>
+          Nach dem Nachtessen lernst du in kurzen 1:1-Runden neue Leute kennen. Drei Minuten pro
+          Gespräch, dann Gong und Wechsel. Ab 21:25 geht es an den Thementischen weiter – ein Tisch
+          gehört euren eigenen Themen.
+        </p>
+
+        <p class="evening__meta">Freie Platzwahl, Wechsel jederzeit. Ohne Anmeldung.</p>
+
+        <p class="evening__more">
+          <a href="/programm/abendprogramm/freitag">Zum Freitagabend</a>
+        </p>
+      </article>
+
+      <article class="evening__card" id="samstag">
+        <div class="evening__when">
+          <span class="evening__day">Samstag, 24. Oktober</span>
+          <span class="evening__time">ab 20:00</span>
+        </div>
+        <h2 class="evening__title">
+          <a href="/programm/abendprogramm/samstag">Queere Tiere</a>
+        </h2>
+        <p class="evening__subtitle">Konzert von Soya the Cow &amp; Piano Prince.</p>
+
+        <p>
+          Daniel Hellmann und Coco Schwarz erzählen als ihre Kunstfiguren Soya the Cow und Piano
+          Prince von schwulen Schwänen, zweigeschlechtlichen Regenwürmern und der Vielfalt von
+          Sexualitäten, Liebes- und Lebensformen im Tierreich – eine Mischung aus Drag Show, queerer
+          Biologiestunde und Musik-Gala.
+        </p>
+
+        <p class="evening__meta">Ohne Anmeldung.</p>
+
+        <p class="evening__more">
+          <a href="/programm/abendprogramm/samstag">Zum Samstagabend</a>
+        </p>
+      </article>
+    </div>
+
+    <p class="evening__back">
+      <a href="/programm">Zurück zum ganzen Programm</a>
+    </p>
+  </div>
+</PageLayout>
+
+<style>
+.evening {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: start;
+}
+
+.evening__card {
+  padding: var(--space-6);
+  background: #e3e3dd;
+  border-radius: var(--radius-lg);
+}
+
+.evening__when {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  margin-bottom: var(--space-3);
+}
+
+.evening__day {
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.evening__time {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.evening__title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+.evening__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.evening__title a:hover,
+.evening__title a:focus-visible {
+  text-decoration: underline;
+}
+
+.evening__subtitle {
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-4);
+}
+
+.evening__card p {
+  line-height: var(--leading-relaxed);
+  max-width: none;
+}
+
+.evening__card p + p {
+  margin-top: var(--space-3);
+}
+
+.evening__meta {
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.evening__more {
+  margin-top: var(--space-5);
+  font-weight: var(--weight-medium);
+}
+
+.evening__back {
+  margin-top: var(--space-8);
+}
+</style>

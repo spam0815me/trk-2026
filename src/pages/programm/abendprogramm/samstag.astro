@@ -1,0 +1,52 @@
+---
+/**
+ * Samstagabend — Konzert «Queere Tiere» (Detailseite)
+ *
+ * Die Endzeit steht noch nicht fest: deshalb kein `endTime`
+ * (Anzeige «ab 20:00», kein Kalender-Eintrag, kein Event-JSON-LD).
+ * Kurzbios und Porträts der beiden Auftretenden folgen, sobald sie geliefert sind.
+ */
+import EveningDetail from "../../../components/programm/EveningDetail.astro";
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+const canonicalUrl = `${site}programm/abendprogramm/samstag/`;
+
+const description =
+  "Samstagabend am TRK 2026: «Queere Tiere» – Konzert von Soya the Cow & Piano Prince über schwule Schwäne, zweigeschlechtliche Regenwürmer und die Vielfalt im Tierreich.";
+---
+
+<EveningDetail
+  title="Queere Tiere"
+  subtitle="Konzert von Soya the Cow & Piano Prince."
+  description={description}
+  dayLabel="Samstag, 24. Oktober"
+  date="2026-10-24"
+  startTime="20:00"
+  canonicalUrl={canonicalUrl}
+  slug="queere-tiere"
+  image="/images/abendprogramm/queere-tiere.webp"
+  imageAlt="Soya the Cow und Piano Prince in schillernden Tierkostümen vor einem grossen Mond, der sich im Wasser spiegelt."
+  imageWidth={914}
+  imageHeight={1280}
+  imageCredit="Foto: Olivia Schenker"
+  note="Ohne Anmeldung."
+>
+  <p>
+    In einem schillernd-faszinierenden Liederabend erzählen Daniel Hellmann und Coco Schwarz als ihre
+    Kunstfiguren <strong>Soya the Cow</strong> und <strong>Piano Prince</strong> von schwulen
+    Schwänen, zweigeschlechtlichen Regenwürmern und der Vielfalt von Sexualitäten, Liebes- und
+    Lebensformen im Tierreich. Eine charmante, subversive Mischung aus Drag Show, queerer
+    Biologiestunde und virtuoser Musik-Gala.
+  </p>
+  <p>
+    Nach zwei Tagen Programm gehört der Abend der Musik. Wer noch bleibt, bleibt – ohne Anmeldung,
+    ohne Zeitdruck.
+  </p>
+  <p>
+    Mehr zu den beiden:
+    <a href="https://www.soyathecow.com" target="_blank" rel="noopener noreferrer">soyathecow.com</a>
+    und <a href="https://mx3.ch/pianoprince" target="_blank" rel="noopener noreferrer">mx3.ch/pianoprince</a>,
+    auf Instagram <a href="https://www.instagram.com/soyathecow/" target="_blank" rel="noopener noreferrer">@soyathecow</a>
+    und <a href="https://www.instagram.com/pianoprince_music/" target="_blank" rel="noopener noreferrer">@pianoprince_music</a>.
+  </p>
+</EveningDetail>

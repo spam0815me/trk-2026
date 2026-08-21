@@ -1,0 +1,47 @@
+---
+/**
+ * Freitagabend — Speed-Kennenlernen (Detailseite)
+ */
+import EveningDetail from "../../../components/programm/EveningDetail.astro";
+
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+const canonicalUrl = `${site}programm/abendprogramm/freitag/`;
+
+const description =
+  "Freitagabend am TRK 2026: Speed-Kennenlernen in kurzen 1:1-Runden, danach Thementische. Ohne Anmeldung.";
+---
+
+<EveningDetail
+  title="Speed-Kennenlernen"
+  subtitle="Erst kurze 1:1-Runden, dann Thementische."
+  description={description}
+  dayLabel="Freitag, 23. Oktober"
+  date="2026-10-23"
+  startTime="20:30"
+  endTime="22:05"
+  canonicalUrl={canonicalUrl}
+  slug="speed-kennenlernen"
+  roomName="Raum Sandra"
+  roomIcon="/images/Raum_Sandra.svg"
+  image="/images/abendprogramm/speed-kennenlernen.webp"
+  imageAlt="Illustration: Zwei Stuhlreihen sitzen sich gegenüber, die Menschen darauf im Gespräch, über ihnen Sprechblasen mit Fragezeichen."
+  imageWidth={1600}
+  imageHeight={900}
+  note="Freie Platzwahl, Wechsel jederzeit. Ohne Anmeldung."
+>
+  <p>
+    Nach dem Nachtessen lernst du in <strong>kurzen 1:1-Runden</strong> neue Leute kennen. Drei
+    Minuten pro Gespräch, dann Gong und Wechsel. Jede Runde beginnt mit einer neuen Frage – zuerst
+    locker, später persönlicher: Was war dein veganer Aha-Moment? Wofür im Tierrechtsbereich
+    brennst du gerade? Was machst du, wenn dir der Aktivismus zu viel wird?
+  </p>
+  <p>
+    Ab 21:25 geht es an den <strong>Thementischen</strong> weiter. Dort könnt ihr länger über Fragen
+    diskutieren, die die Bewegung beschäftigen: Reform oder Revolution? Wo liegen die Grenzen von
+    Protest? Wie redest du über Tiere, ohne dass Leute dichtmachen?
+  </p>
+  <p>
+    Ein Tisch gehört euren eigenen Themen. Vorschläge könnt ihr ab Freitagnachmittag auf ein
+    Flipchart im Foyer schreiben.
+  </p>
+</EveningDetail>

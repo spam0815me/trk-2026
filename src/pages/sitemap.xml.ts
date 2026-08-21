@@ -15,6 +15,9 @@ export const GET: APIRoute = async ({ site }) => {
     // DE
     { url: base,                        priority: "1.0", changefreq: "weekly" },
     { url: `${base}programm/`,          priority: "0.9", changefreq: "weekly" },
+    { url: `${base}programm/abendprogramm/`, priority: "0.7", changefreq: "monthly" },
+    { url: `${base}programm/abendprogramm/freitag/`, priority: "0.6", changefreq: "monthly" },
+    { url: `${base}programm/abendprogramm/samstag/`, priority: "0.6", changefreq: "monthly" },
     { url: `${base}referentinnen/`,     priority: "0.8", changefreq: "weekly" },
     { url: `${base}ort/`,               priority: "0.7", changefreq: "monthly" },
     { url: `${base}anmeldung/`,         priority: "0.9", changefreq: "monthly" },

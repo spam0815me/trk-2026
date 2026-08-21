@@ -62,18 +62,39 @@ const activeRoomData = activeRooms.map(r => ({
   icon:  roomIcons[r.data.id],
 }));
 
-// Pausen & Rahmenprogramm pro Tag (catering: Verpflegung von Spicy Roots; potluck: Mitbring-Buffet)
-type DayBreak = { time: string; label: string; icon: string; catering?: boolean; potluck?: boolean };
+// Pausen & Rahmenprogramm pro Tag (catering: Verpflegung von Spicy Roots; potluck: Mitbring-Buffet;
+// href/linkLabel: verlinkt auf die Detailseite /programm/abendprogramm)
+type DayBreak = {
+  time: string;
+  label: string;
+  icon: string;
+  catering?: boolean;
+  potluck?: boolean;
+  href?: string;
+  linkLabel?: string;
+};
 const breaksByDay: Record<number, DayBreak[]> = {
   1: [
     { time: "19:00", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
-    { time: "20:30", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
+    {
+      time: "20:30",
+      label: "Abendprogramm",
+      icon: "/images/Fiesta.svg",
+      href: "/programm/abendprogramm/freitag",
+      linkLabel: "Speed-Kennenlernen",
+    },
   ],
   2: [
     { time: "12:30", label: "Mittagspause", icon: "/images/Mittag.svg", catering: true },
     { time: "16:00", label: "Kaffeepause", icon: "/images/Pause.svg" },
     { time: "18:30", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
-    { time: "20:00", label: "Abendprogramm", icon: "/images/Fiesta.svg" },
+    {
+      time: "20:00",
+      label: "Abendprogramm",
+      icon: "/images/Fiesta.svg",
+      href: "/programm/abendprogramm/samstag",
+      linkLabel: "Konzert «Queere Tiere»",
+    },
   ],
   3: [
     { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg", potluck: true },
@@ -123,6 +144,8 @@ const timetableData = days.map(day => {
         breakIcon: breakEntry?.icon ?? "",
         breakCatering: breakEntry?.catering ?? false,
         breakPotluck: breakEntry?.potluck ?? false,
+        breakHref: breakEntry?.href ?? "",
+        breakLinkLabel: breakEntry?.linkLabel ?? "",
         cells: activeRooms.map(room =>
           daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
         ),
@@ -197,7 +220,7 @@ const timetableData = days.map(day => {
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakPotluck, cells }) => (
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakPotluck, breakHref, breakLinkLabel, cells }) => (
             isBreak ? (
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
@@ -219,6 +242,11 @@ const timetableData = days.map(day => {
                     <span class="timetable__break-note">
                       Potluck-Style – alle bringen etwas mit
                     </span>
+                  )}
+                  {breakHref && (
+                    <a href={breakHref} class="timetable__break-link">
+                      {breakLinkLabel}
+                    </a>
                   )}
                 </div>
               </div>
@@ -556,6 +584,19 @@ const timetableData = days.map(day => {
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   color: #26282a;
+}
+
+.timetable__break-link {
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: #26282a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.timetable__break-link:hover {
+  color: var(--color-primary);
 }
 
 .timetable__break-label {

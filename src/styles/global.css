@@ -424,6 +424,7 @@ table {
 .badge--session-type-keynote  { background-color: #26282a; color: #fafaff; }
 .badge--session-type-panel    { background-color: #26282a; color: #fafaff; }
 .badge--lang                  { background-color: #26282a; color: #fafaff; }
+.badge--evening               { background-color: #26282a; color: #fafaff; }
 
 /* ─── Karten ───────────────────────────────────────────────────────────────── */
 .card {

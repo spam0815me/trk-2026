@@ -20,10 +20,14 @@ Dieses Dokument definiert verbindliche Regeln für die Arbeit an der Tierrechtsk
 - Fotos in `public/images/speakers/` ablegen, Pfad im JSON als `/images/speakers/...`.
 
 ### Übersetzungen
+> ⚠️ **Das Frontend ist aktuell DE-only** — der `/en`-Baum wurde entfernt, `LOCALES` in
+> `src/lib/i18n.ts` enthält nur noch `"de"`. Neue Seiten werden **nur auf Deutsch** angelegt.
+> Die `_en`-Felder bleiben Schema-Pflicht, werden aber nicht gerendert.
+
 - Inhaltsfelder: immer beide Sprachvarianten pflegen (`_de` und `_en`).
 - UI-Strings: `src/i18n/de.json` und `src/i18n/en.json` immer synchron halten.
 - Wenn eine neue UI-Übersetzung hinzugefügt wird, in **beiden** Dateien ergänzen.
-- Wenn eine neue Seite angelegt wird, in **beiden** Sprachen anlegen (DE + `/en/`).
+- Sobald der `/en`-Baum zurückkommt: neue Seiten wieder in **beiden** Sprachen anlegen (DE + `/en/`).
 
 ### Relationen erhalten
 - Beim Ändern einer Session-ID: `speakerIds` aller betroffenen Sessions und `sessionIds` aller betroffenen Speaker aktualisieren.
