@@ -146,7 +146,7 @@ const icalData = {
         </div>
         <div class="session-detail__meta-item">
           <dt>
-            <img src="/images/Sprache_de.svg" alt="" class="meta-icon" aria-hidden="true" />
+            <img src={session.data.language === "en" ? "/images/Sprache_eng.svg" : "/images/Sprache_de.svg"} alt="" class="meta-icon" aria-hidden="true" />
             {t("program.language")}
           </dt>
           <dd>{langLabel}</dd>
