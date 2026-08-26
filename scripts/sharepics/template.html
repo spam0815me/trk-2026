@@ -37,9 +37,13 @@
     font-family: 'Poppins', system-ui, sans-serif;
   }
 
+  /* So gross wie die Breite erlaubt, aber nie höher als __LOGOMAX__px —
+     sonst schöbe das Logo den gelben Balken aus dem Bild. */
   .card__logo {
     width: __LOGOW__px;
     height: auto;
+    max-height: __LOGOMAX__px;
+    object-fit: contain;
     display: block;
     margin-top: __LOGOTOP__px;
   }
@@ -51,7 +55,7 @@
     color: var(--brand-black);
     text-align: center;
     letter-spacing: -0.01em;
-    max-width: 92%;
+    max-width: 100%;
   }
 
   .card__text {

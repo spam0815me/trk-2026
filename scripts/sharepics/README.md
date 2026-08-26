@@ -2,14 +2,15 @@
 
 Erzeugt die fertigen Sharepics, die auf der Medienseite zum Download stehen:
 
-| Datei | Format | Motiv |
-|---|---|---|
-| `public/images/social/trk26-save-the-date-1080x1080.png` | 1:1 | «Drei Tage für die Tiere» |
-| `public/images/social/trk26-save-the-date-1080x1350.png` | 4:5 | «Drei Tage für die Tiere» |
-| `public/images/social/trk26-programm-1080x1080.png` | 1:1 | «Das Programm ist online» |
-| `public/images/social/trk26-programm-1080x1350.png` | 4:5 | «Das Programm ist online» |
+Zwei Motive – «Drei Tage für die Tiere» und «Das Programm ist online» – in drei Formaten:
 
-1:1 ist das quadratische Feed-Format, 4:5 das Instagram-Hochformat.
+| Format | Grösse | Wofür |
+|---|---|---|
+| 1:1 | 1080 × 1080 | quadratischer Feed-Post |
+| 4:5 | 1080 × 1350 | Instagram-Hochformat |
+| 9:16 | 1080 × 1920 | Story und Reel |
+
+Dateien: `public/images/social/trk26-<motiv>-<breite>x<höhe>.png`
 
 ## Neu rendern
 
@@ -25,13 +26,15 @@ Headless-Modus. Poppins kommt von Google Fonts, der Rechner muss also online sei
 
 - **Text**: Liste `MOTIVE` in `build.py` — Dateiname-Teil, Headline, Unterzeile.
   `<br>` im Text erzwingt einen Zeilenumbruch.
-- **Weiteres Format** (z. B. Story 1080×1920): Eintrag in `FORMATE` ergänzen,
-  danach den Download-Link in `src/pages/medien.astro` (`sharepics`) nachziehen.
+- **Weiteres Format**: Eintrag in `FORMATE` ergänzen, danach den Download-Link in
+  `src/pages/medien.astro` (`sharepics`) nachziehen.
 - **Layout**: Faktoren in `masse()` bzw. das CSS in `template.html`.
 
-Nach dem Rendern die Bilder anschauen: Läuft der Text zu weit nach unten, schneidet
-`overflow: hidden` die letzte Zeile im gelben Balken ab. Dann Logo oder Schriftgrad
-in `masse()` etwas verkleinern.
+Der Schriftgrad der Headline wird aus der längsten Zeile berechnet, damit der Text die
+Satzbreite ausnutzt (`headline_groesse()`, Deckel bei 7.5 % der Bildhöhe). Das Logo ist
+auf 40 % der Bildhöhe gedeckelt — ohne diesen Deckel schöbe es den gelben Balken aus dem
+Bild, das `overflow: hidden` schnitte dann die Adresse ab. Nach Textänderungen also kurz
+alle drei Formate anschauen.
 
 ## Zahlen im Motiv «Programm»
 

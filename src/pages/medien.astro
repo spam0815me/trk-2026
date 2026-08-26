@@ -41,11 +41,13 @@ const sharepics = [
     label:    t("press.socialSaveTheDate"),
     square:   "/images/social/trk26-save-the-date-1080x1080.png",
     portrait: "/images/social/trk26-save-the-date-1080x1350.png",
+    story:    "/images/social/trk26-save-the-date-1080x1920.png",
   },
   {
     label:    t("press.socialProgramm"),
     square:   "/images/social/trk26-programm-1080x1080.png",
     portrait: "/images/social/trk26-programm-1080x1350.png",
+    story:    "/images/social/trk26-programm-1080x1920.png",
   },
 ];
 ---
@@ -123,6 +125,7 @@ const sharepics = [
                   <span class="press-card__formats">
                     <a href={g.square} download>1:1</a>
                     <a href={g.portrait} download>4:5</a>
+                    <a href={g.story} download>9:16</a>
                   </span>
                 </li>
               ))}

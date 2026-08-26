@@ -31,24 +31,38 @@ MOTIVE = [
 
 # Formate: Dateiname-Teil, Breite, Höhe
 FORMATE = [
-    ("1080x1080", 1080, 1080),
-    ("1080x1350", 1080, 1350),
+    ("1080x1080", 1080, 1080),   # quadratisch, Feed
+    ("1080x1350", 1080, 1350),   # 4:5, Instagram-Hochformat
+    ("1080x1920", 1080, 1920),   # 9:16, Story und Reel
 ]
+
+
+# Mittlere Zeichenbreite von Poppins ExtraBold, in em. Empirisch aus den
+# gerenderten Bildern kalibriert — dient nur der Schriftgrad-Schätzung.
+ZEICHENBREITE = 0.62
+
+
+def headline_groesse(text: str, width: int, pad: int, height: int) -> int:
+    """Schriftgrad so wählen, dass die längste Zeile die Satzbreite füllt."""
+    zeilen = [z.strip() for z in text.split("<br>")]
+    laengste = max(len(z) for z in zeilen)
+    passend = (width - 2 * pad) / (laengste * ZEICHENBREITE)
+    return round(min(passend, height * 0.075))
 
 
 def masse(width: int, height: int) -> dict:
     """Layout-Werte relativ zur Höhe — so sitzt 4:5 gleich satt wie 1:1."""
-    pad = round(width * 0.075)
+    pad = round(width * 0.055)
     return {
         "__WIDTH__": width,
         "__HEIGHT__": height,
         "__PAD__": pad,
         "__PAD2__": pad * 2,
         "__PADTOP__": round(height * 0.045),
-        "__LOGOW__": round(width * 0.46),
+        "__LOGOW__": round(width * 0.72),
+        "__LOGOMAX__": round(height * 0.40),
         "__LOGOTOP__": round(height * 0.02),
-        "__HEADSIZE__": round(height * 0.056),
-        "__SUBSIZE__": round(height * 0.026),
+        "__SUBSIZE__": round(height * 0.024),
         "__SUBGAP__": round(height * 0.02),
         "__BARPAD__": round(height * 0.028),
         "__BARGAP__": round(height * 0.008),
@@ -94,7 +108,9 @@ def main() -> int:
     for motiv, headline, sub in MOTIVE:
         for fmt, width, height in FORMATE:
             html = vorlage
-            for platzhalter, wert in masse(width, height).items():
+            werte = masse(width, height)
+            werte["__HEADSIZE__"] = headline_groesse(headline, width, werte["__PAD__"], height)
+            for platzhalter, wert in werte.items():
                 html = html.replace(platzhalter, str(wert))
             html = html.replace("__HEADLINE__", headline).replace("__SUB__", sub)
 
