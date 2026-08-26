@@ -15,6 +15,7 @@
     --brand-black: #26282a;
     --brand-gold:  #e5b969;
     --brand-white: #fafaff;
+    --brand-ghost: #e3e3dd;   /* Ghost White, Schriftfarbe auf dunklem Grund */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,9 +26,10 @@
     height: __HEIGHT__px;
     position: relative;
     overflow: hidden;
-    background-image: url('../../public/images/trk-header-bg.webp');
-    background-size: cover;
-    background-position: center;
+    /* Dunkler Grund wie im Website-Footer: weisse Kuh, gelbes X, heller Text.
+       Der helle Beton-Hintergrund des Hero passt hier nicht, das Negativ-Logo
+       braucht Dunkelheit. */
+    background: var(--brand-black);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,7 +55,7 @@
     font-weight: 800;
     font-size: __HEADSIZE__px;
     line-height: 1.05;
-    color: var(--brand-black);
+    color: var(--brand-ghost);
     text-align: center;
     letter-spacing: -0.01em;
     max-width: 100%;
@@ -71,7 +73,7 @@
     font-weight: 600;
     font-size: __SUBSIZE__px;
     line-height: 1.3;
-    color: var(--brand-black);
+    color: var(--brand-ghost);
     text-align: center;
     margin-top: __SUBGAP__px;
   }
@@ -179,7 +181,7 @@
 </head>
 <body>
   <div class="card">
-    <img class="card__logo" src="../og-image/trk-logo-trim.png"
+    <img class="card__logo" src="../og-image/trk-logo-negativ-trim.png"
          alt="Tierrechtskongress 2026 – Tier im Fokus (TIF)" />
 
     <div class="card__text">

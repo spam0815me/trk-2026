@@ -41,9 +41,13 @@ Textänderungen also kurz alle drei Formate anschauen.
 
 ## Logo
 
-Das Sharepic zieht `../og-image/trk-logo-trim.png`, den Trim des offiziellen Logos –
-Kuh **im gelben X**. Eine Kuh ohne X ist kein offizielles Logo; wie sie hier hineingeriet und
-wie Trim und PNG neu entstehen, steht in `scripts/og-image/README.md`.
+Das Sharepic zieht `../og-image/trk-logo-negativ-trim.png`, den Trim des offiziellen
+**Negativ-Logos** – weisse Kuh **im gelben X**, wie im Website-Footer. Eine Kuh ohne X ist kein
+offizielles Logo; wie sie hier zwischenzeitlich hineingeriet und wie Trims und PNGs neu
+entstehen, steht in `scripts/og-image/README.md`.
+
+Der Grund ist dunkel (`#26282a`), Headline und Unterzeile stehen in Ghost White. Bei einer
+hellen Fassung müssten alle drei zusammen wechseln: Grund, Schriftfarbe und Logo-Variante.
 
 ## Fussbalken: Reihe oder Stapel
 

@@ -8,8 +8,8 @@ kann über die `ogImage`-Prop ein eigenes Bild mitgeben; ohne Angabe greift dies
 
 ## Bestandteile
 
-- `public/images/trk-header-bg.webp` – heller Beton-Hintergrund (gleicher Look wie der Hero)
-- `trk-logo-trim.png` – das Logo (Kuh im gelben X, enthält bereits
+- dunkler Grund `#26282a` – gleicher Look wie der Website-Footer und die Sharepics
+- `trk-logo-negativ-trim.png` – das Negativ-Logo (weisse Kuh im gelben X, enthält bereits
   «Tierrechtskongress 2026 / Tier im Fokus»), gross & zentriert
 
 ### Logo-Quelle: immer das SVG
@@ -23,23 +23,33 @@ Trim wanderte sie ins OG-Bild und in die Sharepics.
 Beide neu erzeugen, wenn sich das Logo ändert:
 
 ```bash
-rsvg-convert -w 2000 public/images/trk-logo.svg -o /tmp/trk-logo.png
+rsvg-convert -w 2000 public/images/trk-logo.svg            -o /tmp/trk-logo.png
+rsvg-convert -w 2000 public/images/TRK_26_Logo_negativ.svg -o /tmp/trk-logo-negativ.png
 ```
 
 ```python
 from PIL import Image
-src = Image.open("/tmp/trk-logo.png").convert("RGBA")
-src.quantize(colors=128, method=Image.FASTOCTREE, dither=Image.NONE).save(
-    "public/images/trk-logo.png", optimize=True)          # Download auf /medien
-im = Image.open("public/images/trk-logo.png").convert("RGBA")
-im.crop(im.getbbox()).save("scripts/og-image/trk-logo-trim.png", optimize=True)
+
+for quelle, png, trim in [
+    ("/tmp/trk-logo.png",         "public/images/trk-logo.png",
+     "scripts/og-image/trk-logo-trim.png"),
+    ("/tmp/trk-logo-negativ.png", "public/images/TRK_26_Logo_negativ.png",
+     "scripts/og-image/trk-logo-negativ-trim.png"),
+]:
+    src = Image.open(quelle).convert("RGBA")
+    src.quantize(colors=128, method=Image.FASTOCTREE, dither=Image.NONE).save(png, optimize=True)
+    im = Image.open(png).convert("RGBA")
+    im.crop(im.getbbox()).save(trim, optimize=True)
 ```
+
+Das positive Trim (`trk-logo-trim.png`) wird derzeit nirgends gerendert, bleibt aber liegen –
+sobald wieder etwas auf hellem Grund entsteht, ist es da.
 
 ### Warum ein getrimmtes Logo?
 
-Das gerenderte PNG hat ungleiche transparente Ränder. Zentriert man es als Ganzes, sitzt das
-sichtbare Motiv nicht mittig – deshalb das zugeschnittene `trk-logo-trim.png` (Motiv =
-Bounding-Box). Der Hero der Startseite bindet direkt das SVG ein, nicht das PNG.
+Die gerenderten PNGs haben ungleiche transparente Ränder. Zentriert man sie als Ganzes, sitzt
+das sichtbare Motiv nicht mittig – deshalb die zugeschnittenen Trims (Motiv = Bounding-Box).
+Der Hero der Startseite bindet direkt das SVG ein, nicht das PNG.
 
 ## Neu rendern
 
