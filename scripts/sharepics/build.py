@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""
+Baut die Social-Media-Grafiken für /medien aus template.html.
+
+    python3 scripts/sharepics/build.py
+
+Ausgabe: public/images/social/trk26-<motiv>-<format>.png
+Formate: 1080×1080 (quadratisch, Feed) und 1080×1350 (4:5, Instagram-Hochformat).
+
+Gerendert wird mit Chrome im Headless-Modus — gleicher Weg wie beim
+Open-Graph-Bild (scripts/og-image/), nur automatisiert. Poppins kommt von
+Google Fonts, der Rechner muss also online sein.
+"""
+
+import pathlib
+import shutil
+import subprocess
+import sys
+import tempfile
+
+CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+TEMPLATE = ROOT / "scripts" / "sharepics" / "template.html"
+OUT_DIR = ROOT / "public" / "images" / "social"
+
+# Motive: Dateiname-Teil, Headline, Unterzeile
+MOTIVE = [
+    ("save-the-date", "Drei Tage für die Tiere", "Vorträge, Workshops<br>und Begegnungen"),
+    ("programm", "Das Programm<br>ist online", "31 Vorträge und Workshops<br>mit 34 Referierenden"),
+]
+
+# Formate: Dateiname-Teil, Breite, Höhe
+FORMATE = [
+    ("1080x1080", 1080, 1080),
+    ("1080x1350", 1080, 1350),
+]
+
+
+def masse(width: int, height: int) -> dict:
+    """Layout-Werte relativ zur Höhe — so sitzt 4:5 gleich satt wie 1:1."""
+    pad = round(width * 0.075)
+    return {
+        "__WIDTH__": width,
+        "__HEIGHT__": height,
+        "__PAD__": pad,
+        "__PAD2__": pad * 2,
+        "__PADTOP__": round(height * 0.045),
+        "__LOGOW__": round(width * 0.46),
+        "__LOGOTOP__": round(height * 0.02),
+        "__HEADSIZE__": round(height * 0.056),
+        "__SUBSIZE__": round(height * 0.026),
+        "__SUBGAP__": round(height * 0.02),
+        "__BARPAD__": round(height * 0.028),
+        "__BARGAP__": round(height * 0.008),
+        "__DATESIZE__": round(height * 0.036),
+        "__PLACESIZE__": round(height * 0.025),
+        "__URLSIZE__": round(height * 0.027),
+    }
+
+
+def rendern(html: str, ziel: pathlib.Path, width: int, height: int) -> None:
+    with tempfile.NamedTemporaryFile(
+        "w", suffix=".html", dir=TEMPLATE.parent, delete=False, encoding="utf-8"
+    ) as fh:
+        fh.write(html)
+        tmp = pathlib.Path(fh.name)
+    try:
+        subprocess.run(
+            [
+                CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
+                "--allow-file-access-from-files",
+                "--force-device-scale-factor=1",
+                "--virtual-time-budget=4000",
+                f"--window-size={width},{height}",
+                f"--screenshot={ziel}",
+                tmp.as_uri(),
+            ],
+            check=True,
+            capture_output=True,
+        )
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def main() -> int:
+    if not pathlib.Path(CHROME).exists():
+        sys.exit(f"Chrome nicht gefunden: {CHROME}")
+    if not shutil.which("sips"):
+        print("Hinweis: sips fehlt, PNGs werden nicht nachoptimiert.", file=sys.stderr)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    vorlage = TEMPLATE.read_text(encoding="utf-8")
+
+    for motiv, headline, sub in MOTIVE:
+        for fmt, width, height in FORMATE:
+            html = vorlage
+            for platzhalter, wert in masse(width, height).items():
+                html = html.replace(platzhalter, str(wert))
+            html = html.replace("__HEADLINE__", headline).replace("__SUB__", sub)
+
+            ziel = OUT_DIR / f"trk26-{motiv}-{fmt}.png"
+            rendern(html, ziel, width, height)
+            kb = ziel.stat().st_size // 1024
+            print(f"{ziel.relative_to(ROOT)}  ({width}×{height}, {kb} KB)")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

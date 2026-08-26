@@ -34,6 +34,20 @@ const logos = [
   { label: t("press.logoDark"),  svg: "/images/trk-logo.svg",            png: "/images/trk-logo.png" },
   { label: t("press.logoLight"), svg: "/images/TRK_26_Logo_negativ.svg", png: "/images/TRK_26_Logo_negativ.png" },
 ];
+
+// Fertige Sharepics — gerendert mit scripts/sharepics/build.py
+const sharepics = [
+  {
+    label:    t("press.socialSaveTheDate"),
+    square:   "/images/social/trk26-save-the-date-1080x1080.png",
+    portrait: "/images/social/trk26-save-the-date-1080x1350.png",
+  },
+  {
+    label:    t("press.socialProgramm"),
+    square:   "/images/social/trk26-programm-1080x1080.png",
+    portrait: "/images/social/trk26-programm-1080x1350.png",
+  },
+];
 ---
 
 <PageLayout
@@ -92,6 +106,23 @@ const logos = [
                   <span class="press-card__formats">
                     <a href={l.svg} download>SVG</a>
                     <a href={l.png} download>PNG</a>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <!-- Social-Media-Grafiken -->
+          <article class="press-card">
+            <h3>{t("press.socialTitle")}</h3>
+            <p>{t("press.socialText")}</p>
+            <ul class="press-card__links" role="list">
+              {sharepics.map(g => (
+                <li>
+                  <span class="press-card__logo-label">{g.label}</span>
+                  <span class="press-card__formats">
+                    <a href={g.square} download>1:1</a>
+                    <a href={g.portrait} download>4:5</a>
                   </span>
                 </li>
               ))}
