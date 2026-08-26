@@ -39,9 +39,10 @@ alle drei Formate anschauen.
 
 ## Fussbalken: Reihe oder Stapel
 
-Im Balken stehen «Jetzt anmelden!», darunter Datum, Ort und Adresse mit Icons.
-Diese drei stehen **nebeneinander** (Klasse `reihe`) in 1:1 und 4:5 und
-**untereinander** (Klasse `stapel`, Icons fluchten, Schrift viel grösser) in der Story.
+Im Balken steht «Jetzt anmelden!», darunter Datum, Ort und Adresse. Diese drei stehen
+**nebeneinander mit Icons** (Klasse `reihe`) in 1:1 und 4:5 und **untereinander, zentriert
+und ohne Icons** (Klasse `stapel`, Schrift viel grösser) in der Story — vor dem vielen
+Weissraum eines 9:16-Bildes wirken die Icons unruhig.
 Grund: Die Schriftgrösse der Reihe hängt allein an der Bildbreite — in einem 9:16-Bild
 wäre sie verloren klein. Erzwingen lässt sich beides:
 
@@ -53,9 +54,9 @@ SHAREPIC_BAR=reihe  python3 scripts/sharepics/build.py
 Zum Vergleichen, ohne die Live-Dateien anzufassen:
 `SHAREPIC_OUT=/tmp/vergleich python3 scripts/sharepics/build.py`
 
-## Icons im Fussbalken
+## Icons im Fussbalken (nur `reihe`)
 
-Die drei Zeilen im gelben Balken tragen Icons aus dem Website-Bestand:
+Die drei Einträge im gelben Balken tragen Icons aus dem Website-Bestand:
 `Tag.svg` (Datum), `Location.svg` (Ort) und `Ticket.svg` (Anmeldung). Die Dateien sind
 gelb gefüllt (#e5b969) und wären auf dem gelben Balken unsichtbar — sie werden deshalb
 als CSS-Maske eingesetzt und dunkel eingefärbt, gleiches Prinzip wie bei den

@@ -102,9 +102,19 @@
     gap: __BARGAP__px;
   }
 
+  /* Story: keine Icons, alles zentriert — untereinander wirken die Icons
+     vor dem vielen Weissraum unruhig. */
   .bar__lines.stapel {
     flex-direction: column;
-    align-items: flex-start;   /* Icons fluchten untereinander */
+    align-items: center;
+  }
+
+  .bar__lines.stapel .bar__line {
+    justify-content: center;
+  }
+
+  .bar__lines.stapel .ico {
+    display: none;
   }
 
   .bar__lines.reihe {
