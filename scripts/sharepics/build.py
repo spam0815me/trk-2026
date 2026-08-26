@@ -23,10 +23,16 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 TEMPLATE = ROOT / "scripts" / "sharepics" / "template.html"
 OUT_DIR = ROOT / "public" / "images" / "social"
 
-# Motive: Dateiname-Teil, Headline, Unterzeile
+# Motive: Dateiname-Teil, Headline breit, Headline für Hochformate, Unterzeile.
+# In Hochformaten wird die Headline umbrochen — zweizeilig darf sie viel grösser
+# gesetzt werden, sonst wirkt die Story leer.
 MOTIVE = [
-    ("save-the-date", "Drei Tage für die Tiere", "Vorträge, Workshops<br>und Begegnungen"),
-    ("programm", "Das Programm<br>ist online", "31 Vorträge und Workshops<br>mit 34 Referierenden"),
+    (
+        "save-the-date",
+        "Drei Tage für die Tiere",
+        "Drei Tage<br>für die Tiere",
+        "Vorträge, Workshops<br>und Begegnungen",
+    ),
 ]
 
 # Formate: Dateiname-Teil, Breite, Höhe
@@ -60,14 +66,16 @@ def masse(width: int, height: int) -> dict:
         "__PAD2__": pad * 2,
         "__PADTOP__": round(height * 0.045),
         "__LOGOW__": round(width * 0.72),
+        "__TIFW__": round(width * 0.22),
+        "__TIFGAP__": round(height * 0.012),
         "__LOGOMAX__": round(height * 0.40),
         "__LOGOTOP__": round(height * 0.02),
-        "__SUBSIZE__": round(height * 0.024),
+        "__SUBSIZE__": round(height * 0.027),
         "__SUBGAP__": round(height * 0.02),
-        "__BARPAD__": round(height * 0.028),
+        "__BARPAD__": round(height * 0.020),
         "__BARGAP__": round(height * 0.008),
         "__DATESIZE__": round(height * 0.036),
-        "__PLACESIZE__": round(height * 0.025),
+        "__PLACESIZE__": round(height * 0.024),
         "__URLSIZE__": round(height * 0.027),
     }
 
@@ -105,8 +113,9 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     vorlage = TEMPLATE.read_text(encoding="utf-8")
 
-    for motiv, headline, sub in MOTIVE:
+    for motiv, headline_breit, headline_hoch, sub in MOTIVE:
         for fmt, width, height in FORMATE:
+            headline = headline_hoch if height / width >= 1.5 else headline_breit
             html = vorlage
             werte = masse(width, height)
             werte["__HEADSIZE__"] = headline_groesse(headline, width, werte["__PAD__"], height)

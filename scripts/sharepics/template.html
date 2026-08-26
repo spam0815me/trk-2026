@@ -101,10 +101,19 @@
     text-align: center;
   }
 
+  .card__cta,
   .card__url {
     font-weight: 800;
     font-size: __URLSIZE__px;
     text-align: center;
+  }
+
+  /* Absenderlogo Tier im Fokus (TIF), klein und mittig im Fussbalken */
+  .card__tif {
+    width: __TIFW__px;
+    height: auto;
+    display: block;
+    margin-top: __TIFGAP__px;
   }
 </style>
 </head>
@@ -121,7 +130,10 @@
     <div class="card__bar">
       <p class="card__date">23. bis 25. Oktober 2026</p>
       <p class="card__place">Photobastei Zürich</p>
+      <p class="card__cta">Jetzt anmelden!</p>
       <p class="card__url">tierrechtskongress.ch</p>
+      <img class="card__tif" src="../../public/images/tif-logo-dark.png"
+           alt="Tier im Fokus (TIF)" />
     </div>
   </div>
 </body>

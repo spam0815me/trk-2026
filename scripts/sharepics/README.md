@@ -2,7 +2,7 @@
 
 Erzeugt die fertigen Sharepics, die auf der Medienseite zum Download stehen:
 
-Zwei Motive – «Drei Tage für die Tiere» und «Das Programm ist online» – in drei Formaten:
+Ein Motiv – «Drei Tage für die Tiere» – in drei Formaten:
 
 | Format | Grösse | Wofür |
 |---|---|---|
@@ -24,8 +24,9 @@ Headless-Modus. Poppins kommt von Google Fonts, der Rechner muss also online sei
 
 ## Ändern
 
-- **Text**: Liste `MOTIVE` in `build.py` — Dateiname-Teil, Headline, Unterzeile.
-  `<br>` im Text erzwingt einen Zeilenumbruch.
+- **Text**: Liste `MOTIVE` in `build.py` — Dateiname-Teil, Headline für breite Formate,
+  Headline für Hochformate (9:16 bekommt einen eigenen Umbruch, damit sie zweizeilig und
+  damit viel grösser gesetzt werden kann), Unterzeile. `<br>` erzwingt einen Zeilenumbruch.
 - **Weiteres Format**: Eintrag in `FORMATE` ergänzen, danach den Download-Link in
   `src/pages/medien.astro` (`sharepics`) nachziehen.
 - **Layout**: Faktoren in `masse()` bzw. das CSS in `template.html`.
@@ -36,10 +37,9 @@ auf 40 % der Bildhöhe gedeckelt — ohne diesen Deckel schöbe es den gelben Ba
 Bild, das `overflow: hidden` schnitte dann die Adresse ab. Nach Textänderungen also kurz
 alle drei Formate anschauen.
 
-## Zahlen im Motiv «Programm»
+## Wenn ein Motiv Zahlen nennt
 
-«31 Vorträge und Workshops mit 34 Referierenden» ist von Hand gepflegt und muss zum
-Programm passen. Aktueller Stand jederzeit:
+Zahlen im Bild veralten. Aktueller Stand jederzeit:
 
 ```bash
 ls src/content/sessions/*.json | wc -l   # Sessions
