@@ -37,6 +37,15 @@ auf 40 % der Bildhöhe gedeckelt — ohne diesen Deckel schöbe es den gelben Ba
 Bild, das `overflow: hidden` schnitte dann die Adresse ab. Nach Textänderungen also kurz
 alle drei Formate anschauen.
 
+## Icons im Fussbalken
+
+Die drei Zeilen im gelben Balken tragen Icons aus dem Website-Bestand:
+`Tag.svg` (Datum), `Location.svg` (Ort) und `Ticket.svg` (Anmeldung). Die Dateien sind
+gelb gefüllt (#e5b969) und wären auf dem gelben Balken unsichtbar — sie werden deshalb
+als CSS-Maske eingesetzt und dunkel eingefärbt, gleiches Prinzip wie bei den
+Button-Icons der Website. Ein anderes Icon: `--i: url(...)` in `template.html` ändern.
+Zur Auswahl stehen unter anderem noch `Uhrzeit.svg` (Uhr) und `Events.svg` (Mikrofon).
+
 ## Wenn ein Motiv Zahlen nennt
 
 Zahlen im Bild veralten. Aktueller Stand jederzeit:

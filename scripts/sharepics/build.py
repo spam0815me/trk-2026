@@ -73,10 +73,14 @@ def masse(width: int, height: int) -> dict:
         "__SUBSIZE__": round(height * 0.027),
         "__SUBGAP__": round(height * 0.02),
         "__BARPAD__": round(height * 0.020),
-        "__BARGAP__": round(height * 0.008),
+        "__BARGAP__": round(height * 0.012),
         "__DATESIZE__": round(height * 0.036),
         "__PLACESIZE__": round(height * 0.024),
-        "__URLSIZE__": round(height * 0.027),
+        # Die Anmeldezeile ist die längste im Balken — Grad aus der Satzbreite
+        # ableiten, damit sie in jedem Format einzeilig bleibt.
+        "__CTASIZE__": round(min(height * 0.027,
+                                 (width - 2 * pad - round(width * 0.055))
+                                 / (len("Jetzt anmelden: tierrechtskongress.ch") * ZEICHENBREITE))),
     }
 
 
