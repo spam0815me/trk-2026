@@ -4,7 +4,10 @@
  *
  * Die Endzeit steht noch nicht fest: deshalb kein `endTime`
  * (Anzeige «ab 20:00», kein Kalender-Eintrag, kein Event-JSON-LD).
- * Kurzbios und Porträts der beiden Auftretenden folgen, sobald sie geliefert sind.
+ *
+ * Kurzbios und Porträts stammen wörtlich von Daniel Hellmann (Mail vom 26.8.2026).
+ * Die beiden sind Auftretende des Rahmenprogramms, keine Referierenden — deshalb
+ * kein Eintrag in der Speaker-Collection und kein eigenes Profil.
  */
 import EveningDetail from "../../../components/programm/EveningDetail.astro";
 
@@ -13,6 +16,26 @@ const canonicalUrl = `${site}programm/abendprogramm/samstag/`;
 
 const description =
   "Samstagabend am TRK 2026: «Queere Tiere» – Konzert von Soya the Cow & Piano Prince über schwule Schwäne, zweigeschlechtliche Regenwürmer und die Vielfalt im Tierreich.";
+
+const people = [
+  {
+    name: "Daniel Hellmann",
+    role: "Performancekünstler, Sänger und Aktivist",
+    bio: "Daniel Hellmann ist Performancekünstler, Sänger und Aktivist aus Zürich. Er schafft interdisziplinäre, künstlerische Arbeiten an der Schnittstelle von Tanz, Sprache und Musik. Seine Projekte befragen Machtverhältnisse, Körperpolitiken und Begehren. Seit 2018 tritt er mit seinem Alter Ego auf, der veganen, queeren Dragfigur Soya the Cow. 2025 wurde Daniel Hellmann mit dem Schweizer Preis Darstellende Künste ausgezeichnet.",
+    photo: "/images/abendprogramm/daniel-hellmann.webp",
+    photoAlt: "Porträt von Daniel Hellmann vor türkisfarbenem Hintergrund, blond gefärbte Haare, Pullover in Weiss, Rot und Schwarz.",
+    photoCredit: "Foto: Charlotte Krieger",
+    website: "https://daniel-hellmann.com",
+  },
+  {
+    name: "Coco Schwarz",
+    role: "Pianist*in, DJ und Klangkünstler*in",
+    bio: "Coco Schwarz ist Pianist*in, DJ und Klangkünstler*in aus Zürich. Die künstlerische Arbeit bewegt sich zwischen Alter Musik auf Hammerklavier und Cembalo und experimenteller elektronischer Klangwelt – von Modularsynthesizer bis Feldaufnahmen. Daneben entstehen Videoarbeiten und Ausstellungsformate, in denen Klang, Bild und Raum ineinandergreifen. 2023/24 erhielt Coco die Auszeichnung eines Werkjahrs des Kantons Graubünden.",
+    photo: "/images/abendprogramm/coco-schwarz.webp",
+    photoAlt: "Porträt von Coco Schwarz mit runder Sonnenbrille und gestreiftem Shirt, das Bild in schillernde Regenbogenfarben verfremdet.",
+    website: "https://coco-schwarz.ch",
+  },
+];
 ---
 
 <EveningDetail
@@ -32,6 +55,7 @@ const description =
   imageHeight={1280}
   imageCredit="Foto: Olivia Schenker"
   note="Ohne Anmeldung."
+  people={people}
 >
   <p>
     In einem schillernd-faszinierenden Liederabend erzählen Daniel Hellmann und Coco Schwarz als ihre

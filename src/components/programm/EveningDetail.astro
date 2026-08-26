@@ -14,6 +14,22 @@ import ShareButtons from "../ui/ShareButtons.astro";
 import { useTranslations } from "../../lib/i18n";
 import { sessionEventJsonLd } from "../../lib/seo-jsonld";
 
+/** Eine auftretende Person des Abends — kein Speaker-Eintrag im Content-System. */
+interface Person {
+  name: string;
+  /** Kurzrolle, z. B. "Performancekünstler, Sänger und Aktivist" */
+  role: string;
+  /** Kurzbio, 2–4 Sätze */
+  bio: string;
+  /** Pfad unter /public, quadratisches Porträt */
+  photo: string;
+  photoAlt: string;
+  /** Bildnachweis, z. B. "Foto: Charlotte Krieger" */
+  photoCredit?: string;
+  /** Eigene Website — Anzeigetext ist die Domain ohne Protokoll */
+  website?: string;
+}
+
 interface Props {
   /** Name des Abends, z. B. "Speed-Kennenlernen" */
   title: string;
@@ -45,6 +61,10 @@ interface Props {
   roomName?: string;
   /** Wortmarke des Raums, z. B. "/images/Raum_Sandra.svg" — wie auf den Vortragsseiten */
   roomIcon?: string;
+  /** Auftretende mit Porträt und Kurzbio; leer lassen, solange nichts geliefert ist */
+  people?: Person[];
+  /** Überschrift über der Personen-Sektion */
+  peopleTitle?: string;
 }
 
 const {
@@ -65,6 +85,8 @@ const {
   note,
   roomName,
   roomIcon,
+  people = [],
+  peopleTitle = "Wer auftritt",
 } = Astro.props;
 
 const locale = "de";
@@ -206,6 +228,47 @@ const icalData = endTime
     </div>
 
     {note && <p class="evening-detail__note">{note}</p>}
+
+    {people.length > 0 && (
+      <section class="evening-people" aria-labelledby="evening-people-title">
+        <h2 class="evening-people__title" id="evening-people-title">{peopleTitle}</h2>
+        <ul class="evening-people__list" role="list">
+          {people.map(person => (
+            <li class="evening-person">
+              <figure class="evening-person__figure">
+                <img
+                  src={person.photo}
+                  alt={person.photoAlt}
+                  class="evening-person__photo"
+                  width="240"
+                  height="240"
+                  loading="lazy"
+                  decoding="async"
+                />
+                {person.photoCredit && (
+                  <figcaption class="evening-person__credit">{person.photoCredit}</figcaption>
+                )}
+              </figure>
+              <div class="evening-person__body">
+                <h3 class="evening-person__name">{person.name}</h3>
+                <p class="evening-person__role">{person.role}</p>
+                <p class="evening-person__bio">{person.bio}</p>
+                {person.website && (
+                  <a
+                    class="evening-person__link"
+                    href={person.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {person.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <div class="evening-detail__share">
       <ShareButtons url={canonicalUrl} title={title} locale={locale} />
@@ -386,6 +449,87 @@ const icalData = endTime
   font-size: var(--text-sm);
   color: var(--color-text-subtle);
   margin-bottom: var(--space-8);
+}
+
+/* Auftretende: Porträt links, Text rechts — ab Tablet zwei Personen nebeneinander */
+.evening-people {
+  margin-bottom: var(--space-8);
+}
+
+.evening-people__title {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-5);
+}
+
+.evening-people__list {
+  display: grid;
+  gap: var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .evening-people__list {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+.evening-person {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+@media (min-width: 480px) {
+  .evening-person {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.evening-person__figure {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.evening-person__photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.evening-person__credit {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  max-width: 140px;
+}
+
+.evening-person__name {
+  font-size: var(--text-lg);
+  margin-bottom: 0;
+}
+
+.evening-person__role {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.evening-person__bio {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2);
+}
+
+.evening-person__link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
 }
 
 .evening-detail__share {
