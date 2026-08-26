@@ -88,14 +88,37 @@
     gap: __BARGAP__px;
   }
 
-  /* Die Zeilen stehen linksbündig untereinander, der Block als Ganzes mittig —
-     so fluchten die Icons, ohne dass der Text zerfranst wirkt. */
+  .bar__cta {
+    font-weight: 800;
+    font-size: __DATESIZE__px;
+    text-align: center;
+  }
+
+  /* Untereinander (Klasse «stapel») oder nebeneinander (Klasse «reihe»).
+     Gesteuert über SHAREPIC_BAR in build.py. */
   .bar__lines {
     list-style: none;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     gap: __BARGAP__px;
+  }
+
+  .bar__lines.stapel {
+    flex-direction: column;
+    align-items: flex-start;   /* Icons fluchten untereinander */
+  }
+
+  .bar__lines.reihe {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: __REIHEGAP__px;
+    font-size: __REIHESIZE__px;
+  }
+
+  .bar__lines.reihe .bar__line--date,
+  .bar__lines.reihe .bar__line--place,
+  .bar__lines.reihe .bar__line--cta {
+    font-size: inherit;
   }
 
   .bar__line {
@@ -154,10 +177,11 @@
     </div>
 
     <div class="card__bar">
-      <ul class="bar__lines">
+      <p class="bar__cta">Jetzt anmelden!</p>
+      <ul class="bar__lines __BARMOD__">
         <li class="bar__line bar__line--date">
           <span class="ico" style="--i: url('../../public/images/Tag.svg')"></span>
-          <span>23. bis 25. Oktober 2026</span>
+          <span>23.–25. Oktober 2026</span>
         </li>
         <li class="bar__line bar__line--place">
           <span class="ico" style="--i: url('../../public/images/Location.svg')"></span>
@@ -165,7 +189,7 @@
         </li>
         <li class="bar__line bar__line--cta">
           <span class="ico" style="--i: url('../../public/images/Ticket.svg')"></span>
-          <span>Jetzt anmelden: tierrechtskongress.ch</span>
+          <span>tierrechtskongress.ch</span>
         </li>
       </ul>
       <img class="card__tif" src="../../public/images/tif-logo-dark.png"

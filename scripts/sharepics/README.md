@@ -37,6 +37,22 @@ auf 40 % der Bildhöhe gedeckelt — ohne diesen Deckel schöbe es den gelben Ba
 Bild, das `overflow: hidden` schnitte dann die Adresse ab. Nach Textänderungen also kurz
 alle drei Formate anschauen.
 
+## Fussbalken: Reihe oder Stapel
+
+Im Balken stehen «Jetzt anmelden!», darunter Datum, Ort und Adresse mit Icons.
+Diese drei stehen **nebeneinander** (Klasse `reihe`) in 1:1 und 4:5 und
+**untereinander** (Klasse `stapel`, Icons fluchten, Schrift viel grösser) in der Story.
+Grund: Die Schriftgrösse der Reihe hängt allein an der Bildbreite — in einem 9:16-Bild
+wäre sie verloren klein. Erzwingen lässt sich beides:
+
+```bash
+SHAREPIC_BAR=stapel python3 scripts/sharepics/build.py
+SHAREPIC_BAR=reihe  python3 scripts/sharepics/build.py
+```
+
+Zum Vergleichen, ohne die Live-Dateien anzufassen:
+`SHAREPIC_OUT=/tmp/vergleich python3 scripts/sharepics/build.py`
+
 ## Icons im Fussbalken
 
 Die drei Zeilen im gelben Balken tragen Icons aus dem Website-Bestand:

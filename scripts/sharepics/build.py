@@ -12,6 +12,7 @@ Open-Graph-Bild (scripts/og-image/), nur automatisiert. Poppins kommt von
 Google Fonts, der Rechner muss also online sein.
 """
 
+import os
 import pathlib
 import shutil
 import subprocess
@@ -19,9 +20,19 @@ import sys
 import tempfile
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+# Fussbalken: "reihe" = Datum, Ort und Adresse nebeneinander,
+#             "stapel" = untereinander (Icons fluchten, Schrift deutlich grösser).
+# Die Reihe passt nur in breite Formate — ihre Schriftgrösse hängt allein an der
+# Bildbreite, in der Story (9:16) wäre sie verloren klein. Deshalb dort gestapelt.
+# Mit SHAREPIC_BAR=reihe|stapel lässt sich das für alle Formate erzwingen.
+BALKEN = os.environ.get("SHAREPIC_BAR")
+
+# Die drei Beschriftungen der Icon-Zeilen — bestimmen, wie klein die Reihe wird.
+REIHE_TEXTE = "23.–25. Oktober 2026" "Photobastei Zürich" "tierrechtskongress.ch"
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TEMPLATE = ROOT / "scripts" / "sharepics" / "template.html"
-OUT_DIR = ROOT / "public" / "images" / "social"
+OUT_DIR = pathlib.Path(os.environ.get("SHAREPIC_OUT", ROOT / "public" / "images" / "social"))
 
 # Motive: Dateiname-Teil, Headline breit, Headline für Hochformate, Unterzeile.
 # In Hochformaten wird die Headline umbrochen — zweizeilig darf sie viel grösser
@@ -74,6 +85,14 @@ def masse(width: int, height: int) -> dict:
         "__SUBGAP__": round(height * 0.02),
         "__BARPAD__": round(height * 0.020),
         "__BARGAP__": round(height * 0.012),
+        "__BARMOD__": BALKEN or ("stapel" if height / width >= 1.5 else "reihe"),
+        "__REIHEGAP__": round(width * 0.035),
+        # Nebeneinander muss alles in eine Zeile passen: Zeichen plus drei Icons
+        # (je 1.15 em), drei Icon-Abstände (0.4 em) und zwei Gruppenabstände.
+        "__REIHESIZE__": round(
+            (width - 2 * pad - 2 * round(width * 0.035))
+            / (len(REIHE_TEXTE) * ZEICHENBREITE + 3 * 1.15 + 3 * 0.4)
+        ),
         "__DATESIZE__": round(height * 0.036),
         "__PLACESIZE__": round(height * 0.024),
         # Die Anmeldezeile ist die längste im Balken — Grad aus der Satzbreite
@@ -130,7 +149,11 @@ def main() -> int:
             ziel = OUT_DIR / f"trk26-{motiv}-{fmt}.png"
             rendern(html, ziel, width, height)
             kb = ziel.stat().st_size // 1024
-            print(f"{ziel.relative_to(ROOT)}  ({width}×{height}, {kb} KB)")
+            try:
+                name = ziel.relative_to(ROOT)
+            except ValueError:      # Ausgabe ausserhalb des Repos (SHAREPIC_OUT)
+                name = ziel
+            print(f"{name}  ({width}×{height}, {kb} KB)")
 
     return 0
 
