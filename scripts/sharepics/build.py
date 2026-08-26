@@ -127,6 +127,20 @@ def rendern(html: str, ziel: pathlib.Path, width: int, height: int) -> None:
         tmp.unlink(missing_ok=True)
 
 
+def vorschau(png: pathlib.Path, breite: int = 420) -> None:
+    """Kleines WebP für die Vorschau auf /medien — das PNG ist knapp 1 MB gross."""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("Pillow fehlt, keine Vorschau erzeugt.", file=sys.stderr)
+        return
+    with Image.open(png) as im:
+        hoehe = round(im.height * breite / im.width)
+        im.convert("RGB").resize((breite, hoehe), Image.LANCZOS).save(
+            png.with_name(png.stem + "-vorschau.webp"), "WEBP", quality=82, method=6
+        )
+
+
 def main() -> int:
     if not pathlib.Path(CHROME).exists():
         sys.exit(f"Chrome nicht gefunden: {CHROME}")
@@ -148,6 +162,7 @@ def main() -> int:
 
             ziel = OUT_DIR / f"trk26-{motiv}-{fmt}.png"
             rendern(html, ziel, width, height)
+            vorschau(ziel)
             kb = ziel.stat().st_size // 1024
             try:
                 name = ziel.relative_to(ROOT)

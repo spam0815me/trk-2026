@@ -239,9 +239,6 @@
     "logosText": "Offizielle Logos des Tierrechtskongresses 2026 zur Verwendung in der Berichterstattung.",
     "logoLight": "Logo (dunkler Hintergrund)",
     "logoDark": "Logo (heller Hintergrund)",
-    "socialTitle": "Grafiken für Social Media",
-    "socialText": "Fertige Sharepics für Feed und Story: quadratisch (1:1), im Instagram-Hochformat (4:5) und als Story oder Reel (9:16).",
-    "socialSaveTheDate": "Drei Tage für die Tiere",
     "photosTitle": "Bildmaterial",
     "photosText": "Pressefotos und Impressionen stellen wir auf Anfrage sowie über die Bilddatenbank von Tier im Fokus (TIF) zur Verfügung.",
     "photosCta": "Zur Bilddatenbank",
@@ -250,7 +247,16 @@
     "videosCta": "Zum YouTube-Kanal",
     "moreTitle": "Weitere Medienanfragen",
     "moreText": "Medienmitteilungen und weiteres Material findest du im Medienbereich von Tier im Fokus (TIF).",
-    "moreCta": "Medienbereich von Tier im Fokus (TIF)"
+    "moreCta": "Medienbereich von Tier im Fokus (TIF)",
+    "shareTitle": "Weitersagen",
+    "shareLead": "Der Kongress lebt davon, dass die Leute rechtzeitig davon erfahren. Hier findest du fertige Grafiken und einen Textbaustein zum Kopieren – für euren Newsletter, eure Kanäle oder eure Mitglieder.",
+    "shareGraphicsTitle": "Grafiken zum Posten",
+    "shareGraphicsText": "Klick aufs Bild lädt die Datei in voller Auflösung (1080 Pixel breit).",
+    "shareSquare": "Quadratisch, für den Feed",
+    "sharePortrait": "Hochformat, für Instagram",
+    "shareStory": "Story und Reel",
+    "shareSnippetTitle": "Textbaustein",
+    "shareSnippet": "Vom 23. bis 25. Oktober 2026 findet in der Photobastei Zürich der Tierrechtskongress von Tier im Fokus (TIF) statt: drei Tage mit über 30 Vorträgen und Workshops zu Tierrechten, Aktivismus, Politik und Ernährung, dazu Vernetzung, veganes Essen und Abendprogramm. Das ganze Programm und die Tickets gibt es auf tierrechtskongress.ch."
   },
   "share": {
     "label": "Teilen",

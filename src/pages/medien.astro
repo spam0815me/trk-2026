@@ -35,13 +35,29 @@ const logos = [
   { label: t("press.logoLight"), svg: "/images/TRK_26_Logo_negativ.svg", png: "/images/TRK_26_Logo_negativ.png" },
 ];
 
-// Fertige Sharepics — gerendert mit scripts/sharepics/build.py
+// Fertige Sharepics — gerendert mit scripts/sharepics/build.py.
+// Die Vorschauen sind kleine WebP-Dateien, der Link führt aufs volle PNG.
 const sharepics = [
   {
-    label:    t("press.socialSaveTheDate"),
-    square:   "/images/social/trk26-save-the-date-1080x1080.png",
-    portrait: "/images/social/trk26-save-the-date-1080x1350.png",
-    story:    "/images/social/trk26-save-the-date-1080x1920.png",
+    label:    t("press.shareSquare"),
+    datei:    "/images/social/trk26-save-the-date-1080x1080.png",
+    vorschau: "/images/social/trk26-save-the-date-1080x1080-vorschau.webp",
+    breite:   420,
+    hoehe:    420,
+  },
+  {
+    label:    t("press.sharePortrait"),
+    datei:    "/images/social/trk26-save-the-date-1080x1350.png",
+    vorschau: "/images/social/trk26-save-the-date-1080x1350-vorschau.webp",
+    breite:   420,
+    hoehe:    525,
+  },
+  {
+    label:    t("press.shareStory"),
+    datei:    "/images/social/trk26-save-the-date-1080x1920.png",
+    vorschau: "/images/social/trk26-save-the-date-1080x1920-vorschau.webp",
+    breite:   420,
+    hoehe:    747,
   },
 ];
 ---
@@ -108,24 +124,6 @@ const sharepics = [
             </ul>
           </article>
 
-          <!-- Social-Media-Grafiken -->
-          <article class="press-card">
-            <h3>{t("press.socialTitle")}</h3>
-            <p>{t("press.socialText")}</p>
-            <ul class="press-card__links" role="list">
-              {sharepics.map(g => (
-                <li>
-                  <span class="press-card__logo-label">{g.label}</span>
-                  <span class="press-card__formats">
-                    <a href={g.square} download>1:1</a>
-                    <a href={g.portrait} download>4:5</a>
-                    <a href={g.story} download>9:16</a>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </article>
-
           <!-- Bildmaterial -->
           <article class="press-card">
             <h3>{t("press.photosTitle")}</h3>
@@ -145,6 +143,35 @@ const sharepics = [
           </article>
 
         </div>
+      </section>
+
+      <!-- Weitersagen: Material für Trägerschaften, Referierende und Community -->
+      <section class="press-share" aria-labelledby="press-share-title">
+        <h2 id="press-share-title">{t("press.shareTitle")}</h2>
+        <p class="press-share__lead">{t("press.shareLead")}</p>
+
+        <h3 class="press-share__sub">{t("press.shareGraphicsTitle")}</h3>
+        <p class="press-share__hint">{t("press.shareGraphicsText")}</p>
+        <ul class="press-share__grid" role="list">
+          {sharepics.map(g => (
+            <li class="press-share__item">
+              <a href={g.datei} download>
+                <img
+                  src={g.vorschau}
+                  width={g.breite}
+                  height={g.hoehe}
+                  loading="lazy"
+                  decoding="async"
+                  alt={`Tierrechtskongress 2026 – ${g.label}`}
+                />
+              </a>
+              <p class="press-share__caption">{g.label}</p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="press-share__sub">{t("press.shareSnippetTitle")}</h3>
+        <blockquote class="press-share__snippet">{t("press.shareSnippet")}</blockquote>
       </section>
 
       <!-- Weitere Medienanfragen -->
@@ -215,6 +242,53 @@ const sharepics = [
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }
+}
+
+/* Weitersagen */
+.press-share__lead {
+  margin-bottom: var(--space-6);
+}
+
+.press-share__sub {
+  font-size: var(--text-base);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+.press-share__hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.press-share__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.press-share__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+
+.press-share__caption {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0 0;
+}
+
+.press-share__snippet {
+  margin: 0;
+  padding: var(--space-5);
+  background: #e3e3dd;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
 }
 
 /* Download-Karten */

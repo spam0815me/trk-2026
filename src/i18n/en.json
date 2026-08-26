@@ -239,9 +239,6 @@
     "logosText": "Official logos of the Animal Rights Congress 2026 for use in reporting.",
     "logoLight": "Logo (dark background)",
     "logoDark": "Logo (light background)",
-    "socialTitle": "Social media graphics",
-    "socialText": "Ready-made share pics for feed and story: square (1:1), Instagram portrait (4:5) and story or reel (9:16).",
-    "socialSaveTheDate": "Three days for the animals",
     "photosTitle": "Image material",
     "photosText": "We provide press photos and impressions on request and via the image database of Tier im Fokus (TIF).",
     "photosCta": "To the image database",
@@ -250,7 +247,16 @@
     "videosCta": "To the YouTube channel",
     "moreTitle": "Further media inquiries",
     "moreText": "Press releases and additional material can be found in the media section of Tier im Fokus (TIF).",
-    "moreCta": "Media section of Tier im Fokus (TIF)"
+    "moreCta": "Media section of Tier im Fokus (TIF)",
+    "shareTitle": "Spread the word",
+    "shareLead": "The congress depends on people hearing about it in time. Here you find ready-made graphics and a text snippet to copy – for your newsletter, your channels or your members.",
+    "shareGraphicsTitle": "Graphics for posting",
+    "shareGraphicsText": "Clicking an image downloads the full-resolution file (1080 pixels wide).",
+    "shareSquare": "Square, for the feed",
+    "sharePortrait": "Portrait, for Instagram",
+    "shareStory": "Story and reel",
+    "shareSnippetTitle": "Text snippet",
+    "shareSnippet": "From 23 to 25 October 2026, the Animal Rights Congress by Tier im Fokus (TIF) takes place at Photobastei Zürich: three days with more than 30 talks and workshops on animal rights, activism, politics and food, plus networking, vegan catering and an evening programme. The full programme and tickets are at tierrechtskongress.ch."
   },
   "share": {
     "label": "Share",
