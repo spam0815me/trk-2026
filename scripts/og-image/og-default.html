@@ -10,14 +10,14 @@
   und .og-card als Bild exportieren (oder via Playwright-Screenshot des Viewports),
   danach mit sips auf JPG bringen. Siehe scripts/og-image/README.md.
 
-  Aktuelles Motiv: Logo (dunkle Kuh + heller Schriftzug, enthält bereits
-  «Tierrechtskongress 2026 / Tier im Fokus») gross und zentriert auf dem
-  Beton-Hintergrund — gleicher Look wie der Hero der Startseite.
+  Aktuelles Motiv: das Logo – Kuh im gelben X, enthält bereits
+  «Tierrechtskongress 2026 / Tier im Fokus» – gross und zentriert auf dem
+  Beton-Hintergrund, gleicher Look wie der Hero der Startseite.
 
-  Wichtig: Verwendet wird trk-logo-trim.png (zugeschnittenes Logo). Das Original
-  public/images/trk-logo.png hat ungleiche transparente Ränder (oben 271px, unten 19px),
-  wodurch das Motiv nicht echt mittig sässe. Das Trim entsteht aus dem Original via
-  Pillow im.crop(im.getbbox()) — siehe README. Original NICHT ersetzen (Hero nutzt es).
+  Wichtig: Verwendet wird trk-logo-trim.png (zugeschnittenes Logo), weil das volle PNG
+  ungleiche transparente Ränder hat und das Motiv sonst nicht echt mittig sässe.
+  Verbindliche Logo-Quelle ist public/images/trk-logo.svg (Kuh IM X) – daraus entstehen
+  trk-logo.png und daraus das Trim. Eine Kuh ohne X ist kein offizielles Logo, siehe README.
 -->
 <style>
   :root {
@@ -34,7 +34,7 @@
     height: 630px;
     position: relative;
     overflow: hidden;
-    background-image: url('../../public/images/trk-header-bg.png');
+    background-image: url('../../public/images/trk-header-bg.webp');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -55,7 +55,7 @@
   <div class="og-card">
     <img class="og-card__logo"
          src="trk-logo-trim.png"
-         alt="Tierrechtskongress 2026 — Tier im Fokus" />
+         alt="Tierrechtskongress 2026 – Tier im Fokus" />
   </div>
 </body>
 </html>

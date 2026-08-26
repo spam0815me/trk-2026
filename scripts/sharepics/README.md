@@ -24,7 +24,7 @@ Headless-Modus. Poppins kommt von Google Fonts, der Rechner muss also online sei
 
 ## Ändern
 
-- **Text**: Liste `MOTIVE` in `build.py` — Dateiname-Teil, Headline für breite Formate,
+- **Text**: Liste `MOTIVE` in `build.py` – Dateiname-Teil, Headline für breite Formate,
   Headline für Hochformate (9:16 bekommt einen eigenen Umbruch, damit sie zweizeilig und
   damit viel grösser gesetzt werden kann), Unterzeile. `<br>` erzwingt einen Zeilenumbruch.
 - **Weiteres Format**: Eintrag in `FORMATE` ergänzen, danach den Download-Link in
@@ -32,18 +32,26 @@ Headless-Modus. Poppins kommt von Google Fonts, der Rechner muss also online sei
 - **Layout**: Faktoren in `masse()` bzw. das CSS in `template.html`.
 
 Der Schriftgrad der Headline wird aus der längsten Zeile berechnet, damit der Text die
-Satzbreite ausnutzt (`headline_groesse()`, Deckel bei 7.5 % der Bildhöhe). Das Logo ist
-auf 40 % der Bildhöhe gedeckelt — ohne diesen Deckel schöbe es den gelben Balken aus dem
-Bild, das `overflow: hidden` schnitte dann die Adresse ab. Nach Textänderungen also kurz
-alle drei Formate anschauen.
+Satzbreite ausnutzt (`headline_groesse()`, Deckel bei 7.5 % der Bildhöhe). Das Logo ist auf
+48 % der Bildhöhe gedeckelt, in der Story (9:16) auf 40 % – ohne Deckel schöbe es den gelben
+Balken aus dem Bild, das `overflow: hidden` schnitte dann das TIF-Logo ab. Achtung, die Box
+ist wegen `object-fit: contain` immer `__LOGOMAX__` hoch, auch wenn das Bild darin kleiner
+dargestellt wird: ein zu hoher Deckel kostet Platz, ohne das Logo grösser zu machen. Nach
+Textänderungen also kurz alle drei Formate anschauen.
+
+## Logo
+
+Das Sharepic zieht `../og-image/trk-logo-trim.png`, den Trim des offiziellen Logos –
+Kuh **im gelben X**. Eine Kuh ohne X ist kein offizielles Logo; wie sie hier hineingeriet und
+wie Trim und PNG neu entstehen, steht in `scripts/og-image/README.md`.
 
 ## Fussbalken: Reihe oder Stapel
 
 Im Balken steht «Jetzt anmelden!», darunter Datum, Ort und Adresse. Diese drei stehen
 **nebeneinander mit Icons** (Klasse `reihe`) in 1:1 und 4:5 und **untereinander, zentriert
-und ohne Icons** (Klasse `stapel`, Schrift viel grösser) in der Story — vor dem vielen
+und ohne Icons** (Klasse `stapel`, Schrift viel grösser) in der Story – vor dem vielen
 Weissraum eines 9:16-Bildes wirken die Icons unruhig.
-Grund: Die Schriftgrösse der Reihe hängt allein an der Bildbreite — in einem 9:16-Bild
+Grund: Die Schriftgrösse der Reihe hängt allein an der Bildbreite – in einem 9:16-Bild
 wäre sie verloren klein. Erzwingen lässt sich beides:
 
 ```bash
@@ -58,7 +66,7 @@ Zum Vergleichen, ohne die Live-Dateien anzufassen:
 
 Die drei Einträge im gelben Balken tragen Icons aus dem Website-Bestand:
 `Tag.svg` (Datum), `Location.svg` (Ort) und `Ticket.svg` (Anmeldung). Die Dateien sind
-gelb gefüllt (#e5b969) und wären auf dem gelben Balken unsichtbar — sie werden deshalb
+gelb gefüllt (#e5b969) und wären auf dem gelben Balken unsichtbar – sie werden deshalb
 als CSS-Maske eingesetzt und dunkel eingefärbt, gleiches Prinzip wie bei den
 Button-Icons der Website. Ein anderes Icon: `--i: url(...)` in `template.html` ändern.
 Zur Auswahl stehen unter anderem noch `Uhrzeit.svg` (Uhr) und `Events.svg` (Mikrofon).
@@ -73,4 +81,4 @@ ls src/content/speakers/*.json | wc -l   # Referierende
 ```
 
 Verwandt: `scripts/og-image/` erzeugt das Vorschaubild fürs Teilen von Links
-(1200 × 630) — gleiches Prinzip, anderer Zweck.
+(1200 × 630) – gleiches Prinzip, anderer Zweck.

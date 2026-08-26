@@ -7,7 +7,7 @@ Baut die Social-Media-Grafiken für /medien aus template.html.
 Ausgabe: public/images/social/trk26-<motiv>-<format>.png
 Formate: 1080×1080 (quadratisch, Feed) und 1080×1350 (4:5, Instagram-Hochformat).
 
-Gerendert wird mit Chrome im Headless-Modus — gleicher Weg wie beim
+Gerendert wird mit Chrome im Headless-Modus – gleicher Weg wie beim
 Open-Graph-Bild (scripts/og-image/), nur automatisiert. Poppins kommt von
 Google Fonts, der Rechner muss also online sein.
 """
@@ -23,19 +23,19 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # Fussbalken: "reihe" = Datum, Ort und Adresse nebeneinander,
 #             "stapel" = untereinander (Icons fluchten, Schrift deutlich grösser).
-# Die Reihe passt nur in breite Formate — ihre Schriftgrösse hängt allein an der
+# Die Reihe passt nur in breite Formate – ihre Schriftgrösse hängt allein an der
 # Bildbreite, in der Story (9:16) wäre sie verloren klein. Deshalb dort gestapelt.
 # Mit SHAREPIC_BAR=reihe|stapel lässt sich das für alle Formate erzwingen.
 BALKEN = os.environ.get("SHAREPIC_BAR")
 
-# Die drei Beschriftungen der Icon-Zeilen — bestimmen, wie klein die Reihe wird.
+# Die drei Beschriftungen der Icon-Zeilen – bestimmen, wie klein die Reihe wird.
 REIHE_TEXTE = "23.–25. Oktober 2026" "Photobastei Zürich" "tierrechtskongress.ch"
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TEMPLATE = ROOT / "scripts" / "sharepics" / "template.html"
 OUT_DIR = pathlib.Path(os.environ.get("SHAREPIC_OUT", ROOT / "public" / "images" / "social"))
 
 # Motive: Dateiname-Teil, Headline breit, Headline für Hochformate, Unterzeile.
-# In Hochformaten wird die Headline umbrochen — zweizeilig darf sie viel grösser
+# In Hochformaten wird die Headline umbrochen – zweizeilig darf sie viel grösser
 # gesetzt werden, sonst wirkt die Story leer.
 MOTIVE = [
     (
@@ -55,7 +55,7 @@ FORMATE = [
 
 
 # Mittlere Zeichenbreite von Poppins ExtraBold, in em. Empirisch aus den
-# gerenderten Bildern kalibriert — dient nur der Schriftgrad-Schätzung.
+# gerenderten Bildern kalibriert – dient nur der Schriftgrad-Schätzung.
 ZEICHENBREITE = 0.62
 
 
@@ -68,7 +68,7 @@ def headline_groesse(text: str, width: int, pad: int, height: int) -> int:
 
 
 def masse(width: int, height: int) -> dict:
-    """Layout-Werte relativ zur Höhe — so sitzt 4:5 gleich satt wie 1:1."""
+    """Layout-Werte relativ zur Höhe – so sitzt 4:5 gleich satt wie 1:1."""
     pad = round(width * 0.055)
     return {
         "__WIDTH__": width,
@@ -76,10 +76,14 @@ def masse(width: int, height: int) -> dict:
         "__PAD__": pad,
         "__PAD2__": pad * 2,
         "__PADTOP__": round(height * 0.045),
+        # Das Logo ist die Kuh IM gelben X – das X zaehlt zum Motiv und ist an den
+        # Raendern leer. Ein blosser 40-%-Deckel wie beim alten, X-losen Logo liesse
+        # den Schriftzug verloren klein wirken. In der Story (9:16) bleibt der Deckel
+        # tiefer: dort steht der Fussbalken gestapelt und braucht mehr Hoehe.
         "__LOGOW__": round(width * 0.72),
         "__TIFW__": round(width * 0.22),
         "__TIFGAP__": round(height * 0.012),
-        "__LOGOMAX__": round(height * 0.40),
+        "__LOGOMAX__": round(height * (0.40 if height / width >= 1.5 else 0.48)),
         "__LOGOTOP__": round(height * 0.02),
         "__SUBSIZE__": round(height * 0.027),
         "__SUBGAP__": round(height * 0.02),
@@ -95,7 +99,7 @@ def masse(width: int, height: int) -> dict:
         ),
         "__DATESIZE__": round(height * 0.036),
         "__PLACESIZE__": round(height * 0.024),
-        # Die Anmeldezeile ist die längste im Balken — Grad aus der Satzbreite
+        # Die Anmeldezeile ist die längste im Balken – Grad aus der Satzbreite
         # ableiten, damit sie in jedem Format einzeilig bleibt.
         "__CTASIZE__": round(min(height * 0.027,
                                  (width - 2 * pad - round(width * 0.055))
@@ -128,7 +132,7 @@ def rendern(html: str, ziel: pathlib.Path, width: int, height: int) -> None:
 
 
 def vorschau(png: pathlib.Path, breite: int = 420) -> None:
-    """Kleines WebP für die Vorschau auf /medien — das PNG ist knapp 1 MB gross."""
+    """Kleines WebP für die Vorschau auf /medien – das PNG ist knapp 1 MB gross."""
     try:
         from PIL import Image
     except ImportError:
