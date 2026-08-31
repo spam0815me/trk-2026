@@ -62,14 +62,13 @@ const activeRoomData = activeRooms.map(r => ({
   icon:  roomIcons[r.data.id],
 }));
 
-// Pausen & Rahmenprogramm pro Tag (catering: Verpflegung von Spicy Roots; potluck: Mitbring-Buffet;
+// Pausen & Rahmenprogramm pro Tag (catering: Verpflegung von Spicy Roots;
 // href/linkLabel: verlinkt auf die Detailseite /programm/abendprogramm)
 type DayBreak = {
   time: string;
   label: string;
   icon: string;
   catering?: boolean;
-  potluck?: boolean;
   href?: string;
   linkLabel?: string;
 };
@@ -97,7 +96,6 @@ const breaksByDay: Record<number, DayBreak[]> = {
     },
   ],
   3: [
-    { time: "09:00", label: "Zmorge", icon: "/images/Zmorge.svg", potluck: true },
     { time: "13:00", label: "Mittagspause", icon: "/images/Mittag.svg", catering: true },
   ],
 };
@@ -116,8 +114,7 @@ const timetableData = days.map(day => {
   const sessionTimes = [...new Set(daySessions.map(sv => sv.view.startTime))];
 
   // Türöffnung (1 h vorher) + Begrüssung (30 min vorher) relativ zur ersten Session des Tages.
-  // Türöffnung entfällt, wenn vor der ersten Session bereits Rahmenprogramm liegt
-  // (z.B. Sonntag: gemeinsames "Zmorge" vor den Vorträgen).
+  // Türöffnung entfällt, wenn vor der ersten Session bereits Rahmenprogramm liegt.
   const firstStart = [...sessionTimes].sort()[0];
   const existingBreaks = breaksByDay[day] ?? [];
   const hasEarlierProgram = firstStart ? existingBreaks.some(b => b.time < firstStart) : false;
@@ -143,7 +140,6 @@ const timetableData = days.map(day => {
         breakLabel: breakEntry?.label ?? "",
         breakIcon: breakEntry?.icon ?? "",
         breakCatering: breakEntry?.catering ?? false,
-        breakPotluck: breakEntry?.potluck ?? false,
         breakHref: breakEntry?.href ?? "",
         breakLinkLabel: breakEntry?.linkLabel ?? "",
         cells: activeRooms.map(room =>
@@ -220,7 +216,7 @@ const timetableData = days.map(day => {
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakPotluck, breakHref, breakLinkLabel, cells }) => (
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakHref, breakLinkLabel, cells }) => (
             isBreak ? (
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
@@ -237,11 +233,6 @@ const timetableData = days.map(day => {
                     >
                       Catering von Spicy Roots
                     </a>
-                  )}
-                  {breakPotluck && (
-                    <span class="timetable__break-note">
-                      Potluck-Style – alle bringen etwas mit
-                    </span>
                   )}
                   {breakHref && (
                     <a href={breakHref} class="timetable__break-link">
@@ -578,12 +569,6 @@ const timetableData = days.map(day => {
 
 .timetable__break-catering:hover {
   color: var(--color-primary);
-}
-
-.timetable__break-note {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: #26282a;
 }
 
 .timetable__break-link {
