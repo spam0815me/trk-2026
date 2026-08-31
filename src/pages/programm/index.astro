@@ -69,6 +69,7 @@ type DayBreak = {
   label: string;
   icon: string;
   catering?: boolean;
+  note?: string;
   href?: string;
   linkLabel?: string;
 };
@@ -115,13 +116,23 @@ const timetableData = days.map(day => {
 
   // Türöffnung (1 h vorher) + Begrüssung (30 min vorher) relativ zur ersten Session des Tages.
   // Türöffnung entfällt, wenn vor der ersten Session bereits Rahmenprogramm liegt.
+  // Die Begrüssung findet nur im Hauptsaal statt, nicht parallel in allen Räumen.
+  const mainRoomName = getField<string>(
+    "name", locale, roomMap["saal-a"]?.data as unknown as Record<string, unknown> ?? {},
+  );
+
   const firstStart = [...sessionTimes].sort()[0];
   const existingBreaks = breaksByDay[day] ?? [];
   const hasEarlierProgram = firstStart ? existingBreaks.some(b => b.time < firstStart) : false;
   const openings: DayBreak[] = firstStart
     ? [
         ...(hasEarlierProgram ? [] : [{ time: shiftTime(firstStart, -60), label: "Türöffnung", icon: "" }]),
-        { time: shiftTime(firstStart, -30), label: "Begrüssung", icon: "" },
+        {
+          time: shiftTime(firstStart, -30),
+          label: "Begrüssung",
+          icon: "",
+          note: mainRoomName ? `nur im ${mainRoomName}` : undefined,
+        },
       ]
     : [];
   const dayBreaks = [...openings, ...existingBreaks];
@@ -140,6 +151,7 @@ const timetableData = days.map(day => {
         breakLabel: breakEntry?.label ?? "",
         breakIcon: breakEntry?.icon ?? "",
         breakCatering: breakEntry?.catering ?? false,
+        breakNote: breakEntry?.note ?? "",
         breakHref: breakEntry?.href ?? "",
         breakLinkLabel: breakEntry?.linkLabel ?? "",
         cells: activeRooms.map(room =>
@@ -216,7 +228,7 @@ const timetableData = days.map(day => {
           </div>
 
           <!-- Zeitslot-Zeilen -->
-          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakHref, breakLinkLabel, cells }) => (
+          {timeSlots.map(({ time, isBreak, breakLabel, breakIcon, breakCatering, breakNote, breakHref, breakLinkLabel, cells }) => (
             isBreak ? (
               <div class="timetable__break-row">
                 <span class="timetable__break-time">{time}</span>
@@ -233,6 +245,9 @@ const timetableData = days.map(day => {
                     >
                       Catering von Spicy Roots
                     </a>
+                  )}
+                  {breakNote && (
+                    <span class="timetable__break-note">{breakNote}</span>
                   )}
                   {breakHref && (
                     <a href={breakHref} class="timetable__break-link">
@@ -569,6 +584,12 @@ const timetableData = days.map(day => {
 
 .timetable__break-catering:hover {
   color: var(--color-primary);
+}
+
+.timetable__break-note {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: #26282a;
 }
 
 .timetable__break-link {
