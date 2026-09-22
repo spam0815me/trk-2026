@@ -12,3 +12,7 @@
 /en/privacy      /datenschutz/              301
 /en/confirmation /bestaetigung/             301
 /en/*            /                          301
+
+# Abgesagter Beitrag (Luca Pasquariello) -> Uebersichtsseiten statt 404
+/programm/fleischmythen           /programm/        301
+/referentinnen/luca-pasquariello  /referentinnen/   301
