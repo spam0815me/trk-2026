@@ -28,7 +28,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
     <div class="container">
       <div class="ticket-grid">
 
-        <a class="ticket-card ticket-card--featured btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <a class="ticket-card ticket-card--featured" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
           <img src="/images/tickets/Eintritt_3-Tages.png" alt="3-Tagespass" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">3-Tagespass</h2>
@@ -41,7 +41,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
           </div>
         </a>
 
-        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
           <img src="/images/tickets/Eintritt_Freitag.png" alt="Eintritt Freitag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Freitag</h2>
@@ -54,7 +54,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
           </div>
         </a>
 
-        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
           <img src="/images/tickets/Eintritt_Samstag.png" alt="Eintritt Samstag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Samstag</h2>
@@ -67,7 +67,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
           </div>
         </a>
 
-        <a class="ticket-card btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
           <img src="/images/tickets/Eintritt_Sonntag.png" alt="Eintritt Sonntag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Sonntag</h2>
@@ -83,10 +83,11 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
       </div>
     </div>
 
-    <!-- Payrexx Modal -->
+    <!-- Payrexx bewusst als eigene Seite, nicht im Modal: Im iframe blockiert
+         Safari/iOS die Payrexx-Cookies, der Zahlvorgang bleibt dann hängen. -->
     <div class="container--narrow">
       <div class="payrexx-cta">
-        <a class="btn btn--organic-yellow btn--lg btn-payrexx btn-payrexx-modal" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d" style="align-self: center;">
+        <a class="btn btn--organic-yellow btn--lg" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d" style="align-self: center;">
           <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 28px; height: 28px;" aria-hidden="true"></span>
           Ticket sichern!
         </a>
@@ -94,14 +95,6 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
     </div>
   </div>
 </PageLayout>
-
-
-
-<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script is:inline src="https://media.payrexx.com/modal/v1/modal.min.js"></script>
-<script is:inline>
-  jQuery(".btn-payrexx-modal").payrexxModal();
-</script>
 
 <style>
 .ticket-note {
