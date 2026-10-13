@@ -89,7 +89,7 @@ const breaksByDay: Record<number, DayBreak[]> = {
     { time: "16:00", label: "Kaffeepause", icon: "/images/Pause.svg" },
     { time: "18:30", label: "zNacht", icon: "/images/Znacht.svg", catering: true },
     {
-      time: "20:15",
+      time: "20:30",
       label: "Abendprogramm",
       icon: "/images/Fiesta.svg",
       href: "/programm/abendprogramm/samstag",
@@ -101,41 +101,36 @@ const breaksByDay: Record<number, DayBreak[]> = {
   ],
 };
 
-// Uhrzeit um Minuten verschieben ("15:00", -60 -> "14:00")
-function shiftTime(hhmm: string, deltaMin: number) {
-  const [h, m] = hhmm.split(":").map(Number);
-  const total = h * 60 + m + deltaMin;
-  const hh = Math.floor(total / 60);
-  const mm = total % 60;
-  return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
-}
+// Türöffnung und Begrüssung pro Tag: Einlasszeiten laut OK-Sitzung vom 12.10.2026,
+// Begrüssung laut TRK-Drehbuch.
+const openingsByDay: Record<number, { doors: string; welcome: string }> = {
+  1: { doors: "13:30", welcome: "14:30" },
+  2: { doors: "08:30", welcome: "09:15" },
+  3: { doors: "10:00", welcome: "10:45" },
+};
 
 const timetableData = days.map(day => {
   const daySessions = sessionViews.filter(sv => sv.view.day === day);
   const sessionTimes = [...new Set(daySessions.map(sv => sv.view.startTime))];
 
-  // Türöffnung (1 h vorher) + Begrüssung (30 min vorher) relativ zur ersten Session des Tages.
-  // Türöffnung entfällt, wenn vor der ersten Session bereits Rahmenprogramm liegt.
   // Die Begrüssung findet nur im Hauptsaal statt, nicht parallel in allen Räumen.
   const mainRoomName = getField<string>(
     "name", locale, roomMap["saal-a"]?.data as unknown as Record<string, unknown> ?? {},
   );
 
-  const firstStart = [...sessionTimes].sort()[0];
-  const existingBreaks = breaksByDay[day] ?? [];
-  const hasEarlierProgram = firstStart ? existingBreaks.some(b => b.time < firstStart) : false;
-  const openings: DayBreak[] = firstStart
+  const opening = openingsByDay[day];
+  const openings: DayBreak[] = opening
     ? [
-        ...(hasEarlierProgram ? [] : [{ time: shiftTime(firstStart, -60), label: "Türöffnung", icon: "" }]),
+        { time: opening.doors, label: "Türöffnung", icon: "" },
         {
-          time: shiftTime(firstStart, -30),
+          time: opening.welcome,
           label: "Begrüssung",
           icon: "",
           note: mainRoomName ? `im ${mainRoomName}` : undefined,
         },
       ]
     : [];
-  const dayBreaks = [...openings, ...existingBreaks];
+  const dayBreaks = [...openings, ...(breaksByDay[day] ?? [])];
 
   const breakTimes = dayBreaks.map(b => b.time);
   const allTimes = [...new Set([...sessionTimes, ...breakTimes])].sort();

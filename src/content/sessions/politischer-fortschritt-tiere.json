@@ -11,7 +11,7 @@
   "status": "confirmed",
   "date": "2026-10-23",
   "startTime": "17:00",
-  "endTime": "18:00",
+  "endTime": "17:50",
   "day": 1,
   "roomId": "saal-a",
   "speakerIds": [
@@ -20,6 +20,6 @@
   "level": "all",
   "recording": true,
   "sortOrder": 22,
-  "durationMinutes": 60,
+  "durationMinutes": 50,
   "highlight": true
 }
