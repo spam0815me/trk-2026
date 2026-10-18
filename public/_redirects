@@ -16,3 +16,7 @@
 # Abgesagter Beitrag (Luca Pasquariello) -> Uebersichtsseiten statt 404
 /programm/fleischmythen           /programm/        301
 /referentinnen/luca-pasquariello  /referentinnen/   301
+
+# Abgesagter Beitrag (Beat Mumenthaler, 18.10.2026) -> Uebersichtsseiten statt 404
+/programm/saftkugler-und-woelfe   /programm/        301
+/referentinnen/beat-mumenthaler   /referentinnen/   301
