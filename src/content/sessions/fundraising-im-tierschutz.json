@@ -1,0 +1,24 @@
+{
+  "id": "fundraising-im-tierschutz",
+  "slug": "fundraising-im-tierschutz",
+  "year": 2026,
+  "title_de": "Fundraising im Tierschutz: Wie VETO Spendenkampagnen umsetzt",
+  "title_en": "Fundraising for Animal Protection: How VETO Runs Its Donation Campaigns",
+  "description_de": "Wie gewinnt man mehr Spenden? Der Vortrag zeigt anhand von Praxisbeispielen, wie VETO Tierschutz Kampagnen plant, Kanäle wie Social Media, Newsletter und Ads gezielt einsetzt und welche Impulse sich auch für kleinere Vereine direkt umsetzen lassen.",
+  "description_en": "How do you raise more donations? Using practical examples, this talk shows how VETO Tierschutz plans its campaigns, uses channels such as social media, newsletters and ads in a targeted way, and which ideas smaller organisations can put into practice right away.",
+  "type": "talk",
+  "language": "de",
+  "status": "confirmed",
+  "date": "2026-10-24",
+  "startTime": "09:30",
+  "endTime": "10:20",
+  "day": 2,
+  "roomId": "saal-b",
+  "speakerIds": [
+    "trajan-tosev"
+  ],
+  "level": "all",
+  "recording": true,
+  "sortOrder": 25,
+  "durationMinutes": 50
+}
