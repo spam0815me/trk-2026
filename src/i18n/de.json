@@ -12,7 +12,7 @@
     "program": "Programm",
     "speakers": "Referierende",
     "venue": "Ort & Anreise",
-    "registration": "Ticket sichern!",
+    "registration": "Tickets vor Ort",
     "archive": "Archiv",
     "faq": "FAQ",
     "contact": "Kontakt",
@@ -29,7 +29,7 @@
     "heroTitle": "Tierrechtskongress 2026",
     "heroSubtitle": "Wissen. Vernetzung. Wandel.",
     "heroLead": "<strong>Tier im Fokus (TIF) präsentiert drei Tage Vorträge, Workshops und Diskussionen für eine Welt ohne Tierausbeutung.</strong>",
-    "ctaRegister": "Ticket sichern!",
+    "ctaRegister": "Tickets vor Ort",
     "ctaProgram": "zum Programm",
     "highlightsTitle": "Highlights",
     "speakersTitle": "Referierende",
@@ -42,9 +42,9 @@
     "venueMore": "Anreise & Infos",
     "partnersTitle": "Unterstützung",
     "newsTitle": "Aktuelles",
-    "registerCTATitle": "Sichere dir deinen Platz",
-    "registerCTAText": "Sei dabei.",
-    "registerCTAButton": "Ticket sichern!"
+    "registerCTATitle": "Tickets an der Kasse",
+    "registerCTAText": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort.",
+    "registerCTAButton": "Tickets vor Ort"
   },
   "program": {
     "title": "Programm",
@@ -128,7 +128,7 @@
   },
   "registration": {
     "title": "Anmeldung",
-    "lead": "Melde dich jetzt für den Tierrechtskongress 2026 an. Die Zahl der Tickets ist begrenzt.",
+    "lead": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei.",
     "closed": "Die Anmeldung ist aktuell geschlossen.",
     "form": {
       "firstName": "Vorname",

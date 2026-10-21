@@ -58,17 +58,22 @@ const roomIcons: Record<string, string> = {
 };
 const roomIcon = roomId ? roomIcons[roomId] : undefined;
 
+const isCancelled = status === "cancelled";
+
 // Beschreibung in der Card vollständig anzeigen
 const descPreview = description;
 ---
 
 <article
-  class:list={["session-card", `session-card--type-${type}`, { "session-card--cancelled": status === "cancelled" }]}
+  class:list={["session-card", `session-card--type-${type}`, { "session-card--cancelled": isCancelled }]}
   data-session-id={id}
   data-type={type}
   data-language={language}
   data-room={roomId}
 >
+  {isCancelled && (
+    <span class="session-card__stamp">{t("program.status.cancelled")}</span>
+  )}
   <header class="session-card__header">
     <div class="session-card__meta">
       <time class="session-card__time">
@@ -137,7 +142,7 @@ const descPreview = description;
       <span class="btn-icon" style="--icon-url: url('/images/eye.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
       {t("program.viewDetail")}
     </a>
-    <button
+    {!isCancelled && <button
       class="bookmark-btn card-btn"
       data-session-id={id}
       aria-label={`${t("program.addToBookmarks")}: ${title}`}
@@ -145,7 +150,7 @@ const descPreview = description;
     >
       <span class="btn-icon" style="--icon-url: url('/images/x-separator.svg'); width: 16px; height: 16px;" aria-hidden="true"></span>
       <span class="bookmark-btn__label">{t("program.addToBookmarks")}</span>
-    </button>
+    </button>}
   </footer>
 </article>
 
@@ -163,9 +168,37 @@ const descPreview = description;
 
 
 
+/* Abgesagt: Inhalt ausgegraut, Stempel bleibt in voller Farbe */
 .session-card--cancelled {
-  opacity: 0.6;
-  filter: grayscale(0.5);
+  position: relative;
+  background: #1f2022;
+}
+
+.session-card--cancelled > :not(.session-card__stamp) {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.session-card--cancelled .session-card__title {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.session-card__stamp {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-4);
+  z-index: 1;
+  padding: 0.25em 0.7em;
+  border: 3px solid var(--color-accent-light);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--color-accent-light);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold, 700);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  pointer-events: none;
 }
 
 /* Header */

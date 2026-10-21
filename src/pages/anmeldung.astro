@@ -21,14 +21,26 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
       <p class="section__lead">{t("registration.lead")}</p>
     </header>
 
-    <!-- Preisübersicht -->
+    <!-- Online-Anmeldung seit 21.10.2026 geschlossen (Payrexx-Link entfernt);
+         Tickets nur noch an der Kasse vor Ort. -->
+    <div class="container--narrow">
+      <div class="door-notice" role="status">
+        <p>
+          <strong>Kasse vor Ort:</strong> Photobastei Zürich, Sihlquai 125.
+          Die Kasse öffnet mit der Türöffnung: Freitag 13:30, Samstag 08:30, Sonntag 10:00.
+          <a href="/ort/">Ort &amp; Anreise</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Preisübersicht (gilt an der Kasse) -->
     <div class="container--narrow">
       <p class="ticket-note">Reduziert für Personen in finanziell schwierigen Verhältnissen. Soli unterstützt die Teilnahme anderer.</p>
     </div>
     <div class="container">
       <div class="ticket-grid">
 
-        <a class="ticket-card ticket-card--featured" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <div class="ticket-card ticket-card--featured">
           <img src="/images/tickets/Eintritt_3-Tages.png" alt="3-Tagespass" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">3-Tagespass</h2>
@@ -39,9 +51,9 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
               <li><span>Soli</span><strong>CHF 200</strong></li>
             </ul>
           </div>
-        </a>
+        </div>
 
-        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <div class="ticket-card">
           <img src="/images/tickets/Eintritt_Freitag.png" alt="Eintritt Freitag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Freitag</h2>
@@ -52,9 +64,9 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
               <li><span>Soli</span><strong>CHF 75</strong></li>
             </ul>
           </div>
-        </a>
+        </div>
 
-        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <div class="ticket-card">
           <img src="/images/tickets/Eintritt_Samstag.png" alt="Eintritt Samstag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Samstag</h2>
@@ -65,9 +77,9 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
               <li><span>Soli</span><strong>CHF 100</strong></li>
             </ul>
           </div>
-        </a>
+        </div>
 
-        <a class="ticket-card" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d">
+        <div class="ticket-card">
           <img src="/images/tickets/Eintritt_Sonntag.png" alt="Eintritt Sonntag" class="ticket-card__img" />
           <div class="ticket-card__body">
             <h2 class="ticket-card__title">1-Tagespass Sonntag</h2>
@@ -78,25 +90,34 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
               <li><span>Soli</span><strong>CHF 75</strong></li>
             </ul>
           </div>
-        </a>
+        </div>
 
       </div>
     </div>
 
-    <!-- Payrexx bewusst als eigene Seite, nicht im Modal: Im iframe blockiert
-         Safari/iOS die Payrexx-Cookies, der Zahlvorgang bleibt dann hängen. -->
-    <div class="container--narrow">
-      <div class="payrexx-cta">
-        <a class="btn btn--organic-yellow btn--lg" href="https://tierimfokus.payrexx.com/pay?tid=4839d51d" style="align-self: center;">
-          <span class="btn-icon" style="--icon-url: url('/images/Ticket.svg'); width: 28px; height: 28px;" aria-hidden="true"></span>
-          Ticket sichern!
-        </a>
-      </div>
-    </div>
   </div>
 </PageLayout>
 
 <style>
+.door-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+}
+
+.door-notice p {
+  margin: 0;
+}
+
+.door-notice a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .ticket-note {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
@@ -130,13 +151,6 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.ticket-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(38,40,42,0.12);
 }
 
 .ticket-card--featured {
@@ -225,11 +239,4 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
   font-weight: var(--weight-semibold);
 }
 
-.payrexx-cta {
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-10);
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
 </style>

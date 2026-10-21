@@ -12,8 +12,8 @@
     "id": "faq-02",
     "question_de": "Wie kann ich mich anmelden?",
     "question_en": "How can I register?",
-    "answer_de": "Die Anmeldung erfolgt direkt über unsere Website. Klicke auf »Anmeldung« in der Navigation und fülle das Formular aus. Nach dem Absenden erhältst du eine Bestätigung per E-Mail.",
-    "answer_en": "Registration is done directly on our website. Click on 'Registration' in the navigation and fill out the form. After submitting, you will receive a confirmation by email.",
+    "answer_de": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei.",
+    "answer_en": "Online registration is closed. Tickets are only available at the door at the Photobastei.",
     "category": "registration",
     "sortOrder": 2
   },
@@ -21,8 +21,8 @@
     "id": "faq-03",
     "question_de": "Wie viel kostet die Teilnahme?",
     "question_en": "How much does participation cost?",
-    "answer_de": "Der 3-Tagespass kostet CHF 100 reduziert, CHF 150 normal und CHF 200 solidarisch. Der Tagespass für Freitag oder Sonntag kostet CHF 40 / 55 / 75, jener für den Samstag CHF 55 / 80 / 100. Reduziert gilt für Personen in finanziell schwierigen Verhältnissen, Soli unterstützt die Teilnahme anderer. Alle Tickets findest du auf der Seite »Anmeldung«.",
-    "answer_en": "The 3-day pass costs CHF 100 reduced, CHF 150 regular and CHF 200 solidarity. A day pass for Friday or Sunday costs CHF 40 / 55 / 75, one for Saturday CHF 55 / 80 / 100. The reduced rate is for people in financially difficult circumstances, the solidarity rate supports others' participation. You can find all tickets on the 'Registration' page.",
+    "answer_de": "Der 3-Tagespass kostet CHF 100 reduziert, CHF 150 normal und CHF 200 solidarisch. Der Tagespass für Freitag oder Sonntag kostet CHF 40 / 55 / 75, jener für den Samstag CHF 55 / 80 / 100. Reduziert gilt für Personen in finanziell schwierigen Verhältnissen, Soli unterstützt die Teilnahme anderer. Tickets gibt es nur noch vor Ort an der Kasse.",
+    "answer_en": "The 3-day pass costs CHF 100 reduced, CHF 150 regular and CHF 200 solidarity. A day pass for Friday or Sunday costs CHF 40 / 55 / 75, one for Saturday CHF 55 / 80 / 100. The reduced rate is for people in financially difficult circumstances, the solidarity rate supports others' participation. Tickets are only available at the door.",
     "category": "registration",
     "sortOrder": 3
   },
@@ -66,8 +66,8 @@
     "id": "faq-08",
     "question_de": "Kann ich auch spontan teilnehmen?",
     "question_en": "Can I also participate spontaneously?",
-    "answer_de": "Wir empfehlen eine vorherige Anmeldung, da die Kapazitäten begrenzt sind. Für einzelne Workshops ist eine Anmeldung zwingend erforderlich. An der Tageskasse sind möglicherweise noch Plätze verfügbar.",
-    "answer_en": "We recommend prior registration, as capacity is limited. Registration is mandatory for some workshops. Day-of tickets may be available at the door.",
+    "answer_de": "Ja. Die Online-Anmeldung ist geschlossen, Tickets gibt es vor Ort an der Kasse, solange Plätze frei sind.",
+    "answer_en": "Yes. Online registration is closed; tickets are available at the door while places last.",
     "category": "registration",
     "sortOrder": 8
   }

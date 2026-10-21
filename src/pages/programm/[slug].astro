@@ -58,7 +58,10 @@ const jsonLd = sessionEventJsonLd({
   performers: sessionSpeakers.map(s => s.data.name),
   url: canonicalUrl,
   superEventUrl: site,
+  cancelled: session.data.status === "cancelled",
 });
+
+const isCancelled = session.data.status === "cancelled";
 
 const roomIcons: Record<string, string> = {
   "saal-a": "/images/Raum_Sandra.svg",
@@ -98,7 +101,17 @@ const icalData = {
     { label: sessionView.title },
   ]}
 >
-  <article class="session-detail section" aria-labelledby="session-title">
+  <article
+    class:list={["session-detail section", { "session-detail--cancelled": isCancelled }]}
+    aria-labelledby="session-title"
+  >
+    {isCancelled && (
+      <p class="session-detail__cancelled" role="status">
+        <span class="session-detail__stamp">{t("program.status.cancelled")}</span>
+        Dieser Beitrag wurde abgesagt und findet nicht statt.
+        <a href="/programm/">Zum aktuellen Programm</a>
+      </p>
+    )}
     <!-- Header -->
     <header class="session-detail__header">
       <div class="session-detail__badges">
@@ -159,8 +172,8 @@ const icalData = {
         )}
       </dl>
 
-      <!-- Aktionen -->
-      <div class="session-detail__actions">
+      <!-- Aktionen (entfallen bei abgesagten Beiträgen) -->
+      {!isCancelled && <div class="session-detail__actions">
         <button
           class="bookmark-btn btn btn--primary btn--sm"
           data-session-id={session.data.id}
@@ -179,7 +192,7 @@ const icalData = {
           <span class="btn-icon" style="--icon-url: url('/images/calendar.svg'); width: 20px; height: 20px;" aria-hidden="true"></span>
           {t("bookmarks.addToCalendar")}
         </button>
-      </div>
+      </div>}
     </header>
 
     <!-- Beschreibung -->
@@ -268,6 +281,45 @@ const icalData = {
 <script src="../../scripts/bookmarks.js"></script>
 
 <style>
+/* Abgesagter Beitrag: Hinweis mit Stempel, Inhalt ausgegraut */
+.session-detail__cancelled {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border: 2px solid var(--color-accent-light);
+  border-radius: var(--radius-lg);
+}
+
+.session-detail__cancelled a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.session-detail__stamp {
+  display: inline-block;
+  padding: 0.25em 0.7em;
+  border: 3px solid var(--color-accent-light);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--color-accent-light);
+  font-weight: var(--weight-bold, 700);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+}
+
+.session-detail--cancelled > :not(.session-detail__cancelled) {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+.session-detail--cancelled .session-detail__title {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
 .bookmark-btn.is-bookmarked .bookmark-btn__label {
   color: #e5b969;
 }

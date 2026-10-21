@@ -29,15 +29,19 @@ const jsonLd = [
 
 // Daten laden
 const speakersRaw = await getCollection("speakers");
+const sessionsRaw = await getCollection("sessions");
+
+// Abgesagte Beiträge und Personen erscheinen nur im Programm, nicht auf der Startseite
+const cancelledIds = new Set(sessionsRaw.filter(s => s.data.status === "cancelled").map(s => s.data.id));
 const speakers = speakersRaw
   .filter(s => s.data.year === 2026)
+  .filter(s => !(s.data.sessionIds.length > 0 && s.data.sessionIds.every(id => cancelledIds.has(id))))
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
 const partnersRaw = await getCollection("partners");
 const partners = partnersRaw.flatMap(entry => entry.data).sort((a, b) => a.sortOrder - b.sortOrder);
 
 // Highlights (⭐ Sessions)
-const sessionsRaw = await getCollection("sessions");
 const speakerMap = Object.fromEntries(speakersRaw.map(s => [s.data.id, s]));
 const roomIcons: Record<string, string> = {
   "saal-a": "/images/Raum_Sandra.svg",
@@ -49,7 +53,7 @@ const dayLabels: Record<number, string> = {
   3: "So 25. Oktober",
 };
 const highlights = sessionsRaw
-  .filter(s => s.data.highlight && s.data.year === 2026)
+  .filter(s => s.data.highlight && s.data.year === 2026 && s.data.status !== "cancelled")
   .sort((a, b) => a.data.day - b.data.day || a.data.startTime.localeCompare(b.data.startTime))
   .map(s => {
     const sp = speakerMap[s.data.speakerIds[0]];

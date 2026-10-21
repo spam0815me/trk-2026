@@ -18,7 +18,7 @@ const alternates = {
   en: `${site}en/program/`,
 };
 
-const sessions = await getCurrentSessions(2026);
+const sessions = await getCurrentSessions(2026, { includeCancelled: true });
 const rooms    = await getCollection("rooms");
 const speakers = await getCollection("speakers");
 
@@ -149,8 +149,11 @@ const timetableData = days.map(day => {
         breakNote: breakEntry?.note ?? "",
         breakHref: breakEntry?.href ?? "",
         breakLinkLabel: breakEntry?.linkLabel ?? "",
+        // Pro Zelle eine Liste: ein abgesagter Beitrag steht unter seinem Ersatz.
         cells: activeRooms.map(room =>
-          daySessions.find(sv => sv.view.startTime === time && sv.view.roomId === room.data.id) ?? null
+          daySessions
+            .filter(sv => sv.view.startTime === time && sv.view.roomId === room.data.id)
+            .sort((a, b) => Number(a.view.status === "cancelled") - Number(b.view.status === "cancelled"))
         ),
       };
     }),
@@ -254,9 +257,9 @@ const timetableData = days.map(day => {
             ) : (
               <div class="timetable__row">
                 <div class="timetable__time">{time}</div>
-                {cells.map(sv => (
+                {cells.map(cellSessions => (
                   <div class="timetable__cell">
-                    {sv ? (
+                    {cellSessions.length ? cellSessions.map(sv => (
                       <SessionCard
                         id={sv.view.id}
                         slug={sv.view.slug}
@@ -279,7 +282,7 @@ const timetableData = days.map(day => {
                         recording={sv.view.recording}
                         status={sv.view.status}
                       />
-                    ) : (
+                    )) : (
                       <div class="timetable__empty" aria-hidden="true"></div>
                     )}
                   </div>
@@ -525,6 +528,7 @@ const timetableData = days.map(day => {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  gap: var(--space-3);
 }
 
 .timetable__cell > :global(.session-card) {

@@ -76,6 +76,7 @@ export function sessionEventJsonLd(opts: {
   performers: string[];
   url: string;
   superEventUrl: string;
+  cancelled?: boolean;
 }): Record<string, unknown> {
   const off = tzOffset(opts.date);
   return {
@@ -85,7 +86,9 @@ export function sessionEventJsonLd(opts: {
     description: opts.description,
     startDate: `${opts.date}T${opts.startTime}:00${off}`,
     endDate: `${opts.date}T${opts.endTime}:00${off}`,
-    eventStatus: "https://schema.org/EventScheduled",
+    eventStatus: opts.cancelled
+      ? "https://schema.org/EventCancelled"
+      : "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "Place",

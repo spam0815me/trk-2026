@@ -12,7 +12,7 @@
     "program": "Program",
     "speakers": "Speakers",
     "venue": "Venue & Travel",
-    "registration": "Get Ticket!",
+    "registration": "Tickets at the door",
     "archive": "Archive",
     "faq": "FAQ",
     "contact": "Contact",
@@ -29,7 +29,7 @@
     "heroTitle": "Animal Rights Congress 2026",
     "heroSubtitle": "Knowledge. Network. Change.",
     "heroLead": "Three days of talks, workshops, and discussions<br>for a world without animal exploitation.",
-    "ctaRegister": "Register now",
+    "ctaRegister": "Tickets at the door",
     "ctaProgram": "to the Program",
     "highlightsTitle": "Highlights",
     "speakersTitle": "Speakers",
@@ -42,9 +42,9 @@
     "venueMore": "Travel & Info",
     "partnersTitle": "Partners & Supporters",
     "newsTitle": "News",
-    "registerCTATitle": "Reserve your spot",
-    "registerCTAText": "Registration is open. Sign up now and join us.",
-    "registerCTAButton": "Get Ticket!"
+    "registerCTATitle": "Tickets at the door",
+    "registerCTAText": "Online registration is closed. Tickets are only available at the door.",
+    "registerCTAButton": "Tickets at the door"
   },
   "program": {
     "title": "Program",
@@ -128,7 +128,7 @@
   },
   "registration": {
     "title": "Registration",
-    "lead": "Register now for the Animal Rights Congress 2026.",
+    "lead": "Online registration is closed. Tickets are only available at the door at the Photobastei.",
     "closed": "Registration is currently closed.",
     "form": {
       "firstName": "First name",

@@ -17,7 +17,11 @@ const pressEmail = "info@tierimfokus.ch";
 const sessions = (await getCollection("sessions")).filter(
   s => s.data.year === 2026 && s.data.status !== "cancelled"
 );
-const speakers = (await getCollection("speakers")).filter(s => s.data.year === 2026);
+const sessionIds = new Set(sessions.map(s => s.data.id));
+// Nur Referierende mit mindestens einem nicht abgesagten Beitrag zählen
+const speakers = (await getCollection("speakers")).filter(
+  s => s.data.year === 2026 && s.data.sessionIds.some(id => sessionIds.has(id))
+);
 const rooms    = await getCollection("rooms");
 
 const scopeValue = `${sessions.length} Sessions · ${speakers.length} Referierende · 3 Tage · ${rooms.length} Räume`;

@@ -8,9 +8,18 @@ const locale = "de";
 const t = useTranslations(locale);
 
 const speakersRaw = await getCollection("speakers");
+const sessionsRaw = await getCollection("sessions");
+
+// Abgesagt = alle eigenen Beiträge abgesagt; diese Personen stehen am Schluss.
+const cancelledIds = new Set(sessionsRaw.filter(s => s.data.status === "cancelled").map(s => s.data.id));
+const isCancelled = (sessionIds: string[]) =>
+  sessionIds.length > 0 && sessionIds.every(id => cancelledIds.has(id));
+
 const speakers = speakersRaw
   .filter(s => s.data.year === 2026)
   .sort((a, b) => {
+    const byStatus = Number(isCancelled(a.data.sessionIds)) - Number(isCancelled(b.data.sessionIds));
+    if (byStatus !== 0) return byStatus;
     const lastName = (name: string) => name.trim().split(" ").slice(-1)[0].toLowerCase();
     return lastName(a.data.name).localeCompare(lastName(b.data.name), "de");
   });
@@ -44,6 +53,7 @@ const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
           photo={s.data.photo}
           photoPosition={s.data.photoPosition}
           sessionCount={s.data.sessionIds.length}
+          cancelled={isCancelled(s.data.sessionIds)}
           locale={locale}
         />
       ))}

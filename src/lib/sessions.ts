@@ -77,11 +77,14 @@ export function toSessionView(entry: SessionEntry, locale: Locale): SessionView 
   };
 }
 
-/** Lädt alle Sessions des aktuellen Jahrgangs (confirmed + draft, kein cancelled) */
-export async function getCurrentSessions(year = 2026) {
+/**
+ * Lädt alle Sessions des aktuellen Jahrgangs. Abgesagte (cancelled) nur mit
+ * includeCancelled – das Programm zeigt sie ausgegraut mit Stempel.
+ */
+export async function getCurrentSessions(year = 2026, { includeCancelled = false } = {}) {
   const all = await getCollection("sessions");
   return all
-    .filter(s => s.data.year === year && s.data.status !== "cancelled")
+    .filter(s => s.data.year === year && (includeCancelled || s.data.status !== "cancelled"))
     .sort((a, b) => {
       // Sortierung: Tag → Uhrzeit → Sortierreihenfolge
       if (a.data.day !== b.data.day) return a.data.day - b.data.day;

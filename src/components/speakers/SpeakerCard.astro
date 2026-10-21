@@ -13,11 +13,12 @@ interface Props {
   photo?: string;
   photoPosition?: string;
   sessionCount?: number;
+  cancelled?: boolean;
   locale: Locale;
 }
 
 const {
-  slug, name, pronouns, role, organization, bio, photo, photoPosition = "center 20%", sessionCount = 0, locale,
+  slug, name, pronouns, role, organization, bio, photo, photoPosition = "center 20%", sessionCount = 0, cancelled = false, locale,
 } = Astro.props;
 
 const t = useTranslations(locale);
@@ -26,7 +27,8 @@ const href = locale === "en" ? `/en/speakers/${slug}` : `/referentinnen/${slug}`
 const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
 ---
 
-<article class="speaker-card">
+<article class:list={["speaker-card", { "speaker-card--cancelled": cancelled }]}>
+  {cancelled && <span class="speaker-card__stamp">{t("program.status.cancelled")}</span>}
   <a href={href} class="speaker-card__photo-link" tabindex="-1" aria-hidden="true">
     <img
       src={photoSrc}
@@ -56,6 +58,34 @@ const photoSrc = photo ?? "/images/speakers/placeholder.jpg";
 </article>
 
 <style>
+/* Abgesagt: Karte ausgegraut, Stempel in voller Farbe */
+.speaker-card--cancelled {
+  position: relative;
+}
+
+.speaker-card--cancelled > :not(.speaker-card__stamp) {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.speaker-card__stamp {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 1;
+  padding: 0.25em 0.7em;
+  border: 3px solid var(--color-accent-light);
+  border-radius: var(--radius-sm, 4px);
+  background: rgba(20, 20, 22, 0.75);
+  color: var(--color-accent-light);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold, 700);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
 .speaker-card {
   display: flex;
   flex-direction: column;
