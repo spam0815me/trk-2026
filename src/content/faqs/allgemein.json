@@ -12,8 +12,8 @@
     "id": "faq-02",
     "question_de": "Wie kann ich mich anmelden?",
     "question_en": "How can I register?",
-    "answer_de": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei.",
-    "answer_en": "Online registration is closed. Tickets are only available at the door at the Photobastei.",
+    "answer_de": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei. Der Samstag ist ausverkauft.",
+    "answer_en": "Online registration is closed. Tickets are only available at the door at the Photobastei. Saturday is sold out.",
     "category": "registration",
     "sortOrder": 2
   },
@@ -66,8 +66,8 @@
     "id": "faq-08",
     "question_de": "Kann ich auch spontan teilnehmen?",
     "question_en": "Can I also participate spontaneously?",
-    "answer_de": "Ja. Die Online-Anmeldung ist geschlossen, Tickets gibt es vor Ort an der Kasse, solange Plätze frei sind.",
-    "answer_en": "Yes. Online registration is closed; tickets are available at the door while places last.",
+    "answer_de": "Ja. Die Online-Anmeldung ist geschlossen, Tickets gibt es vor Ort an der Kasse, solange Plätze frei sind. Der Samstag ist ausverkauft.",
+    "answer_en": "Yes. Online registration is closed; tickets are available at the door while places last. Saturday is sold out.",
     "category": "registration",
     "sortOrder": 8
   }

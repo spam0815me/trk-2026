@@ -43,7 +43,7 @@
     "partnersTitle": "Partners & Supporters",
     "newsTitle": "News",
     "registerCTATitle": "Tickets at the door",
-    "registerCTAText": "Online registration is closed. Tickets are only available at the door.",
+    "registerCTAText": "Online registration is closed. Tickets are only available at the door. Saturday is sold out.",
     "registerCTAButton": "Tickets at the door"
   },
   "program": {
@@ -128,7 +128,7 @@
   },
   "registration": {
     "title": "Registration",
-    "lead": "Online registration is closed. Tickets are only available at the door at the Photobastei.",
+    "lead": "Online registration is closed. Tickets are only available at the door at the Photobastei. Saturday is sold out.",
     "closed": "Registration is currently closed.",
     "form": {
       "firstName": "First name",

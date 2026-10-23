@@ -43,7 +43,7 @@
     "partnersTitle": "Unterstützung",
     "newsTitle": "Aktuelles",
     "registerCTATitle": "Tickets an der Kasse",
-    "registerCTAText": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort.",
+    "registerCTAText": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort. Der Samstag ist ausverkauft.",
     "registerCTAButton": "Tickets vor Ort"
   },
   "program": {
@@ -128,7 +128,7 @@
   },
   "registration": {
     "title": "Anmeldung",
-    "lead": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei.",
+    "lead": "Die Online-Anmeldung ist geschlossen. Tickets gibt es nur noch vor Ort an der Kasse in der Photobastei. Der Samstag ist ausverkauft.",
     "closed": "Die Anmeldung ist aktuell geschlossen.",
     "form": {
       "firstName": "Vorname",
