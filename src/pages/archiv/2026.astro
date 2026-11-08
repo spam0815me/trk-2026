@@ -1,0 +1,138 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import TalkGrid from "../../components/archive/TalkGrid.astro";
+import { useTranslations } from "../../lib/i18n";
+import talks2026 from "../../data/archive-2026-talks.json";
+
+const locale = "de";
+const t = useTranslations(locale);
+const site = Astro.site?.toString() ?? "https://tierrechtskongress.ch";
+
+const playlistUrl = "https://www.youtube.com/playlist?list=PLPu80N-85260";
+const berichtUrl = "https://tierimfokus.ch/news/tierrechtskongress-2026/";
+---
+
+<PageLayout
+  title="Tierrechtskongress 2026 | Archiv"
+  description="Rückblick auf den Tierrechtskongress 2026 in der Photobastei Zürich: Bericht und Aufzeichnungen aller öffentlichen Vorträge."
+  locale={locale}
+  canonicalUrl={`${site}archiv/2026/`}
+  alternates={{ de: `${site}archiv/2026/`, en: `${site}en/archive/2026/` }}
+  breadcrumbs={[{ label: t("archive.title"), href: "/archiv" }, { label: "2026" }]}
+>
+  <div class="section">
+    <header class="section__header">
+      <h1 class="section__title">Tierrechts&shy;kongress 2026</h1>
+      <p class="archive-meta">23.–25. Oktober 2026 · Photobastei Zürich</p>
+    </header>
+
+    <div class="archive-2026">
+      <article class="report-teaser">
+        <img
+          src="/images/archiv/2026/trk26-bericht.webp"
+          alt="Zwei Kongressbesucherinnen unterhalten sich draussen vor der Photobastei"
+          width="1200"
+          height="800"
+          class="report-teaser__img"
+        />
+        <div class="report-teaser__body">
+          <p class="report-teaser__kicker">Bericht</p>
+          <h2 class="report-teaser__title">«Das Highlight des Jahres»</h2>
+          <p class="report-teaser__lead">
+            An unserem Tierrechtskongress kamen täglich 150 bis 180 Menschen zusammen, um zuzuhören,
+            zu diskutieren und einander kennenzulernen. Ein Rückblick auf drei bunte Tage in der
+            Photobastei in Zürich.
+          </p>
+          <a href={berichtUrl} class="report-teaser__btn" target="_blank" rel="noopener">
+            Ganzen Bericht lesen
+          </a>
+        </div>
+      </article>
+
+      <section aria-labelledby="videos-2026">
+        <h2 id="videos-2026" class="archive-2026__heading">Vorträge zum Nachschauen</h2>
+        <TalkGrid talks={talks2026} label={`${talks2026.length} Vorträge vom TRK 2026`} playlistUrl={playlistUrl} />
+      </section>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+.archive-meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+.archive-2026 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.archive-2026__heading {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-5);
+}
+
+.report-teaser {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .report-teaser {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.report-teaser__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.report-teaser__kicker {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.report-teaser__title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-3);
+}
+
+.report-teaser__lead {
+  margin-bottom: var(--space-5);
+}
+
+/* Organische Knopfform: SVG skaliert proportional, darum Höhe passend zur Textlänge (Verhältnis ~4.3:1) */
+.report-teaser__btn {
+  display: inline-block;
+  padding: 1.4em 2.2em;
+  background: url('/images/btn-v2-black.svg') center / 100% 100% no-repeat;
+  font-family: var(--brand-font-bold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  color: #fafaff;
+  text-decoration: none;
+}
+
+.report-teaser__btn:hover {
+  background-image: url('/images/btn-v2-yellow.svg');
+  color: #26282a;
+}
+
+.report-teaser__btn:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+</style>

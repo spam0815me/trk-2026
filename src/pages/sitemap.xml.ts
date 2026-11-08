@@ -22,6 +22,8 @@ export const GET: APIRoute = async ({ site }) => {
     { url: `${base}ort/`,               priority: "0.7", changefreq: "monthly" },
     { url: `${base}anmeldung/`,         priority: "0.9", changefreq: "monthly" },
     { url: `${base}archiv/`,            priority: "0.6", changefreq: "yearly" },
+    { url: `${base}archiv/2026/`,       priority: "0.6", changefreq: "yearly" },
+    { url: `${base}archiv/2023/`,       priority: "0.5", changefreq: "yearly" },
     { url: `${base}faq/`,               priority: "0.7", changefreq: "monthly" },
     { url: `${base}kontakt/`,           priority: "0.5", changefreq: "yearly" },
     { url: `${base}medien/`,            priority: "0.6", changefreq: "monthly" },
